@@ -1,6 +1,6 @@
 function carousel() {
     return (<>
-            <div style={{width:"50%"}}>
+            <div style={{width:"50%", position:"relative"}}>
             <div id="carouselBasicExample" className="carousel slide carousel-fade" data-ride="carousel">
 
             <div className="carousel-indicators">

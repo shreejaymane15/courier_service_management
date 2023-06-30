@@ -12,7 +12,7 @@ function Register () {
 
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form">
+      <form className="Auth-form" action="/">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign Up</h3>
           <div className="text-center">
@@ -74,9 +74,6 @@ function Register () {
               Submit
             </button>
           </div>
-          <p className="text-center mt-2">
-            <a href="#"> Forgot password?</a>
-          </p>
         </div>
       </form>
     </div>

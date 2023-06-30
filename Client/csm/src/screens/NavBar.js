@@ -18,13 +18,21 @@ function NavBar() {
                 </a>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <a className="navbar-brand" style={{fontSize:"1.5rem"}} href="#">MyCourier</a>
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0" style={{fontSize:"1.3rem", marginLeft:"4rem", paddingTop:"0.3rem"}}>
+                <ul className="navbar-nav mr-auto mb-2 mb-lg-0" style={{fontSize:"1.3rem", marginLeft:"4rem", paddingTop:"0.3rem"}}>
                     <li className="nav-item" style={{marginLeft:"1rem", marginRight:"1rem"}}>
                     <a className="nav-link" aria-current="page" href="#">Home</a>
                     </li>
-                    <li className="nav-item" style={{marginLeft:"1rem", marginRight:"1rem"}}>
-                    <a className="nav-link" href="#">Services</a>
-                    </li>
+                    <li class="nav-item dropdown" style={{marginLeft:"1rem", marginRight:"1rem"}}>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Services
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style={{backgroundColor:"#F5F5F5"}}>
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li> 
                     <li className="nav-item" style={{marginLeft:"1rem", marginRight:"1rem"}}>
                     <a className="nav-link" href="#">Track Your Shipment</a>
                     </li>
