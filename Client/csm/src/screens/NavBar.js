@@ -7,6 +7,18 @@ function NavBar() {
         navigate('/login');
     }
 
+    const GoToAboutUs = () =>{
+        navigate('/about');
+    }
+
+    const GoToContactUs = () =>{
+        navigate('/contact');
+    }
+
+    const GoToTrackShipment = () =>{
+        navigate('/trackshipment');
+    }
+
     return (<>
             <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{height:"5rem"}}>
             <div className="container-fluid">
@@ -17,7 +29,7 @@ function NavBar() {
                 <img src="/Images/bootstrap-logo.svg" alt="" width="60" height="54"/>
                 </a>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a className="navbar-brand" style={{fontSize:"1.5rem"}} href="#">MyCourier</a>
+                <a className="navbar-brand" style={{fontSize:"1.5rem"}} href="#">SwiftTransit</a>
                 <ul className="navbar-nav mr-auto mb-2 mb-lg-0" style={{fontSize:"1.3rem", marginLeft:"4rem", paddingTop:"0.3rem"}}>
                     <li className="nav-item" style={{marginLeft:"1rem", marginRight:"1rem"}}>
                     <a className="nav-link" aria-current="page" href="#">Home</a>
@@ -34,13 +46,13 @@ function NavBar() {
                         </div>
                     </li> 
                     <li className="nav-item" style={{marginLeft:"1rem", marginRight:"1rem"}}>
-                    <a className="nav-link" href="#">Track Your Shipment</a>
+                    <a className="nav-link" onClick={GoToTrackShipment}>Track Your Shipment</a>
                     </li>
                     <li className="nav-item" style={{marginLeft:"1rem", marginRight:"1rem"}}>
-                    <a className="nav-link" href="#">About Us</a>
+                    <a className="nav-link" onClick={GoToAboutUs}>About Us</a>
                     </li>
                     <li className="nav-item" style={{marginLeft:"1rem", marginRight:"1rem"}}>
-                    <a className="nav-link" href="#">Contact Us</a>
+                    <a className="nav-link" onClick={GoToContactUs}>Contact Us</a>
                     </li>
                 </ul>
                 <form className="d-flex" role="search">

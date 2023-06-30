@@ -3,6 +3,8 @@ import Home from "./Home";
 import Login from "./Login";
 import Register from "./Register";
 import './App.css'
+import AboutUs from "./AboutUs";
+import ContactUs from "./ContactUs";
 
 function Controller() {
     return (
@@ -11,6 +13,8 @@ function Controller() {
                 <Route path='/' element={<Home/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>
+                <Route path='/about' element={<AboutUs/>}/>
+                <Route path='/contact' element={<ContactUs/>}/>
             </Routes>
         </BrowserRouter>
     );
