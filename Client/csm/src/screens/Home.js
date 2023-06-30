@@ -10,7 +10,7 @@ function Home() {
                 <div className="column">
                     <Carousel/>
                 </div>
-                <div style={{position:"absolute", display:"flex", marginLeft:"55rem", marginTop:"10rem"}}>
+                <div style={{position:"absolute", display:"flex", marginLeft:"57.9%", marginTop:"10.5%"}}>
                     <div style={{border:"solid green", padding: "2rem 4rem 2rem 1rem"}}>
                         <a style={{fontFamily:"sans-serif", fontSize:"1.75rem", color:"black", textDecoration:"none"}} href="#">
                         <img src="/Images/Package_Icon.jpg" style={{width:"5rem", height:"5rem", paddingRight:"1rem"}}/>
@@ -19,7 +19,7 @@ function Home() {
                         </a>
                     </div>
                 </div>
-                <div style={{position:"absolute", display:"flex", marginLeft:"55rem", marginTop:"19.1rem"}}>
+                <div style={{position:"absolute", display:"flex", marginLeft:"57.9%", marginTop:"20.1%"}}>
                     <div style={{border:"solid green", padding: "2rem 4rem 2rem 1rem"}}>
                         <a style={{fontFamily:"sans-serif", fontSize:"1.7rem", color:"black", textDecoration:"none"}} href="#">
                         <img src="/Images/Package_Icon.jpg" style={{width:"5rem", height:"5rem", paddingRight:"1rem"}}/>
@@ -28,7 +28,7 @@ function Home() {
                         </a>
                     </div>
                 </div>
-                <div style={{position:"absolute", display:"flex", marginLeft:"55rem", marginTop:"28.3rem"}}>
+                <div style={{position:"absolute", display:"flex", marginLeft:"57.9%", marginTop:"29.75%"}}>
                     <div style={{border:"solid green", padding: "2rem 4rem 2rem 1rem"}}>
                         <a style={{fontFamily:"sans-serif", fontSize:"1.59rem", color:"black", textDecoration:"none"}} href="#">
                         <img src="/Images/Package_Icon.jpg" style={{width:"5rem", height:"5rem", paddingRight:"1rem"}}/>
