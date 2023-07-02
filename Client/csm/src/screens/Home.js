@@ -1,9 +1,23 @@
+import { useNavigate } from "react-router-dom";
 import Carousel from "./Carousel";
 import NavBar from "./NavBar";
-
+import "./css/Home.css";
 
 
 function Home() {
+
+    const navigate = useNavigate();
+
+    const GoToTracking = () =>{
+        navigate('/');
+    }
+
+    const GoToHubLocation = () =>{
+        navigate('/hublocation');
+    }
+
+
+
     return (<>
             <NavBar/>
             <div className="row">
@@ -12,7 +26,7 @@ function Home() {
                 </div>
                 <div style={{position:"absolute", display:"flex", marginLeft:"57.9%", marginTop:"10.5%"}}>
                     <div style={{border:"solid green", padding: "32px 64px 32px 16px"}}>
-                        <a style={{fontFamily:"sans-serif", fontSize:"28px", color:"black", textDecoration:"none"}} href="#">
+                        <a style={{fontFamily:"sans-serif", fontSize:"28px", color:"black", textDecoration:"none"}} onClick={GoToTracking}>
                         <img src="/Images/Package_Icon.jpg" style={{width:"80px", height:"80px", paddingRight:"15px"}}/>
                             Where is My Package?
                         <img src="/Images/circle-right.svg" alt="arrow" style={{paddingLeft:"148px"}}/>
@@ -30,7 +44,7 @@ function Home() {
                 </div>
                 <div style={{position:"absolute", display:"flex", marginLeft:"57.9%", marginTop:"29.75%"}}>
                     <div style={{border:"solid green", padding: "32px 64px 32px 16px"}}>
-                        <a style={{fontFamily:"sans-serif", fontSize:"25.45px", color:"black", textDecoration:"none"}} href="#">
+                        <a style={{fontFamily:"sans-serif", fontSize:"25.45px", color:"black", textDecoration:"none"}} onClick={GoToHubLocation}>
                         <img src="/Images/Package_Icon.jpg" style={{width:"80px", height:"80px", paddingRight:"15px"}}/>
                             Where is SwiftTransit Service Point?
                         <img src="/Images/circle-right.svg" alt="arrow" style={{paddingLeft:"25px"}}/>

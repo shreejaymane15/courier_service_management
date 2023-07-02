@@ -13,7 +13,7 @@ function carousel() {
                     className="rounded-circle" style={{width:"7px", height: "7px"}}></button>
             </div>
 
-            <div className="carousel-inner shadow-5-strong" style={{borderBottomRightRadius:"4rem"}}>
+            <div className="carousel-inner shadow-5-strong" style={{borderBottomRightRadius:"64px"}}>
 
                 <div className="carousel-item active">
                 <img src="/Images/Home_Delivery.jpg" className="d-block vh-100 object-cover"

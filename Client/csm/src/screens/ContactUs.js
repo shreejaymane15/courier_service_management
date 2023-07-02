@@ -1,4 +1,5 @@
 import { useState } from "react";
+import NavBar from "./NavBar";
 
 
 function ContactUs() {
@@ -19,6 +20,7 @@ function ContactUs() {
       
     return (
 <>
+<NavBar/>
 <div className="container my-5 py-5 z-depth-1">
 
 

@@ -1,7 +1,9 @@
+import NavBar from "./NavBar";
 
 
 function AboutUs() {
     return (<>
+    <NavBar/>
     <div>
       <section style={{ backgroundColor: '#f1f1f1', padding: '20px' }}>
         <h1 style={{ textAlign: 'center' }}>About Us</h1>

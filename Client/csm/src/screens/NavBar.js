@@ -3,6 +3,11 @@ import {useNavigate} from 'react-router-dom';
 function NavBar() {
     const navigate = useNavigate();
 
+
+    const GoToHome = () =>{
+        navigate('/');
+    }
+
     const GoToLogin = () =>{
         navigate('/login');
     }
@@ -32,7 +37,7 @@ function NavBar() {
                 <a className="navbar-brand" style={{fontSize:"1.5rem"}} href="#">SwiftTransit</a>
                 <ul className="navbar-nav mr-auto mb-2 mb-lg-0" style={{fontSize:"1.3rem", marginLeft:"4rem", paddingTop:"0.3rem"}}>
                     <li className="nav-item" style={{marginLeft:"1rem", marginRight:"1rem"}}>
-                    <a className="nav-link" aria-current="page" href="#">Home</a>
+                    <a className="nav-link" aria-current="page" onClick={GoToHome}>Home</a>
                     </li>
                     <li class="nav-item dropdown" style={{marginLeft:"1rem", marginRight:"1rem"}}>
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
