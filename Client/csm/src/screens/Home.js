@@ -9,7 +9,7 @@ function Home() {
     const navigate = useNavigate();
 
     const GoToTracking = () =>{
-        navigate('/');
+        navigate('/admin');
     }
 
     const GoToHubLocation = () =>{

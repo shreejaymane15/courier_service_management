@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 
-function NavBar() {
+function NavBarProtected() {
     const navigate = useNavigate();
 
 
@@ -25,7 +25,7 @@ function NavBar() {
     }
 
     return (<>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{height:"65px"}}>
+            <nav className="navbar navbar-dark bg-dark navbar-expand-lg navbar-light" style={{height:"65px"}}>
             <div className="container-fluid">
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
@@ -39,17 +39,6 @@ function NavBar() {
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
                     <a className="nav-link" aria-current="page" onClick={GoToHome}>Home</a>
                     </li>
-                    <li class="nav-item dropdown" style={{marginLeft:"16px", marginRight:"16px"}}>
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Services
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style={{backgroundColor:"#F5F5F5"}}>
-                        <a class="dropdown-item" href="#">Enterprise Logistic Services</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li> 
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
                     <a className="nav-link" onClick={GoToTrackShipment}>Track Your Shipment</a>
                     </li>
@@ -65,7 +54,7 @@ function NavBar() {
                     <button className="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 <div className="d-grid gap-2 d-md-flex justify-content-md-end" style={{marginLeft:"32px", marginRight:"32px"}}>
-                <button class="btn btn-outline-success me-2" type="button" onClick={GoToLogin}>Login</button>
+                <button class="btn btn-outline-success me-2" type="button" onClick={GoToLogin}>Log Out</button>
                 </div>
                 </div>
             </div>
@@ -73,4 +62,4 @@ function NavBar() {
             </>);
 }
 
-export default NavBar;
+export default NavBarProtected;

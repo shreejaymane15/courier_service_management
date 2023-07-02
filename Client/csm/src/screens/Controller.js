@@ -5,6 +5,7 @@ import Register from "./Register";
 import AboutUs from "./AboutUs";
 import ContactUs from "./ContactUs";
 import HubLocation from "./HubLocation";
+import Admin from "./Admin";
 import './css/App.css'
 
 function Controller() {
@@ -17,6 +18,7 @@ function Controller() {
                 <Route path='/about' element={<AboutUs/>}/>
                 <Route path='/contact' element={<ContactUs/>}/>
                 <Route path='/hublocation' element={<HubLocation/>}/>
+                <Route path='/admin' element={<Admin/>}/>                
             </Routes>
         </BrowserRouter>
     );
