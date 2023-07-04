@@ -25,17 +25,17 @@ function NavBar() {
     }
 
     return (<>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{height:"65px"}}>
+            <nav className="navbar navbar-dark navbar-expand-lg bg-dark navbar-light" style={{height:"65px"}}>
             <div className="container-fluid">
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">
-                <img src="/Images/bootstrap-logo.svg" alt="" width="60" height="54"/>
+                <a class="navbar-brand" onClick={GoToHome}>
+                <img src="/Images/Logo/SwiftTransitLogo 1.png" alt="" width="60" height="54"/>
                 </a>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a className="navbar-brand" style={{fontSize:"25px"}} href="#">SwiftTransit</a>
-                <ul className="navbar-nav mr-auto mb-2 mb-lg-0" style={{fontSize:"21px", marginLeft:"64px", paddingTop:"5px"}}>
+                <a className="navbar-brand" style={{marginBottom:"5px", fontSize:"25px"}} onClick={GoToHome}>SwiftTransit</a>
+                <ul className="navbar-nav mr-auto mb-2 mb-lg-0" style={{fontSize:"21px", marginLeft:"64px"}}>
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
                     <a className="nav-link" aria-current="page" onClick={GoToHome}>Home</a>
                     </li>
@@ -44,10 +44,10 @@ function NavBar() {
                         Services
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown" style={{backgroundColor:"#F5F5F5"}}>
-                        <a class="dropdown-item" href="#">Enterprise Logistic Services</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="#">Home PickUp</a>
+                        <a class="dropdown-item" href="#">Extra Care Delivery</a>
+                        {/* <div class="dropdown-divider"></div> */}
+                        <a class="dropdown-item" href="#">Prime Consignment</a>
                         </div>
                     </li> 
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>

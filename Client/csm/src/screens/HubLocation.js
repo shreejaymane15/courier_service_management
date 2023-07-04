@@ -37,6 +37,9 @@ function HubLocation(){
 
     return (<>
         <NavBar/>
+        <div style={{marginTop:"10%", textAlign:"center"}}>
+        <h4>Find an SwiftTransit authorized service center near you</h4>
+        </div>
         <div className="container Map">
         {!isLoaded ? (
             <h1>Loading...</h1>

@@ -31,7 +31,7 @@ function NavBarProtected() {
                 <span className="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                <img src="/Images/bootstrap-logo.svg" alt="" width="60" height="54"/>
+                <img src="/Images/Logo/SwiftTransitLogo 1.png" alt="" width="60" height="54"/>
                 </a>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <a className="navbar-brand" style={{fontSize:"25px"}} href="#">SwiftTransit</a>

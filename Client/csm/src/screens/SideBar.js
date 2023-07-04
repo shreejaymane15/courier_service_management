@@ -37,7 +37,7 @@ function SideBar() {
             </li>
             <li className="nav-item">
               <a className="nav-link d-flex align-items-center gap-2" href="#">
-                Products
+                Employee Directory
               </a>
             </li>
             <li className="nav-item">
@@ -50,11 +50,11 @@ function SideBar() {
                 Reports
               </a>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <a className="nav-link d-flex align-items-center gap-2" href="#">
                 Integrations
               </a>
-            </li>
+            </li> */}
           </ul>
           <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
             <span>Saved reports</span>

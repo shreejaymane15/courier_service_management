@@ -44,7 +44,7 @@ function Admin() {
       />
       <h2>Section title</h2>
       <div className="table-responsive small">
-        <table className="table table-striped table-sm">
+        {/* <table className="table table-striped table-sm">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -168,7 +168,7 @@ function Admin() {
               <td>text</td>
             </tr>
           </tbody>
-        </table>
+        </table> */}
       </div>
     </main>
   </div>

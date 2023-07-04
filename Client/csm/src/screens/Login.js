@@ -11,6 +11,27 @@ function Login() {
     navigate("/register");
   }
 
+  // SendLoginData = (props) => {
+
+  //   const helper = new XMLHttpRequest();
+  //   helper.onreadystatechange = () =>{
+  //     if(helper.status == 200 && helper.readyState == 4){
+  //       var result = JSON.parse(helper.responseText);
+  //       if(result){
+  //         console.log(result);
+  //         navigate("/admin");
+  //       }
+  //       else{
+  //         console.log(error);
+  //       }
+  //     }
+  //   }
+  //   helper.open("POST", "http://127.0.0.1:9999/login");
+  //   helper.setRequestHeader("Content-Type", "application/json");
+  //   helper.send(JSON.stringify(props));
+  // }
+  
+
   return (<>
   <div className="Auth-form-container">
     <form className="Auth-form">
@@ -26,16 +47,20 @@ function Login() {
           <label>Email address</label>
           <input
             type="email"
+            name='LoginEmail'
             className="form-control mt-1"
             placeholder="Enter email"
+            required
             />
         </div>
         <div className="form-group mt-3">
           <label>Password</label>
           <input
             type="password"
+            name='LoginPassword'
             className="form-control mt-1"
             placeholder="Enter password"
+            required
             />
         </div>
         <div className="d-grid gap-2 mt-3">

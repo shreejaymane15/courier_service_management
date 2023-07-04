@@ -9,11 +9,15 @@ function Home() {
     const navigate = useNavigate();
 
     const GoToTracking = () =>{
-        navigate('/admin');
+        navigate('/trackshipment');
     }
 
     const GoToHubLocation = () =>{
         navigate('/hublocation');
+    }
+
+    const GoToAdmin = () =>{
+        navigate('/admin');
     }
 
 
@@ -35,8 +39,8 @@ function Home() {
                 </div>
                 <div style={{position:"absolute", display:"flex", marginLeft:"57.9%", marginTop:"20.1%"}}>
                     <div style={{border:"solid green", padding: "32px 64px 32px 16px"}}>
-                        <a style={{fontFamily:"sans-serif", fontSize:"27.2px", color:"black", textDecoration:"none"}} href="#">
-                        <img src="/Images/Package Home Pick Up.png" style={{width:"80px", height:"80px", paddingRight:"15px"}}/>
+                        <a style={{fontFamily:"sans-serif", fontSize:"27.2px", color:"black", textDecoration:"none"}} onClick={GoToAdmin}>
+                        <img src="/Images/Package Home Pick Up.png" style={{width:"80px", height:"80px", paddingRight:"15px"}} />
                             Home Pick Up Service
                         <img src="/Images/circle-right.svg" alt="arrow" style={{paddingLeft:"163.5px"}}/>
                         </a>
