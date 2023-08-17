@@ -30,7 +30,7 @@ function NavBar() {
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" onClick={GoToHome}>
+                <a className="navbar-brand" onClick={GoToHome}>
                 <img src="/Images/Logo/SwiftTransitLogo 1.png" alt="" width="60" height="54"/>
                 </a>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
@@ -39,15 +39,15 @@ function NavBar() {
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
                     <a className="nav-link" aria-current="page" onClick={GoToHome}>Home</a>
                     </li>
-                    <li class="nav-item dropdown" style={{marginLeft:"16px", marginRight:"16px"}}>
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <li className="nav-item dropdown" style={{marginLeft:"16px", marginRight:"16px"}}>
+                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Services
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style={{backgroundColor:"#F5F5F5"}}>
-                        <a class="dropdown-item" href="#">Home PickUp</a>
-                        <a class="dropdown-item" href="#">Extra Care Delivery</a>
+                        <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{backgroundColor:"#F5F5F5"}}>
+                        <a className="dropdown-item" href="#">Home PickUp</a>
+                        <a className="dropdown-item" href="#">Extra Care Delivery</a>
                         {/* <div class="dropdown-divider"></div> */}
-                        <a class="dropdown-item" href="#">Prime Consignment</a>
+                        <a className="dropdown-item" href="#">Prime Consignment</a>
                         </div>
                     </li> 
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
@@ -64,8 +64,8 @@ function NavBar() {
                     <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                     <button className="btn btn-outline-success" type="submit">Search</button>
                 </form>
-                <div className="d-grid gap-2 d-md-flex justify-content-md-end" style={{marginLeft:"32px", marginRight:"32px"}}>
-                <button class="btn btn-outline-success me-2" type="button" onClick={GoToLogin}>Login</button>
+                <div className="d-grid gap-2 d-md-flex justify-content-md-end" style={{marginLeft:"32px"}}>
+                <button class="btn btn-outline-success me-2" type="button" onClick={GoToLogin}>Login/SignUp</button>
                 </div>
                 </div>
             </div>

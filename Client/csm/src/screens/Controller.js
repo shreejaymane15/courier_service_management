@@ -5,7 +5,10 @@ import Register from "./Register";
 import AboutUs from "./AboutUs";
 import ContactUs from "./ContactUs";
 import HubLocation from "./HubLocation";
-import Admin from "./Admin";
+import Admin from "./Admin/Admin";
+import Customer from "./Customer/Customer";
+import Dispatcher from "./Dispatcher/Dispatcher";
+import DeliveryPersonnel from "./DeliveryPersonnel/DeliveryPersonnel";
 import Tracking from "./Tracking"
 import './css/App.css'
 
@@ -20,6 +23,9 @@ function Controller() {
                 <Route path='/contact' element={<ContactUs/>}/>
                 <Route path='/hublocation' element={<HubLocation/>}/>
                 <Route path='/admin' element={<Admin/>}/>                
+                <Route path='/customer' element={<Customer/>}/>                
+                <Route path='/dispatcher' element={<Dispatcher/>}/>                
+                <Route path='/deliverypersonnel' element={<DeliveryPersonnel/>}/>                
                 <Route path='/trackshipment' element={<Tracking/>}/>                
             </Routes>
         </BrowserRouter>

@@ -30,7 +30,7 @@ function NavBarProtected() {
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">
+                <a className="navbar-brand" href="#">
                 <img src="/Images/Logo/SwiftTransitLogo 1.png" alt="" width="60" height="54"/>
                 </a>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
@@ -54,7 +54,7 @@ function NavBarProtected() {
                     <button className="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 <div className="d-grid gap-2 d-md-flex justify-content-md-end" style={{marginLeft:"32px", marginRight:"32px"}}>
-                <button class="btn btn-outline-success me-2" type="button" onClick={GoToLogin}>Log Out</button>
+                <button className="btn btn-outline-success me-2" type="button" onClick={GoToLogin}>Log Out</button>
                 </div>
                 </div>
             </div>
