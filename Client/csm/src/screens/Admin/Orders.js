@@ -1,5 +1,7 @@
 function Orders() {
-    
+    renderHeader = () => {
+        
+    }
     return (<>
         <div style={{ margin: '50px' }}>
         <h2>Orders Table</h2>

@@ -1,4 +1,4 @@
-import DeliverySideBar from "../DeliverySideBar";
+import DeliverySideBar from "./DeliverySideBar";
 import NavBarProtected from "../NavBarProtected";
 
 function DeliveryPersonnel() {
