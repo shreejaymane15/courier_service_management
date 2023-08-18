@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -11,8 +13,7 @@ namespace CSM
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            var corsAttr = new EnableCorsAttribute("*", "*", "*");
-            config.EnableCors(corsAttr);
+            config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
 
@@ -21,6 +22,11 @@ namespace CSM
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var jsonSettings = config.Formatters.JsonFormatter.SerializerSettings;
+            jsonSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            jsonSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
         }
     }
 }

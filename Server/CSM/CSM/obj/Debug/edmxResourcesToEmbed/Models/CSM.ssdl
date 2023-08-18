@@ -16,7 +16,7 @@
     <Key>
       <PropertyRef Name="personnel_id" />
     </Key>
-    <Property Name="personnel_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="personnel_id" Type="int" Nullable="false" />
     <Property Name="location" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="Dispatcher">
@@ -41,9 +41,9 @@
     <Key>
       <PropertyRef Name="order_id" />
     </Key>
-    <Property Name="order_id" Type="int" Nullable="false" />
-    <Property Name="reciver_name" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="reciver_email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="receiver_name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="receiver_email" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="receiver_mobile" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="receiver_address" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="package_count" Type="int" Nullable="false" />
@@ -115,18 +115,6 @@
     <Property Name="mobile" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="role_id" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="Fk_Complaint_To_Order">
-    <End Role="Order" Type="Self.Order" Multiplicity="1" />
-    <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="order_id" />
-      </Principal>
-      <Dependent Role="Complaint">
-        <PropertyRef Name="order_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="Fk_Complaint_To_User_Info">
     <End Role="User_Info" Type="Self.User_Info" Multiplicity="1" />
     <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
@@ -175,18 +163,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="Fk_Feedback_To_Order">
-    <End Role="Order" Type="Self.Order" Multiplicity="1" />
-    <End Role="Feedback" Type="Self.Feedback" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="order_id" />
-      </Principal>
-      <Dependent Role="Feedback">
-        <PropertyRef Name="feedback_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="Fk_Feedback_To_User_Info">
     <End Role="User_Info" Type="Self.User_Info" Multiplicity="1" />
     <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
@@ -223,18 +199,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Package_To_Order">
-    <End Role="Order" Type="Self.Order" Multiplicity="1" />
-    <End Role="Package" Type="Self.Package" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="order_id" />
-      </Principal>
-      <Dependent Role="Package">
-        <PropertyRef Name="order_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Package_To_Package_Pricing">
     <End Role="Package_Price" Type="Self.Package_Price" Multiplicity="1" />
     <End Role="Package" Type="Self.Package" Multiplicity="*" />
@@ -244,30 +208,6 @@
       </Principal>
       <Dependent Role="Package">
         <PropertyRef Name="type" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Payment_To_Order">
-    <End Role="Order" Type="Self.Order" Multiplicity="1" />
-    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="order_id" />
-      </Principal>
-      <Dependent Role="Payment">
-        <PropertyRef Name="order_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Tracking_To_Order">
-    <End Role="Order" Type="Self.Order" Multiplicity="1" />
-    <End Role="Tracking" Type="Self.Tracking" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="order_id" />
-      </Principal>
-      <Dependent Role="Tracking">
-        <PropertyRef Name="order_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -295,10 +235,6 @@
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tracking" EntityType="Self.Tracking" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User_Info" EntityType="Self.User_Info" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="Fk_Complaint_To_Order" Association="Self.Fk_Complaint_To_Order">
-      <End Role="Order" EntitySet="Order" />
-      <End Role="Complaint" EntitySet="Complaint" />
-    </AssociationSet>
     <AssociationSet Name="Fk_Complaint_To_User_Info" Association="Self.Fk_Complaint_To_User_Info">
       <End Role="User_Info" EntitySet="User_Info" />
       <End Role="Complaint" EntitySet="Complaint" />
@@ -315,10 +251,6 @@
       <End Role="User_Info" EntitySet="User_Info" />
       <End Role="Dispatcher" EntitySet="Dispatcher" />
     </AssociationSet>
-    <AssociationSet Name="Fk_Feedback_To_Order" Association="Self.Fk_Feedback_To_Order">
-      <End Role="Order" EntitySet="Order" />
-      <End Role="Feedback" EntitySet="Feedback" />
-    </AssociationSet>
     <AssociationSet Name="Fk_Feedback_To_User_Info" Association="Self.Fk_Feedback_To_User_Info">
       <End Role="User_Info" EntitySet="User_Info" />
       <End Role="Feedback" EntitySet="Feedback" />
@@ -331,21 +263,9 @@
       <End Role="Dispatcher" EntitySet="Dispatcher" />
       <End Role="Package" EntitySet="Package" />
     </AssociationSet>
-    <AssociationSet Name="FK_Package_To_Order" Association="Self.FK_Package_To_Order">
-      <End Role="Order" EntitySet="Order" />
-      <End Role="Package" EntitySet="Package" />
-    </AssociationSet>
     <AssociationSet Name="FK_Package_To_Package_Pricing" Association="Self.FK_Package_To_Package_Pricing">
       <End Role="Package_Price" EntitySet="Package_Price" />
       <End Role="Package" EntitySet="Package" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Payment_To_Order" Association="Self.FK_Payment_To_Order">
-      <End Role="Order" EntitySet="Order" />
-      <End Role="Payment" EntitySet="Payment" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tracking_To_Order" Association="Self.FK_Tracking_To_Order">
-      <End Role="Order" EntitySet="Order" />
-      <End Role="Tracking" EntitySet="Tracking" />
     </AssociationSet>
     <AssociationSet Name="FK_USER_TO_ROLE" Association="Self.FK_USER_TO_ROLE">
       <End Role="Role" EntitySet="Role" />

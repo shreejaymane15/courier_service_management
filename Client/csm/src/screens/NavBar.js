@@ -46,7 +46,7 @@ function NavBar() {
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown" style={{backgroundColor:"#F5F5F5"}}>
                         <a className="dropdown-item" href="#">Home PickUp</a>
                         <a className="dropdown-item" href="#">Extra Care Delivery</a>
-                        {/* <div class="dropdown-divider"></div> */}
+                        {/* <div className="dropdown-divider"></div> */}
                         <a className="dropdown-item" href="#">Prime Consignment</a>
                         </div>
                     </li> 
@@ -65,7 +65,7 @@ function NavBar() {
                     <button className="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 <div className="d-grid gap-2 d-md-flex justify-content-md-end" style={{marginLeft:"32px"}}>
-                <button class="btn btn-outline-success me-2" type="button" onClick={GoToLogin}>Login/SignUp</button>
+                <button className="btn btn-outline-success me-2" type="button" onClick={GoToLogin}>Login/SignUp</button>
                 </div>
                 </div>
             </div>

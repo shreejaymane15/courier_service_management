@@ -50,8 +50,6 @@
       <PropertyRef Name="order_id" />
     </Key>
     <Property Name="order_id" Type="Int32" Nullable="false" />
-    <Property Name="reciver_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="reciver_email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="receiver_mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="receiver_address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="package_count" Type="Int32" Nullable="false" />
@@ -66,6 +64,8 @@
     <NavigationProperty Name="Packages" Relationship="Self.FK_Package_To_Order" FromRole="Order" ToRole="Package" />
     <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_To_Order" FromRole="Order" ToRole="Payment" />
     <NavigationProperty Name="Trackings" Relationship="Self.FK_Tracking_To_Order" FromRole="Order" ToRole="Tracking" />
+    <Property Name="receiver_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="receiver_email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Package">
     <Key>

@@ -23,8 +23,8 @@ namespace CSM.Models
         }
     
         public int order_id { get; set; }
-        public string reciver_name { get; set; }
-        public string reciver_email { get; set; }
+        public string receiver_name { get; set; }
+        public string receiver_email { get; set; }
         public string receiver_mobile { get; set; }
         public string receiver_address { get; set; }
         public int package_count { get; set; }

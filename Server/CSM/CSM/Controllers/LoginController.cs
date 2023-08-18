@@ -1,9 +1,11 @@
 ﻿using CSM.Models;
 using System.Web.Http;
 using System.Linq;
+using System.Web.Http.Cors;
 
 namespace CSM.Controllers
 {
+    [EnableCors("*", "*", "*")]
     [RoutePrefix("api/Login")]
     public class LoginController : ApiController
     {
