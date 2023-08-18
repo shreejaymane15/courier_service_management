@@ -57,7 +57,7 @@ function Orders() {
       }
 
     const renderHeader = () => {
-      return orders.map(({ order_id, receiver_name, receiver_email, receiver_mobile, receiver_address, package_count, amount, status, customer_id, personnel_id}));
+      
     }
 
     return (<>

@@ -1,4 +1,30 @@
-function CustomerSideBar() {
+function CustomerSideBar({toggleComponent}) {
+
+  const toggleDashboard = () => {
+    toggleComponent("Dashboard");
+  };
+
+  const toggleOrders = () => {
+    toggleComponent("COrders");
+  };
+
+  const toggleAddresses = () => {
+    toggleComponent("Addresses");
+  };
+
+  const toggleSettings = () => {
+    toggleComponent("AccountSettings");
+  };
+
+
+  const toggleComplaints = () => {
+    toggleComponent("Support");
+  };
+
+  const toggleSignOut = () => {
+    toggleComponent("Sign Out");
+  };
+
     return (<>
         <div className="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
       <div
@@ -25,45 +51,34 @@ function CustomerSideBar() {
               <a
                 className="nav-link d-flex align-items-center gap-2 active"
                 aria-current="page"
-                href="#"
+                onClick={toggleDashboard}
               >
                 Dashboard
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" href="#">
+              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleOrders}>
                  My Orders
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" href="#">
+              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleAddresses}>
                 My Addresses
               </a>
-            </li>
-        
-            {/* <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" href="#">
-                Integrations
-              </a>
-            </li> */}
-          </ul>
-          
-          <ul className="nav flex-column mb-auto">
+            </li>       
             <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" href="#">
+              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleSettings}>
                 Account Settings
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" href="#">
+              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleComplaints}>
                 Complaints and Support
               </a>
             </li>
-          </ul>
           <hr className="my-3" />
-          <ul className="nav flex-column mb-auto">
             <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" href="#">
+              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleSignOut}>
                 Sign out
               </a>
             </li>
