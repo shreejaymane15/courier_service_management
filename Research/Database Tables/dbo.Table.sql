@@ -1,25 +1,25 @@
-﻿CREATE TABLE [dbo].[Complaint]
-(
-	[complaint_id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[complaint] varchar(255) NOT NULL,
-	[status] varchar(100) NOT NULL,
-	[placed_date] date NOT NULL,
-	[resolved_date] date DEFAULT NULL,
-	[order_id] int NOT NULL,
-	[customer_id] int NOT NULL,
-	CONSTRAINT [Fk_Complaint_To_Order] FOREIGN KEY ([order_id]) REFERENCES [Order]([order_id]),
-	CONSTRAINT [Fk_Complaint_To_User_Info] FOREIGN KEY ([customer_id]) REFERENCES [User_Info]([user_id]),
+﻿CREATE TABLE [dbo].[Complaint] (
+    [complaint_id]  INT           IDENTITY (1, 1) NOT NULL,
+    [complaint]     VARCHAR (255) NOT NULL,
+    [status]        VARCHAR (100) NOT NULL,
+    [placed_date]   DATE          NOT NULL,
+    [resolved_date] DATE          DEFAULT (NULL) NULL,
+    [order_id]      INT           NOT NULL,
+    [customer_id]   INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([complaint_id] ASC),
+    CONSTRAINT [Fk_Complaint_To_User_Info] FOREIGN KEY ([customer_id]) REFERENCES [dbo].[User_Info] ([user_Id])
 );
 
+GO;
 
 CREATE TABLE [dbo].[Delivery_Personnel] (
-    [personnel_id] INT           IDENTITY (1, 1) NOT NULL,
+    [personnel_id] INT           NOT NULL,
     [location]     VARCHAR (100) NOT NULL,
     PRIMARY KEY CLUSTERED ([personnel_id] ASC),
     CONSTRAINT [FK_Delivery_Personnel_To_User_Info] FOREIGN KEY ([personnel_id]) REFERENCES [dbo].[User_Info] ([user_Id])
 );
 
-
+GO;
 
 CREATE TABLE [dbo].[Dispatcher] (
     [dispatcher_id] INT           NOT NULL,
@@ -29,6 +29,7 @@ CREATE TABLE [dbo].[Dispatcher] (
 );
 
 
+GO;
 
 CREATE TABLE [dbo].[Feedback] (
     [feedback_id]   INT           IDENTITY (1, 1) NOT NULL,
@@ -38,18 +39,19 @@ CREATE TABLE [dbo].[Feedback] (
     [order_id]      INT           NOT NULL,
     [customer_id]   INT           NOT NULL,
     PRIMARY KEY CLUSTERED ([feedback_id] ASC),
-    CONSTRAINT [Fk_Feedback_To_Order] FOREIGN KEY ([order_id]) REFERENCES [dbo].[Order] ([order_id]),
+    CONSTRAINT [UQ_Order_ID] UNIQUE NONCLUSTERED ([order_id] ASC),
     CONSTRAINT [Fk_Feedback_To_User_Info] FOREIGN KEY ([customer_id]) REFERENCES [dbo].[User_Info] ([user_Id])
 );
 
 
+GO;
 
 
 
 CREATE TABLE [dbo].[Order] (
-    [order_id]         INT           NOT NULL,
-    [reciver_name]     VARCHAR (100) NOT NULL,
-    [reciver_email]    VARCHAR (100) NOT NULL,
+    [order_id]         INT           IDENTITY (1, 1) NOT NULL,
+    [receiver_name]    VARCHAR (100) NOT NULL,
+    [receiver_email]   VARCHAR (100) NOT NULL,
     [receiver_mobile]  VARCHAR (15)  NOT NULL,
     [receiver_address] VARCHAR (100) NOT NULL,
     [package_count]    INT           NOT NULL,
@@ -63,6 +65,7 @@ CREATE TABLE [dbo].[Order] (
 );
 
 
+GO;
 
 CREATE TABLE [dbo].[Package] (
     [package_id]    INT           IDENTITY (1, 1) NOT NULL,
@@ -75,11 +78,11 @@ CREATE TABLE [dbo].[Package] (
     [dispatcher_id] INT           NOT NULL,
     PRIMARY KEY CLUSTERED ([package_id] ASC),
     CONSTRAINT [FK_Package_To_Package_Pricing] FOREIGN KEY ([type]) REFERENCES [dbo].[Package_Price] ([package_type]),
-    CONSTRAINT [FK_Package_To_Dispatcher] FOREIGN KEY ([dispatcher_id]) REFERENCES [dbo].[Dispatcher] ([dispatcher_id]),
-    CONSTRAINT [FK_Package_To_Order] FOREIGN KEY ([order_id]) REFERENCES [dbo].[Order] ([order_id])
+    CONSTRAINT [FK_Package_To_Dispatcher] FOREIGN KEY ([dispatcher_id]) REFERENCES [dbo].[Dispatcher] ([dispatcher_id])
 );
 
 
+Go;
 
 CREATE TABLE [dbo].[Package_Price] (
     [package_type]  VARCHAR (100) NOT NULL,
@@ -87,7 +90,7 @@ CREATE TABLE [dbo].[Package_Price] (
     PRIMARY KEY CLUSTERED ([package_type] ASC)
 );
 
-
+GO;
 
 CREATE TABLE [dbo].[Payment] (
     [payment_id]   INT           IDENTITY (1, 1) NOT NULL,
@@ -96,13 +99,11 @@ CREATE TABLE [dbo].[Payment] (
     [UTR]          VARCHAR (100) DEFAULT (NULL) NULL,
     [STATUS]       VARCHAR (50)  NOT NULL,
     [order_id]     INT           NOT NULL,
-    PRIMARY KEY CLUSTERED ([payment_id] ASC),
-    CONSTRAINT [FK_Payment_To_Order] FOREIGN KEY ([order_id]) REFERENCES [dbo].[Order] ([order_id])
+    PRIMARY KEY CLUSTERED ([payment_id] ASC)
 );
 
 
-
-
+GO;
 
 
 
@@ -114,6 +115,7 @@ CREATE TABLE [dbo].[Role] (
 
 
 
+GO;
 
 CREATE TABLE [dbo].[Tracking] (
     [tracking_id]   INT           IDENTITY (1, 1) NOT NULL,
@@ -123,12 +125,11 @@ CREATE TABLE [dbo].[Tracking] (
     [status]        VARCHAR (100) NOT NULL,
     [updated_at]    DATE          NOT NULL,
     [order_id]      INT           NOT NULL,
-    PRIMARY KEY CLUSTERED ([tracking_id] ASC),
-    CONSTRAINT [FK_Tracking_To_Order] FOREIGN KEY ([order_id]) REFERENCES [dbo].[Order] ([order_id])
+    PRIMARY KEY CLUSTERED ([tracking_id] ASC)
 );
 
 
-
+GO;
 
 
 CREATE TABLE [dbo].[User_Info] (
@@ -144,3 +145,5 @@ CREATE TABLE [dbo].[User_Info] (
     CONSTRAINT [FK_USER_TO_ROLE] FOREIGN KEY ([role_id]) REFERENCES [dbo].[Role] ([role_id])
 );
 
+
+GO;
