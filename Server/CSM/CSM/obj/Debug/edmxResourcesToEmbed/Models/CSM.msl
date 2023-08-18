@@ -116,6 +116,7 @@
     <EntitySetMapping Name="User_Info">
       <EntityTypeMapping TypeName="CSMModel.User_Info">
         <MappingFragment StoreEntitySet="User_Info">
+          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="user_Id" ColumnName="user_Id" />
           <ScalarProperty Name="first_name" ColumnName="first_name" />
           <ScalarProperty Name="last_name" ColumnName="last_name" />

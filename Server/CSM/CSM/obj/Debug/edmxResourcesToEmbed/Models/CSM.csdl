@@ -142,6 +142,7 @@
     <NavigationProperty Name="Feedbacks" Relationship="Self.Fk_Feedback_To_User_Info" FromRole="User_Info" ToRole="Feedback" />
     <NavigationProperty Name="Orders" Relationship="Self.FK_Order_To_User_Info" FromRole="User_Info" ToRole="Order" />
     <NavigationProperty Name="Role" Relationship="Self.FK_USER_TO_ROLE" FromRole="User_Info" ToRole="Role" />
+    <Property Name="status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="Fk_Complaint_To_Order">
     <End Role="Order" Type="Self.Order" Multiplicity="1" />
