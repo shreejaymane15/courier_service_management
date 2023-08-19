@@ -34,7 +34,6 @@ function Orders() {
 
 
 
-<<<<<<< HEAD
   function getCities(){
     axios.get("http://localhost:58447/api/Admin/GetCities")
     .then((response) => {
@@ -46,11 +45,6 @@ function Orders() {
       console.log(error);
     })
   }
-=======
-    const renderHeader = () => {
-      
-    }
->>>>>>> 7db33f628cc01a0fce571dfead89663c02d726ff
 
     
   function getOrders(){
