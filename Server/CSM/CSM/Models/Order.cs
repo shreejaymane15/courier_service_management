@@ -23,8 +23,6 @@ namespace CSM.Models
         }
     
         public int order_id { get; set; }
-        public string receiver_name { get; set; }
-        public string receiver_email { get; set; }
         public string receiver_mobile { get; set; }
         public string receiver_address { get; set; }
         public int package_count { get; set; }
@@ -32,6 +30,8 @@ namespace CSM.Models
         public string status { get; set; }
         public int customer_id { get; set; }
         public int personnel_id { get; set; }
+        public string receiver_name { get; set; }
+        public string receiver_email { get; set; }
     
         public virtual ICollection<Complaint> Complaints { get; set; }
         public virtual Delivery_Personnel Delivery_Personnel { get; set; }

@@ -15,8 +15,7 @@ namespace CSM
             // Web API configuration and services
             var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
-            
-            // Web API routes
+      // Web API routes
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
