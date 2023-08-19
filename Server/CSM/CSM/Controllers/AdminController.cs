@@ -1,25 +1,99 @@
 ﻿using CSM.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
 namespace CSM.Controllers
 {
-    [EnableCors("*", "*", "*")]
     public class AdminController : ApiController
     {
         CSMEntities1 db = new CSMEntities1 ();
 
         [HttpGet]
+        [Route("api/Admin/GetOrders")]
         public IHttpActionResult GetOrders() 
         {
             var orders = db.Orders.ToList();
             return Ok(orders);
         }
-        
+
+
+        [HttpGet]
+        [Route("api/Admin/GetCities")]
+        public IHttpActionResult GetCities()
+        {
+            var cities = (from Dispatcher in db.Dispatchers.ToList()
+                          select Dispatcher.hub_location).Distinct();
+            return Ok(cities);
+        }
+
+
+        [HttpGet]
+        [Route("api/Admin/GetOrders/{id}")]
+        public IHttpActionResult GetOrders(string id)
+        {
+            var orders = (from Orders in db.Orders.ToList()
+                          where id == Orders.receiver_address
+                          select Orders).ToList();
+            return Ok(orders);
+        }
+
+
+        [HttpGet]
+        [Route("api/Admin/GetEmployees/{id}")]
+        public IHttpActionResult GetEmployees(string id)
+        {
+            var roleId = (from Roles in db.Roles.ToList()
+                          where Roles.role_name == id
+                          select Roles.role_id).FirstOrDefault();
+            
+            var employees = (from User_Info in db.User_Info.ToList()
+                             where User_Info.role_id == roleId
+                             select User_Info).ToList();
+
+            return Ok(employees);
+        }
+
+        [HttpGet]
+        [Route("api/Admin/GetRoles")]
+        public IHttpActionResult GetRoles()
+        {
+            var roles = (from Roles in db.Roles.ToList()
+                         where Roles.role_id  != 4
+                        select Roles.role_name).Distinct();
+            return Ok(roles);
+        }
+
+
+        [HttpPut]
+        [Route("api/Admin/DeleteEmployee/{id}")]
+        public IHttpActionResult DeleteEmployee(int id)
+        {
+            var employeeToUpdate = (from User_Info in db.User_Info.ToList()
+                                    where User_Info.user_Id == id
+                                    select User_Info).FirstOrDefault();
+            employeeToUpdate.status = "INACTIVE";
+            int result = db.SaveChanges();
+            return Ok(result);
+        }
+
+
+
+        [HttpPut]
+        [Route("api/Admin/UpdateEmployee/{id}")]
+        public IHttpActionResult UpdateEmployee(int id)
+        {
+            var employeeToUpdate = db.User_Info.ToList()
+                .Where(User_Info => User_Info.user_Id != id)
+                .FirstOrDefault();
+            employeeToUpdate.status = "INACTIVE";
+            int result = db.SaveChanges();
+            return Ok(result);
+        }
+
+
+
+
     }
 }

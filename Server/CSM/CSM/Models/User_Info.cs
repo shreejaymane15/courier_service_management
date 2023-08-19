@@ -29,6 +29,7 @@ namespace CSM.Models
         public string address { get; set; }
         public string mobile { get; set; }
         public int role_id { get; set; }
+        public string status { get; set; }
     
         public virtual ICollection<Complaint> Complaints { get; set; }
         public virtual Delivery_Personnel Delivery_Personnel { get; set; }

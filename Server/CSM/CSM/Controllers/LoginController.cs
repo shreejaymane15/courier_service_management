@@ -5,7 +5,6 @@ using System.Web.Http.Cors;
 
 namespace CSM.Controllers
 {
-    [EnableCors("*", "*", "*")]
     [RoutePrefix("api/Login")]
     public class LoginController : ApiController
     {
