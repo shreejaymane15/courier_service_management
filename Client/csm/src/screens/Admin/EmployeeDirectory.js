@@ -2,15 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 
-function EmployeeDirectory() {
+function EmployeeDirectory({toggleComponent, updateData}) {
    
     var [employees, setEmployees] = useState([]);
     var [selectedFilter, setSelectedFilter] = useState("ADMIN");
     var [roles, setRoles] = useState([]);
   
-  
     const headerMapping = {
-      'User ID': 'user_Id',
+      'Employee ID': 'user_Id',
       'First Name': 'first_name',
       'Last Name': 'last_name',
       'Email': 'email',
@@ -30,6 +29,9 @@ function EmployeeDirectory() {
       getEmployees();
     },[selectedFilter]);
   
+    useEffect(() => {
+      getEmployees();
+    },[deleteEmployee]);
   
   
     function getRoles(){
@@ -46,11 +48,9 @@ function EmployeeDirectory() {
   
       
     function getEmployees(){
-      debugger;
       const url = `http://localhost:58447/api/Admin/GetEmployees/${selectedFilter}`;
       axios.get(url)
       .then((response) => {
-        debugger;
         var responseData = response.data;
         setEmployees(responseData);
       })
@@ -73,7 +73,6 @@ function EmployeeDirectory() {
             console.log("error");
           }else{
             console.log("Successfully Inactive");
-            getEmployees();
           }
         })
         .catch(error => {
@@ -82,25 +81,17 @@ function EmployeeDirectory() {
       }
 
 
-      function updateEmployee(props){
-        debugger;
-        var id = props.target.id;
-        const url = `http://localhost:58447/api/Admin/UpdateEmployee/${id}`;
-        axios.put(url)
-        .then((response) => {
-          debugger;
-          var responseData = response.data;
-          if(responseData != 0 ){
-            console.log("error");
-          }else{
-            console.log("Successfully Inactive");
-            getEmployees();
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        })
-      } 
+    const AddEmployee = () =>{
+      toggleComponent("Add");
+    } 
+
+
+    function updateEmployee(props){
+      debugger;
+      var id = props.target.id;
+      toggleComponent("Update");
+      updateData(id);
+    } 
   
   
   
@@ -120,8 +111,8 @@ function EmployeeDirectory() {
           {Object.keys(headerMapping).map(label => (
               <td>{employee[headerMapping[label]]}</td>
               ))}
-          <td ><button className="btn btn-warning" id={employee[headerMapping['User ID']]} onClick={(props) => updateEmployee(props)}>Update</button></td>
-          <td ><button className="btn btn-danger"  id={employee[headerMapping['User ID']]} onClick={(props) => deleteEmployee(props)}>Delete</button></td>
+          <td ><button className="btn btn-warning" id={employee[headerMapping['Employee ID']]} onClick={(props) => updateEmployee(props)}>Update</button></td>
+          <td ><button className="btn btn-danger"  id={employee[headerMapping['Employee ID']]} onClick={(props) => deleteEmployee(props)}>Delete</button></td>
         </tr>
       ));
   
@@ -148,9 +139,15 @@ function EmployeeDirectory() {
   
     return (<>
       <div style={{ margin: '50px' }}>
-        <div style={{display:"flex", flexDirection:"row" , alignItems:"center", justifyContent:"space-between"}}> 
-          <div style={{alignContent:"center"}}>
+      <div style={{alignContent:"center"}}>
             <h2>Employees</h2>
+          </div>
+        <div style={{display:"flex", flexDirection:"row" , alignItems:"center", justifyContent:"end"}}> 
+          <div style={{margin:"20px"}}>
+            <button className="btn btn-primary" 
+            style={{paddingLeft:"20px", paddingRight:"20px"}} 
+            onClick={AddEmployee}>
+            Add</button>
           </div>
           <div>
           <select onChange={handleFilterChange}>

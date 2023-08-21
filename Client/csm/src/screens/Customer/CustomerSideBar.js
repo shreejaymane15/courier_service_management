@@ -26,7 +26,7 @@ function CustomerSideBar({toggleComponent}) {
   };
 
     return (<>
-        <div className="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+        <div className="sidebar border border-right col-md-12 p-0 bg-body-tertiary">
       <div
         className="offcanvas-lg offcanvas-end bg-body-tertiary"
         tabIndex={-1}

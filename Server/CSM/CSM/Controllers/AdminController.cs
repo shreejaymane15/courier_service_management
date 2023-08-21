@@ -80,14 +80,31 @@ namespace CSM.Controllers
 
 
 
+        [HttpGet]
+        [Route("api/Admin/GetEmployeeDetails/{id}")]
+        public IHttpActionResult GetEmployeeDetails(int id)
+        {
+            var employeeDetails = (from User_Info in db.User_Info.ToList()
+                                    where User_Info.user_Id == id
+                                    select User_Info).FirstOrDefault();
+            return Ok(employeeDetails);
+        }
+
+
+
         [HttpPut]
-        [Route("api/Admin/UpdateEmployee/{id}")]
-        public IHttpActionResult UpdateEmployee(int id)
+        [Route("api/Admin/UpdateEmployeeDetails/{id}")]
+        public IHttpActionResult UpdateEmployee(int id, [FromBody] User_Info user)
         {
             var employeeToUpdate = db.User_Info.ToList()
-                .Where(User_Info => User_Info.user_Id != id)
+                .Where(User_Info => User_Info.user_Id == id)
                 .FirstOrDefault();
-            employeeToUpdate.status = "INACTIVE";
+            employeeToUpdate.first_name = user.first_name;
+            employeeToUpdate.last_name = user.last_name;
+            employeeToUpdate.address = user.address;
+            employeeToUpdate.mobile = user.mobile;
+            employeeToUpdate.email = user.email;
+            employeeToUpdate.status = user.status;
             int result = db.SaveChanges();
             return Ok(result);
         }

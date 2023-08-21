@@ -1,26 +1,37 @@
 import SideBar from "./SideBar";
 import NavBarProtected from "../NavBarProtected";
 import Dashboard from "./Dashboard";
-import "./Admin.css";
+// import "./Admin.css";
 import { useState } from "react";
 import Orders from "./Orders";
 import EmployeeDirectory from "./EmployeeDirectory";
 import Reports from "./Reports";
-
+import Update from "./Update";
+import Add from "./Add";
 
 function Admin() {
 
     const [activeComponent, setActiveComponent] = useState("Dashboard");
-
+    const [id, setId] = useState("1");
+    
+    
     const toggleComponent = (component) => {
+      debugger;
       setActiveComponent(component);
+    };
+
+    const updateData = (component) => {
+      debugger;
+      setId(component);
     };
   
     const componentMapping = {
       Dashboard: <Dashboard />,
       Orders: <Orders />,
-      EmployeeDirectory: <EmployeeDirectory />,
+      EmployeeDirectory: <EmployeeDirectory toggleComponent={toggleComponent} updateData={updateData} />,
       Reports: <Reports />,
+      Update: <Update id={id} updateData={updateData} toggleComponent={toggleComponent}/>,
+      Add:  <Add/>
     };
 
 

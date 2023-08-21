@@ -26,16 +26,16 @@ function Customer() {
 
 
     return (<>
-        <NavBarProtected/>
-        <div style={{display:"flex"}}>
-        <div style={{flex: 3}}>
-        <CustomerSideBar  toggleComponent={toggleComponent}/>
-        </div>
-        <div className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            {componentMapping[activeComponent]}
-        </div>
-    </div>
-    </>);
+      <NavBarProtected/>
+      <div style={{display:"flex"}}>
+      <div style={{flex: 3}}>
+      <CustomerSideBar  toggleComponent={toggleComponent}/>
+      </div>
+      <div className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          {componentMapping[activeComponent]}
+      </div>
+  </div>
+  </>);
 }
 
 export default Customer;

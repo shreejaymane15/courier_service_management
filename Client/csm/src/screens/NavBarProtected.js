@@ -34,7 +34,7 @@ function NavBarProtected() {
                 <img src="/Images/Logo/SwiftTransitLogo 1.png" alt="" width="60" height="54"/>
                 </a>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a className="navbar-brand" style={{fontSize:"25px"}} href="#">SwiftTransit</a>
+                <a className="navbar-brand" style={{fontSize:"25px"}} onClick={GoToHome}>SwiftTransit</a>
                 <ul className="navbar-nav mr-auto mb-2 mb-lg-0" style={{fontSize:"21px", marginLeft:"64px", paddingTop:"5px"}}>
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
                     <a className="nav-link" aria-current="page" onClick={GoToHome}>Home</a>

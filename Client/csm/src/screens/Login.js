@@ -17,6 +17,7 @@ function Login() {
     helper.onreadystatechange = (response, error) => {
       if (helper.status === 200 && helper.readyState === 4) {
         var result = JSON.parse(helper.responseText);
+        sessionStorage.setItem("user_id",result.user_id);
         if (result != 0) {
           switch (result.role_id) {
             case 1:

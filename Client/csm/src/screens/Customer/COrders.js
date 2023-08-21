@@ -1,77 +1,143 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-
 function COrders() {
    
-    var [myorders, setMyOrders] = useState([]);
-   var [order, setOrder] = useState({order_id: "", reciver_name: "", reciver_email: "", reciver_mobile: "", reciver_address:"", package_count:"", amount:"", status:""});
+  var [orders, setOrders] = useState([]);
+  var [selectedFilter, setSelectedFilter] = useState("ALL");
+//   var [status, setStatus] = useState([]);
 
 
-    useEffect(() => {
-        getOrders();
-    },[]);
+  const headerMapping = {
+    'Order ID': 'order_id',
+    'Receiver Name': 'receiver_name',
+    'Receiver Email': 'receiver_email',
+    'Receiver Mobile': 'receiver_mobile',
+    'Receiver Address': 'receiver_address',
+    'Package Count': 'package_count',
+    'Amount': 'amount',
+    'Status': 'status',
+  };
 
 
-    function getOrders() {
-        debugger;
-        axios.get("http://localhost:58447/api/Customer/GetMyOrders/3")
-        .then((response) => {
-            debugger;
-            var responseData = response.data;
-            setMyOrders(responseData);
-            renderMyOrders();
-        })
-        .catch(error => {
-            console.log(error);
-        })
-        // const helper = new XMLHttpRequest();
-        // helper.onreadystatechange = (response, error) => {
-        //   if (helper.status === 200 && helper.readyState === 4) {
-        //     var result = JSON.parse(helper.responseText);
-        //     setOrders(result);
-        //     } else {
-        //       console.log(error);
-        //     }
-        //   }
-        // helper.open("GET", "http://localhost:58447/api/Admin/GetOrders");
-        // helper.send();
-      
+  useEffect(() => {
+    getOrders();
+    // getStatus();
+  },[]);
+
+  useEffect(() => {
+    console.log(selectedFilter);
+    getOrders();
+  },[selectedFilter]);
+
+
+
+//   function getStatus(){
+//     axios.get("http://localhost:58447/api/Customer/GetStatus")
+//     .then((response) => {
+//       debugger;
+//       var responseData = response.data;
+//       setStatus(responseData);
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     })
+//   }
+
+    
+  function getOrders(){
+    debugger;
+    if(selectedFilter != "ALL"){
+      axios.post(`http://localhost:58447/api/Customer/GetByStatus`,{Id: 3, Status: selectedFilter})
+      .then((response) => {
+      debugger;
+      var responseData = response.data;
+      setOrders(responseData);
+      })
+      .catch(error => {
+      console.log(error);
+      })
+    }else if(selectedFilter == "ALL"){
+      debugger;
+      axios.get(`http://localhost:58447/api/Customer/GetMyOrders/${3}`)
+      .then((response) => {
+      debugger;
+      var responseData = response.data;
+      setOrders(responseData);
+      })
+      .catch(error => {
+      console.log(error);
+      })
     }
+    
+  }
 
 
-    const renderMyOrders = () => {
-        return myorders.map(({ order_id, receiver_name, receiver_email, receiver_mobile, receiver_address, package_count, amount, status, customer_id, personnel_id}) => {
-          return <tr key={order_id} >
-          <td style={{ padding: '10px', border: '1px solid black' }}>{order_id}</td>
-          <td style={{ padding: '10px', border: '1px solid black' }}>{receiver_name}</td>
-          <td style={{ padding: '10px', border: '1px solid black' }}>{receiver_email}</td>
-          <td style={{ padding: '10px', border: '1px solid black' }}>{receiver_mobile}</td>
-          <td style={{ padding: '10px', border: '1px solid black' }}>{receiver_address}</td>
-          <td style={{ padding: '10px', border: '1px solid black' }}>{package_count}</td>
-          <td style={{ padding: '10px', border: '1px solid black' }}>{amount}</td>
-          <td style={{ padding: '10px', border: '1px solid black' }}>{status}</td>
-          <td style={{ padding: '10px', border: '1px solid black' }}>{customer_id}</td>
-          <td style={{ padding: '10px', border: '1px solid black' }}>{personnel_id}</td>
-        </tr>
-        })
-      }
 
-    const renderHeader = () => {
-      
-    }
+//   const renderOption = () => {
+//     return status.map(status => (
+//       <option key={status} value={status}>
+//         {status}
+//       </option>
+//     ));
+//   }
 
-    return (<>
-        <div style={{ margin: '50px' }}>
-        <h2>My Orders</h2>
-        <table className="table table-responsive table-bordered">
-            {renderHeader()}
-            <tbody>
-            {renderMyOrders()}
-            </tbody>
-        </table>
+
+
+  const renderOrders = () =>
+    orders.map(order => (
+      <tr key={order.order_id}>
+        {Object.keys(headerMapping).map(label => (
+            <td key={label}>{order[headerMapping[label]]}</td>
+        ))}
+      </tr>
+    ));
+
+    
+  const renderHeader = () => {
+    return (
+      <thead>
+      <tr>
+          {Object.keys(headerMapping).map(label => (
+              <th key={label}>{label}</th>
+          ))}
+      </tr>
+      </thead>
+    );
+  }
+
+
+  const handleFilterChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedFilter(selectedValue);
+  };
+
+
+
+  return (<>
+    <div style={{ margin: '50px' }}>
+      <div style={{display:"flex", flexDirection:"row" , alignItems:"center", justifyContent:"space-between"}}> 
+        <div>
+          <h2>My Orders</h2>
         </div>
-    </>  );
+        <div>
+        <select onChange={handleFilterChange}>
+          <option value="ALL">All</option>
+          <option value="In Transit">In Transit</option>
+          <option value="Delivered">Delivered</option>
+          <option value="Canceled">Canceled</option>
+          {/* {renderOption()} */}
+        </select>
+        </div>
+      </div>
+      <table className="table table-bordered">
+        {renderHeader()}
+        <tbody>
+        {renderOrders()}
+        </tbody>
+      </table>
+    </div>
+</>  );
 
 }
 export default COrders;

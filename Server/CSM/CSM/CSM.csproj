@@ -203,6 +203,7 @@
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\MyOrder.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>

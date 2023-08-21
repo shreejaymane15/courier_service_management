@@ -35,6 +35,7 @@ namespace CSM.Controllers
         public string SignUp([FromBody] User_Info user)
         {
             user.role_id = 4;
+            user.status = "ACTIVE";
             db.User_Info.Add(user);
             int result = db.SaveChanges();
             if (result == 0)
