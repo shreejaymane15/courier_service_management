@@ -199,6 +199,7 @@
     <Compile Include="Models\Dispatcher.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmployeeData.cs" />
     <Compile Include="Models\Feedback.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getCitiesAPI, getOrdersAPI } from "../Services/AdminService";
+import {toast} from 'react-toastify';
+
 
 function Orders() {
    
@@ -23,43 +25,35 @@ function Orders() {
 
 
   useEffect(() => {
-    getOrders();
+    debugger;
+    getOrders(selectedFilter);
     getCities();
   },[]);
 
   useEffect(() => {
-    console.log(selectedFilter);
-    getOrders();
+    getOrders(selectedFilter);
   },[selectedFilter]);
 
 
-
-  function getCities(){
-    axios.get("http://localhost:58447/api/Admin/GetCities")
-    .then((response) => {
-      debugger;
-      var responseData = response.data;
-      setCities(responseData);
-    })
-    .catch(error => {
-      console.log(error);
-    })
+  const getOrders = async(selectedFilter) => {
+    debugger;
+    const response = await getOrdersAPI(selectedFilter);
+    if(response.status == 200){
+      setOrders(response.data);
+    }else{
+      toast.error('Error while calling getorders api')
+    }
   }
 
-    
-  function getOrders(){
-    debugger;
-    const filterParam = selectedFilter != "ALL" ? `/${selectedFilter}` : ``;
-    const url = `http://localhost:58447/api/Admin/GetOrders${filterParam}`;
-    axios.get(url)
-    .then((response) => {
-      debugger;
-      var responseData = response.data;
-      setOrders(responseData);
-    })
-    .catch(error => {
-      console.log(error);
-    })
+
+  
+  const getCities = async() => {
+    const response = await getCitiesAPI();
+    if(response.status == 200){
+      setCities(response.data);
+    }else{
+      toast.error('Error while calling getcities api')
+    }
   }
 
 

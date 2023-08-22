@@ -1,84 +1,81 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-
+import { deleteEmployeeAPI, getEmployeesAPI, getRolesAPI } from "../Services/AdminService";
+import {toast} from 'react-toastify';
 
 function EmployeeDirectory({toggleComponent, updateData}) {
-   
-    var [employees, setEmployees] = useState([]);
-    var [selectedFilter, setSelectedFilter] = useState("ADMIN");
-    var [roles, setRoles] = useState([]);
   
-    const headerMapping = {
-      'Employee ID': 'user_Id',
-      'First Name': 'first_name',
-      'Last Name': 'last_name',
-      'Email': 'email',
-      'Address': 'address',
-      'Mobile': 'mobile',
-      'Status': 'status'
-    };
-  
-  
-    useEffect(() => {
-      getEmployees();
-      getRoles();
-    },[]);
-  
-    useEffect(() => {
-      console.log(selectedFilter);
-      getEmployees();
-    },[selectedFilter]);
-  
-    useEffect(() => {
-      getEmployees();
-    },[deleteEmployee]);
-  
-  
-    function getRoles(){
-      axios.get("http://localhost:58447/api/Admin/GetRoles")
-      .then((response) => {
-        debugger;
-        var responseData = response.data;
-        setRoles(responseData);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    }
-  
-      
-    function getEmployees(){
-      const url = `http://localhost:58447/api/Admin/GetEmployees/${selectedFilter}`;
-      axios.get(url)
-      .then((response) => {
-        var responseData = response.data;
-        setEmployees(responseData);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    }
+  var [employees, setEmployees] = useState([]);
+  var [selectedFilter, setSelectedFilter] = useState("ADMIN");
+  var [deleteEmployeeId, setDeleteEmployeeId] = useState("");
+  var [roles, setRoles] = useState([]);
 
+  const headerMapping = {
+    'Employee ID': 'user_Id',
+    'First Name': 'first_name',
+    'Last Name': 'last_name',
+    'Email': 'email',
+    'Address': 'address',
+    'Mobile': 'mobile',
+    'Status': 'status'
+  };  
 
+  useEffect(() => {
+    // debugger;
+    loadRoles();
+    loadEmployees(selectedFilter);
+  },[]);  
 
-    function deleteEmployee(props){
-        debugger;
-        var id = props.target.id;
-        const url = `http://localhost:58447/api/Admin/DeleteEmployee/${id}`;
-        axios.put(url)
-        .then((response) => {
-          debugger;
-          var responseData = response.data;
-          if(responseData != 0 ){
-            console.log("error");
-          }else{
-            console.log("Successfully Inactive");
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        })
+  useEffect(() => {
+    // debugger;
+    loadEmployees(selectedFilter);
+  },[selectedFilter]);  
+
+  useEffect(() => {
+    // debugger;    
+    loadEmployees(selectedFilter);
+  },[deleteEmployeeId]);  
+
+    
+  
+  
+    
+    const deleteEmployeeBtn = async(props) => {
+      // debugger;
+      let id = props.target.id;
+      let response = await deleteEmployeeAPI(id);
+      if(response.status == 200){
+        toast.success('Employee Deleted Successfully');
+        setDeleteEmployeeId(id);
+      }else{
+        toast.error('Error while calling get api')
       }
+    }
+
+
+    const loadEmployees = async(selectedFilter) => {
+      // debugger;
+      let response = await getEmployeesAPI(selectedFilter);
+      if(response.status == 200){
+        setEmployees(response.data);
+      }else{
+        toast.error('Error while calling get api')
+      }  
+    }  
+    
+
+
+    const loadRoles = async() => {
+      // debugger;
+      let response = await getRolesAPI();
+      if(response.status == 200){
+        setRoles(response.data);
+      }else{
+        toast.error('Error while calling roles api')
+      }
+    }
+
+
+
 
 
     const AddEmployee = () =>{
@@ -87,7 +84,7 @@ function EmployeeDirectory({toggleComponent, updateData}) {
 
 
     function updateEmployee(props){
-      debugger;
+      // debugger;
       var id = props.target.id;
       toggleComponent("Update");
       updateData(id);
@@ -112,7 +109,7 @@ function EmployeeDirectory({toggleComponent, updateData}) {
               <td>{employee[headerMapping[label]]}</td>
               ))}
           <td ><button className="btn btn-warning" id={employee[headerMapping['Employee ID']]} onClick={(props) => updateEmployee(props)}>Update</button></td>
-          <td ><button className="btn btn-danger"  id={employee[headerMapping['Employee ID']]} onClick={(props) => deleteEmployee(props)}>Delete</button></td>
+          <td ><button className="btn btn-danger"  id={employee[headerMapping['Employee ID']]} onClick={(props) => deleteEmployeeBtn(props)}>Delete</button></td>
         </tr>
       ));
   

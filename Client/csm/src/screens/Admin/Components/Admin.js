@@ -1,13 +1,12 @@
-import SideBar from "./SideBar";
-import NavBarProtected from "../NavBarProtected";
-import Dashboard from "./Dashboard";
-// import "./Admin.css";
+import SideBar from "../Components/SideBar";
+import NavBarProtected from "../../NavBarProtected";
+import Dashboard from "../Components/Dashboard";
 import { useState } from "react";
-import Orders from "./Orders";
-import EmployeeDirectory from "./EmployeeDirectory";
-import Reports from "./Reports";
-import Update from "./Update";
-import Add from "./Add";
+import Orders from "../Components/Orders";
+import EmployeeDirectory from "../Components/EmployeeDirectory";
+import Reports from "../Components/Reports";
+import Update from "../Components/Update";
+import Add from "../Components/Add";
 
 function Admin() {
 
@@ -31,7 +30,7 @@ function Admin() {
       EmployeeDirectory: <EmployeeDirectory toggleComponent={toggleComponent} updateData={updateData} />,
       Reports: <Reports />,
       Update: <Update id={id} updateData={updateData} toggleComponent={toggleComponent}/>,
-      Add:  <Add/>
+      Add:  <Add toggleComponent={toggleComponent}/>
     };
 
 

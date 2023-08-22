@@ -1,4 +1,3 @@
-import Orders from "./Orders";
 
 function SideBar({toggleComponent}) {
 

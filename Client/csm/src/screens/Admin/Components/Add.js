@@ -1,9 +1,10 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { AddEmployee, getRolesAPI } from "../Services/AdminService";
+import { toast } from "react-toastify";
 
-function Add() {
+function Add({toggleComponent}) {
 
-    var [user, setUser] = useState({first_name: "", last_name: "", email:"", password:"", address: "", mobile: "", role:""});
+    var [user, setUser] = useState({first_name: "", last_name: "", email:"", password:"", address: "", mobile: ""});
     var [selectedFilter, setSelectedFilter] = useState("ADMIN");  
     var [roles, setRoles] = useState([]);
 
@@ -35,30 +36,24 @@ function Add() {
     }
   
 
-    function getRoles(){
-      axios.get("http://localhost:58447/api/Admin/GetRoles")
-      .then((response) => {
-        debugger;
-        var responseData = response.data;
-        setRoles(responseData);
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    const getRoles = async () => {
+      var response = await getRolesAPI();
+      setRoles(response.data);
     }
 
 
-    const Submit = () =>{
-        debugger;
-        axios.post('http://localhost:58447/api/Admin/AddEmployee',user)
-        .then(response => {
-            if(response.data == "TRUE"){
-                
-            }else{
-              
-            }
-        })
-      }
+  const Submit = async () =>{
+    debugger;
+    var role_name = selectedFilter;
+    var data = {user, role_name}
+    const response = await AddEmployee(data);
+    if(response.status == 200 && response.data != 0){
+      toggleComponent("EmployeeDirectory");
+      toast.success("Employee Added Successfully");
+    }else{
+      toast.error("Failed To Add Employee");
+    }
+  }
     
     return(<div className="container row">
     <div className="col"></div>
@@ -138,11 +133,6 @@ function Add() {
               placeholder="Password"
               required
               />
-            {/* <input
-              type="hidden"
-              name="Status"
-              value="ACTIVE"
-            /> */}
           </div>
           <div color="red" id="ErrorBox">
           </div>
@@ -156,11 +146,18 @@ function Add() {
             </select>
            </div>
           </div>
-          <div className="d-grid mt-1">
-            <button type="submit" className="btn btn-primary" onClick={Submit}>
+          <div className="row mt-3">
+          <div className="col-md-6">
+            <button type="submit" className="btn btn-primary btn-block" onClick={Submit}>
               Submit
             </button>
           </div>
+          <div className="col-md-6">
+            <button type="submit" className="btn btn-danger btn-block" onClick={() => toggleComponent("EmployeeDirectory")}>
+              Cancel
+            </button>
+          </div>
+        </div>
         </div>
       <div className="col">
       </div>

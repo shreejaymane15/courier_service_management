@@ -1,16 +1,14 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { GetEmployeeDetailsAPI, UpdateEmployeeDetailsAPI } from "../Services/AdminService";
+import { toast } from "react-toastify";
 
 function Update({id, updateData, toggleComponent}) {
 
     var [user, setUser] = useState({first_name: "", last_name: "", email:"", address: "", mobile: "", status:""});
-    var [updateid, setUpdateid] = useState();
-    const navigate = useNavigate();
 
 
     useEffect (() =>{
-        GetEmployeeDetails();
+      GetEmployeeDetails();
     },[id])
 
     const onTextChange = (args) =>{
@@ -19,35 +17,26 @@ function Update({id, updateData, toggleComponent}) {
         setUser(copy);
     }
 
-    const GetEmployeeDetails = () =>{
-        debugger;
-        setUpdateid(id);
-        const url = `http://localhost:58447/api/Admin/GetEmployeeDetails/${id}`;
-        axios.get(url)
-        .then((response) => {
-          debugger;
-          var responseData = response.data;
-          setUser(responseData);
-        })
-        .catch(error => {
-          console.log(error);
-        })
+    const GetEmployeeDetails = async() =>{
+      debugger;
+      let response = await GetEmployeeDetailsAPI(id);
+      if(response.status == 200){
+        setUser(response.data);
+      }else{
+        toast.error('Error while getting employee details')
+      }
     }
 
-    const UpdateEmployeeDetails = () =>{
+
+    const UpdateEmployeeDetails = async() =>{
         debugger;
-        const url = `http://localhost:58447/api/Admin/UpdateEmployeeDetails/${updateid}`;
-        axios.put(url,user)
-        .then((response) => {
-          debugger;
-          var responseData = response.data;
-          if(responseData != 0){
-            toggleComponent("EmployeeDirectory");
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        })
+        let response = await UpdateEmployeeDetailsAPI(id, user)
+        if(response.status == 200){
+          toggleComponent("EmployeeDirectory");
+          toast.success("Employee Details Updated Succeessfully");
+        }else{
+          toast.error("Error Occured During Updating");
+        }
     }
 
     return ( <>
@@ -121,10 +110,17 @@ function Update({id, updateData, toggleComponent}) {
           required>
           </input>
       </div>
-      <div className="d-grid gap-2 mt-3">
-          <button type="submit" className="btn btn-primary" onClick={UpdateEmployeeDetails}>
-            Update
-          </button>
+      <div className="row mt-3">
+          <div className="col-md-6">
+            <button type="submit" className="btn btn-primary btn-block" onClick={UpdateEmployeeDetails}>
+              Update
+            </button>
+          </div>
+          <div className="col-md-6">
+            <button type="submit" className="btn btn-danger btn-block" onClick={() => toggleComponent("EmployeeDirectory")}>
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
       <div className="col"></div>

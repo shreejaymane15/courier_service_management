@@ -1,116 +1,210 @@
 ﻿using CSM.Models;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
 
 namespace CSM.Controllers
 {
     public class AdminController : ApiController
     {
-        CSMEntities1 db = new CSMEntities1 ();
+        CSMEntities1 db = new CSMEntities1();
 
         [HttpGet]
         [Route("api/Admin/GetOrders")]
-        public IHttpActionResult GetOrders() 
+        public async Task<IHttpActionResult> GetOrders()
         {
-            var orders = db.Orders.ToList();
-            return Ok(orders);
+            try
+            {
+                var orders = await Task.Run(()=>db.Orders.ToList());
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
 
 
         [HttpGet]
         [Route("api/Admin/GetCities")]
-        public IHttpActionResult GetCities()
+        public async Task<IHttpActionResult> GetCities()
         {
-            var cities = (from Dispatcher in db.Dispatchers.ToList()
-                          select Dispatcher.hub_location).Distinct();
-            return Ok(cities);
+            try
+            {
+                var cities = await Task.Run(() => db.Dispatchers.ToList()
+                                .Select(Dispatcher => Dispatcher.hub_location)
+                                .Distinct());
+                return Ok(cities);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
 
 
         [HttpGet]
         [Route("api/Admin/GetOrders/{id}")]
-        public IHttpActionResult GetOrders(string id)
+        public async Task<IHttpActionResult> GetOrders(string id)
         {
-            var orders = (from Orders in db.Orders.ToList()
-                          where id == Orders.receiver_address
-                          select Orders).ToList();
-            return Ok(orders);
+            try{
+                var orders = await Task.Run(()=>db.Orders.ToList()
+                                .Where(Orders => id == Orders.receiver_address)
+                                .Select(Orders => Orders)
+                                .ToList());
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
 
 
         [HttpGet]
         [Route("api/Admin/GetEmployees/{id}")]
-        public IHttpActionResult GetEmployees(string id)
+        public async Task<IHttpActionResult> GetEmployees(string id)
         {
-            var roleId = (from Roles in db.Roles.ToList()
-                          where Roles.role_name == id
-                          select Roles.role_id).FirstOrDefault();
-            
-            var employees = (from User_Info in db.User_Info.ToList()
-                             where User_Info.role_id == roleId
-                             select User_Info).ToList();
+            try{
+                var roleId = await Task.Run((() => db.Roles.ToList()
+                          .Where(Roles => Roles.role_name == id)
+                          .Select(Roles => Roles.role_id).FirstOrDefault()));
 
-            return Ok(employees);
+                var employees = await Task.Run(() => db.User_Info.ToList()
+                         .Where(User_Info => User_Info.role_id == roleId)
+                         .Select(User_Info => User_Info).ToList());
+
+                return Ok(employees);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
 
         [HttpGet]
         [Route("api/Admin/GetRoles")]
-        public IHttpActionResult GetRoles()
+        public async Task<IHttpActionResult> GetRoles()
         {
-            var roles = (from Roles in db.Roles.ToList()
-                         where Roles.role_id  != 4
-                        select Roles.role_name).Distinct();
-            return Ok(roles);
+            try
+            {
+                var roles = await Task.Run(() => db.Roles
+                    .Where(role => role.role_id != 4)
+                    .Select(role => role.role_name)
+                    .Distinct()
+                    .ToList());
+                return Ok(roles);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
 
 
         [HttpPut]
         [Route("api/Admin/DeleteEmployee/{id}")]
-        public IHttpActionResult DeleteEmployee(int id)
+        public async Task<IHttpActionResult> DeleteEmployee(int id)
         {
-            var employeeToUpdate = (from User_Info in db.User_Info.ToList()
-                                    where User_Info.user_Id == id
-                                    select User_Info).FirstOrDefault();
+            try
+            {
+            var employeeToUpdate = await Task.Run(() => db.User_Info.ToList()
+                                    .Where(User_Info => User_Info.user_Id == id)
+                                    .Select(User_Info => User_Info)
+                                    .FirstOrDefault());
             employeeToUpdate.status = "INACTIVE";
             int result = db.SaveChanges();
             return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
-
-
 
         [HttpGet]
         [Route("api/Admin/GetEmployeeDetails/{id}")]
-        public IHttpActionResult GetEmployeeDetails(int id)
+        public async Task<IHttpActionResult> GetEmployeeDetails(int id)
         {
-            var employeeDetails = (from User_Info in db.User_Info.ToList()
-                                    where User_Info.user_Id == id
-                                    select User_Info).FirstOrDefault();
-            return Ok(employeeDetails);
+            try
+            {
+                var employeeDetails = await Task.Run(() => db.User_Info.ToList()
+                                       .Where(User_Info => User_Info.user_Id == id)
+                                       .Select(User_Info => User_Info)
+                                       .FirstOrDefault());
+                return Ok(employeeDetails);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
-
-
 
         [HttpPut]
         [Route("api/Admin/UpdateEmployeeDetails/{id}")]
-        public IHttpActionResult UpdateEmployee(int id, [FromBody] User_Info user)
+        public async Task<IHttpActionResult> UpdateEmployee(int id, [FromBody] User_Info user)
         {
-            var employeeToUpdate = db.User_Info.ToList()
-                .Where(User_Info => User_Info.user_Id == id)
-                .FirstOrDefault();
-            employeeToUpdate.first_name = user.first_name;
-            employeeToUpdate.last_name = user.last_name;
-            employeeToUpdate.address = user.address;
-            employeeToUpdate.mobile = user.mobile;
-            employeeToUpdate.email = user.email;
-            employeeToUpdate.status = user.status;
-            int result = db.SaveChanges();
-            return Ok(result);
+            try
+            {
+                var employeeToUpdate = await Task.Run(() => db.User_Info.ToList()
+                    .Where(User_Info => User_Info.user_Id == id)
+                    .FirstOrDefault());
+                employeeToUpdate.first_name = user.first_name;
+                employeeToUpdate.last_name = user.last_name;
+                employeeToUpdate.address = user.address;
+                employeeToUpdate.mobile = user.mobile;
+                employeeToUpdate.email = user.email;
+                employeeToUpdate.status = user.status;
+                int result = db.SaveChanges();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
 
+        [HttpPost]
+        [Route("api/Admin/AddEmployeeDetails")]
+        public async Task<IHttpActionResult> AddEmployeeDetails([FromBody] EmployeeData data)
+        {
+            try
+            {
+                User_Info newUser = new User_Info();
+                newUser = data.user;
+                newUser.status = "ACTIVE";
+                newUser.role_id = await Task.Run(() => db.Roles.ToList()
+                                       .Where(Roles => Roles.role_name == data.role_name)
+                                       .Select(Roles => Roles.role_id)
+                                       .FirstOrDefault());
+                db.User_Info.Add(newUser);
+                int result = db.SaveChanges();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
 
-
-
+        }
     }
 }
