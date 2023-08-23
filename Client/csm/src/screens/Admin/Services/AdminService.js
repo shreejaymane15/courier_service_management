@@ -106,3 +106,28 @@ export async function AddEmployee(data){
     }
 
 }
+
+
+export async function getCustomerCitiesAPI(){
+    try{
+        let url = createUrl("/api/Admin/GetCustomerCities");
+        const response = await axios.get(url);
+        return response;
+    }catch(ex){
+        console.log(ex);
+        return null;
+    }
+}
+
+export async function getCustomersAPI(selectedFilter){
+    try{
+        // debugger;
+        const filterParam = selectedFilter != "ALL" ? `/${selectedFilter}` : ``;
+        let url = createUrl(`/api/Admin/GetCustomers${filterParam}`);
+        const response =  await axios.get(url)
+        return response;
+    }catch(ex){
+        console.log(ex);
+        return null;
+    }
+}

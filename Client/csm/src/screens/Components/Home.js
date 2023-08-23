@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Carousel from "./Carousel";
 import NavBar from "./NavBar";
-import "./css/Home.css";
+import "../css/Home.css";
 
 
 function Home() {

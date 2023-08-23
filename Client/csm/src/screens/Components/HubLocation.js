@@ -1,6 +1,6 @@
 import { GoogleMap, InfoWindow, Marker, useLoadScript } from "@react-google-maps/api";
 import { useState } from "react";
-import "./css/Map.css"
+import "../css/Map.css"
 import NavBar from "./NavBar";
 
 

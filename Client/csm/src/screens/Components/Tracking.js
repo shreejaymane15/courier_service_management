@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/Tracking.css'
+import '../css/Tracking.css'
 import NavBar from './NavBar';
 
 function Tracking() {

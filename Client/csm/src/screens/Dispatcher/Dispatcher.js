@@ -1,5 +1,5 @@
 import DispatcherSideBar from "./DispatcherSideBar";
-import NavBarProtected from "../NavBarProtected";
+import NavBarProtected from "../Components/NavBarProtected";
 
 function DispatcherDash() {
     return (<>

@@ -204,7 +204,69 @@ namespace CSM.Controllers
                 Console.WriteLine(ex + "An error occurred while processing the request.");
                 return InternalServerError(ex);
             }
-
         }
+
+        [HttpGet]
+        [Route("api/Admin/GetCustomerCities")]
+        public async Task<IHttpActionResult> GetCustomerCities()
+        {
+            try
+            {
+                var cities = await Task.Run(() => db.User_Info.ToList()
+                                .Where(User => User.role_id == 4)
+                                .Select(User => User.address)
+                                .Distinct());
+                return Ok(cities);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
+
+
+        [HttpGet]
+        [Route("api/Admin/GetCustomers")]
+        public async Task<IHttpActionResult> GetCustomers()
+        {
+            try
+            {
+                var customers = await Task.Run(() => db.User_Info.ToList()
+                                           .Where(User => User.role_id == 4)
+                                           .Select(User => User));
+                return Ok(customers);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
+
+
+
+        [HttpGet]
+        [Route("api/Admin/GetCustomers/{id}")]
+        public async Task<IHttpActionResult> GetCustomers(string id)
+        {
+            try
+            {
+                var customers = await Task.Run(() => db.User_Info.ToList()
+                                .Where(User => id == User.address && User.role_id == 4)
+                                .Select(User => User)
+                                .ToList());
+                return Ok(customers);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
+
     }
 }
