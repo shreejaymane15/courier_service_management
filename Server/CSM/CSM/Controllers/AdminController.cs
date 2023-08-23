@@ -124,6 +124,8 @@ namespace CSM.Controllers
                                     .Select(User_Info => User_Info)
                                     .FirstOrDefault());
             employeeToUpdate.status = "INACTIVE";
+            db.Delivery_Personnel.Remove(employeeToUpdate.Delivery_Personnel);
+            db.Dispatchers.Remove(employeeToUpdate.Dispatcher);
             int result = db.SaveChanges();
             return Ok(result);
             }
