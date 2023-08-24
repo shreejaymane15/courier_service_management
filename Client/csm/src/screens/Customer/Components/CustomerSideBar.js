@@ -8,8 +8,8 @@ function CustomerSideBar({toggleComponent}) {
     toggleComponent("COrders");
   };
 
-  const toggleAddresses = () => {
-    toggleComponent("Addresses");
+  const toggleProfiles = () => {
+    toggleComponent("MyProfile");
   };
 
   const toggleSettings = () => {
@@ -62,8 +62,8 @@ function CustomerSideBar({toggleComponent}) {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleAddresses}>
-                My Addresses
+              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleProfiles}>
+                My Profile
               </a>
             </li>       
             <li className="nav-item">
