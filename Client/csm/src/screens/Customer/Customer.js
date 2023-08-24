@@ -1,5 +1,5 @@
 import CustomerSideBar from "./CustomerSideBar";
-import NavBarProtected from "../NavBarProtected";
+import NavBarProtected from "../Components/NavBarProtected";
 import Dashboard from "./Dashboard";
 import { useState } from "react";
 import COrders from "./COrders";
