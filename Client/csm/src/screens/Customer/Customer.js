@@ -1,11 +1,11 @@
-import CustomerSideBar from "./CustomerSideBar";
+import CustomerSideBar from "../Customer/Components/CustomerSideBar";
 import NavBarProtected from "../Components/NavBarProtected";
-import Dashboard from "./Dashboard";
+import Dashboard from "../Customer/Components/Dashboard";
 import { useState } from "react";
-import COrders from "./COrders";
-import Addresses from "./Addresses";
-import Support from "./Support";
-import AccountSettings from "./AccountSettings";
+import COrders from "../Customer/Components/COrders";
+import MyProfile from "../Customer/Components/MyProfile";
+import Support from "../Customer/Components/Support";
+import AccountSettings from "../Customer/Components/AccountSettings";
 
 
 function Customer() {
@@ -19,7 +19,7 @@ function Customer() {
     const componentMapping = {
       Dashboard: <Dashboard />,
       COrders: <COrders/>,
-      Addresses: <Addresses/>,
+      MyProfile: <MyProfile/>,
       AccountSettings: <AccountSettings />,
       Support: <Support />,
     };
