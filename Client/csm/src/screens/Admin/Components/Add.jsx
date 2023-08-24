@@ -38,7 +38,11 @@ function Add({toggleComponent}) {
 
     const getRoles = async () => {
       var response = await getRolesAPI();
-      setRoles(response.data);
+      if(response.status == 200){
+        setRoles(response.data);
+      }else{
+        toast.error("Failed To Load Roles");
+      }
     }
 
 
