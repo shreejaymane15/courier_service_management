@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import '../css/App.css';
 import { useNavigate } from 'react-router-dom';
+import { loginAPI } from '../Services/LoginServices';
+import { toast } from 'react-toastify';
 
 function Login() {
 
@@ -12,48 +14,41 @@ function Login() {
     navigate("/register");
   }
 
-  function sendLoginData() {
-    const helper = new XMLHttpRequest();
-    helper.onreadystatechange = (response, error) => {
-      if (helper.status === 200 && helper.readyState === 4) {
-        var result = JSON.parse(helper.responseText);
-        sessionStorage.setItem("user_id",result.user_id);
-        if (result != 0) {
-          switch (result.role_id) {
-            case 1:
-              navigate("/admin");              
-              break;
-            case 2:
-              navigate("/dispatcher");              
-              break;
-            case 3:
-              navigate("/deliverypersonnel");              
-              break;
-            case 4:
-              navigate("/customer");              
-              break;
-            default:
-              break;
-          }
-
-        } else {
-          console.log(error);
-        }
-      }
-    };
-    helper.open("POST", "http://localhost:58447/api/Login/Login");
-    helper.setRequestHeader("Content-Type", "application/json");
+  const sendLoginData = async() => {
     const user = {
       email: email,
       password: password
     };
-    helper.send(JSON.stringify(user));
+    const response = await loginAPI(user);
+    if(response.status == 200){
+      sessionStorage.setItem("user_id",response.data.user_id);
+      if (response.data != 0) {
+        switch (response.data.role_id) {
+          case 1:
+            navigate("/admin");              
+            break;
+          case 2:
+            navigate("/dispatcher");              
+            break;
+          case 3:
+            navigate("/deliverypersonnel");              
+            break;
+          case 4:
+            navigate("/customer");              
+            break;
+          default:
+            break;
+        }
+      } 
+      toast.success(`Welcome ${response.data.first_name}!`);
+    }else{
+      toast.error("Customer Login Failed. Please Try Again!");
+    }
   }
   
 
   return (<>
   <div className="Auth-form-container">
-    {/* <form className="Auth-form"> */}
       <div className="Auth-form-content">
         <h3 className="Auth-form-title">Sign In</h3>
         <div className="text-center">
@@ -91,7 +86,6 @@ function Login() {
         <a href="#"> Forgot password?</a>
         </p>
       </div>
-    {/* </form> */}
   </div>
   </>);
 }

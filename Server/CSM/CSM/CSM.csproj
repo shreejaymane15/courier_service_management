@@ -221,6 +221,7 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SHA512Encryption.cs" />
     <Compile Include="Models\Tracking.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>

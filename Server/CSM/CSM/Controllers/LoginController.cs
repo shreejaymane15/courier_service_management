@@ -1,7 +1,11 @@
 ﻿using CSM.Models;
 using System.Web.Http;
 using System.Linq;
-using System.Web.Http.Cors; 
+using System.Web.Http.Cors;
+using System.Threading.Tasks;
+using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace CSM.Controllers
 {
@@ -12,14 +16,16 @@ namespace CSM.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public IHttpActionResult Login([FromBody] Login login)
+        public async Task<IHttpActionResult> Login([FromBody] Login login)
         {
-            User_Info user = (from User_Info in db.User_Info.ToList()
-                                where User_Info.email == login.email && User_Info.password == login.password
-                                select User_Info).FirstOrDefault();
+            SHA512Encryption sha512 = new SHA512Encryption();
+            string encrypt = sha512.Encode(login.password);
+            User_Info user = await Task.Run(() => db.User_Info.ToList()
+                                .Where(User_Info => User_Info.email == login.email && (User_Info.password == encrypt || User_Info.password == login.password) && User_Info.status != "INACTIVE")
+                                .Select(User_Info => User_Info).FirstOrDefault());
             if (user != null)
             {
-                var data = new { user_id =  user.user_Id, role_id = user.role_id};
+                var data = new { first_name = user.first_name, user_id =  user.user_Id, role_id = user.role_id};
                 return Ok(data);
 
             }
@@ -32,19 +38,16 @@ namespace CSM.Controllers
 
         [HttpPost]
         [Route("SignUp")]
-        public string SignUp([FromBody] User_Info user)
+        public async Task<IHttpActionResult> SignUp([FromBody] User_Info user)
         {
             user.role_id = 4;
             user.status = "ACTIVE";
-            db.User_Info.Add(user);
-            int result = db.SaveChanges();
-            if (result == 0)
-            {
-                return "FALSE";
-            }
-            else { 
-                return "TRUE";
-            }
+            SHA512Encryption sha512 = new SHA512Encryption();
+            string encrypt = sha512.Encode(user.password);
+            user.password = encrypt;
+            await Task.Run(() => db.User_Info.Add(user));       
+            int result = await Task.Run(() => db.SaveChanges());
+            return Ok(result);
         }
     }
 }

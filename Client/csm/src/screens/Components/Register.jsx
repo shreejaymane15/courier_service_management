@@ -1,7 +1,8 @@
 import React, {useState} from "react"
-import axios from "axios"
 import { useNavigate} from "react-router-dom"
 import "../css/App.css"
+import { RegisterCustomerAPI } from "../Services/RegisterServices";
+import { toast } from "react-toastify";
 
 
 function Register () {
@@ -19,16 +20,14 @@ function Register () {
       setUser(copy);
   }
 
-  const Submit = () =>{
-    debugger;
-    axios.post('http://localhost:58447/api/Login/SignUp',user)
-    .then(response => {
-        if(response.data == "TRUE"){
-          GoToLogin();
-        }else{
-          
-        }
-    })
+  const Submit = async() =>{
+    const response = await RegisterCustomerAPI(user);
+    if(response.status == 200 && response.data != 0){
+      GoToLogin();
+      toast.success("Customer Registration Done Successfully");
+    }else{
+      toast.error("Customer Registration Failed");
+    }
   }
 
   return (
@@ -116,11 +115,6 @@ function Register () {
               placeholder="Password"
               required
             />
-            {/* <input
-              type="hidden"
-              name="Status"
-              value="ACTIVE"
-            /> */}
           </div>
           <div color="red" id="ErrorBox">
           </div>
@@ -131,7 +125,6 @@ function Register () {
           </div>
         </div>
       {/* </form> */}
-    </div>
-  )
+  </div>);
 }
 export default Register;
