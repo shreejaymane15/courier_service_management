@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCitiesAPI, getOrdersAPI } from "../Services/AdminService";
 import {toast} from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 function Orders() {
@@ -9,6 +10,7 @@ function Orders() {
   var [selectedFilter, setSelectedFilter] = useState("");
   var [cities, setCities] = useState([]);
 
+  const navigate = useNavigate();
 
   const headerMapping = {
     'Order ID': 'order_id',
@@ -24,6 +26,14 @@ function Orders() {
   };
 
 
+  const id = sessionStorage.getItem("user_id");
+  const token = sessionStorage.getItem("token");
+  const data = {
+    user_id : id,
+    token :token
+  }
+
+
   useEffect(() => {
     debugger;
     getOrders(selectedFilter);
@@ -37,9 +47,15 @@ function Orders() {
 
   const getOrders = async(selectedFilter) => {
     debugger;
-    const response = await getOrdersAPI(selectedFilter);
+    const response = await getOrdersAPI(selectedFilter, data);
     if(response.status == 200){
-      setOrders(response.data);
+      if(response.data == "EXPIRED" || response.data == "INVALID"){
+        navigate("/login");
+        toast.warning("Session Time Expired");
+      }
+      else{
+        setOrders(response.data);
+      }
     }else{
       toast.error('Error while calling getorders api')
     }
@@ -48,9 +64,15 @@ function Orders() {
 
   
   const getCities = async() => {
-    const response = await getCitiesAPI();
+    const response = await getCitiesAPI(data);
     if(response.status == 200){
-      setCities(response.data);
+      if(response.data == "EXPIRED" || response.data == "INVALID"){
+        navigate("/login");
+        // toast.warning("Session Time Expired");
+      }
+      else{
+        setCities(response.data);
+      }
     }else{
       toast.error('Error while calling getcities api')
     }

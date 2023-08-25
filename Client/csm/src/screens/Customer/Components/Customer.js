@@ -1,5 +1,9 @@
 import CustomerSideBar from "./CustomerSideBar";
+<<<<<<< HEAD
 import NavBarProtected from "../../Components/NavBar";
+=======
+import NavBarProtected from "../../Components/NavBarProtected";
+>>>>>>> a14b9a55eba0ad9b2a2adc49d681967ab9911f1b
 import Dashboard from "./Dashboard";
 import { useState } from "react";
 import COrders from "./COrders";

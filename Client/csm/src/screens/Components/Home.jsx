@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Carousel from "./Carousel";
 import NavBar from "./NavBar";
 import "../css/Home.css";
+import NavBarProtected from "./NavBarProtected";
 
 
 function Home() {
@@ -17,13 +18,17 @@ function Home() {
     }
 
     const GoToAdmin = () =>{
-        navigate('/admin');
+        navigate('/');
     }
+
+    const id = sessionStorage.getItem("user_id");
+    const token = sessionStorage.getItem("token");
+    const isAuthenticated = id !== null && token !== null; 
 
 
 
     return (<>
-            <NavBar/>
+      {isAuthenticated ? <NavBarProtected/> : <NavBar />}
             <div className="row">
                 <div className="column">
                     <Carousel/>

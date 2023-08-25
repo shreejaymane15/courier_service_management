@@ -30,6 +30,7 @@ namespace CSM.Models
         public string mobile { get; set; }
         public int role_id { get; set; }
         public string status { get; set; }
+        public string token { get; set; }
     
         public virtual ICollection<Complaint> Complaints { get; set; }
         public virtual Delivery_Personnel Delivery_Personnel { get; set; }

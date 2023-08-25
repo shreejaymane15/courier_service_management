@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
 import { getCitiesAPI, getCustomerCitiesAPI, getCustomersAPI, getOrdersAPI } from "../Services/AdminService";
 import {toast} from 'react-toastify';
-
+import { useNavigate } from "react-router-dom";
 
 function Customer() {
    
   var [Customers, setCustomers] = useState([]);
-  var [selectedFilter, setSelectedFilter] = useState("");
+  var [selectedFilter, setSelectedFilter] = useState("ALL");
   var [cities, setCities] = useState([]);
+  const navigate = useNavigate();
 
+
+  const id = sessionStorage.getItem("user_id");
+  const token = sessionStorage.getItem("token");
+  const data = {
+    user_id : id,
+    token :token
+  }
 
   const headerMapping = {
     'Customer ID': 'user_Id',
@@ -34,9 +42,15 @@ function Customer() {
 
   const getCustomers = async(selectedFilter) => {
     debugger;
-    const response = await getCustomersAPI(selectedFilter);
+    const response = await getCustomersAPI(selectedFilter, data);
     if(response.status == 200){
-      setCustomers(response.data);
+      if(response.data == "EXPIRED" || response.data == "INVALID"){
+        navigate("/login");
+        toast.warning("Session Time Expired");
+      }
+      else{
+        setCustomers(response.data);
+      }  
     }else{
       toast.error('Error while calling getorders api')
     }
@@ -45,9 +59,16 @@ function Customer() {
 
   
   const getCustomerCities = async() => {
-    const response = await getCustomerCitiesAPI();
+    const response = await getCustomerCitiesAPI(data);
     if(response.status == 200){
-      setCities(response.data);
+      if(response.data == "EXPIRED" || response.data == "INVALID"){
+        navigate("/login");
+        toast.warning("Session Time Expired");
+      }
+      else{
+        setCities(response.data);
+      }  
+
     }else{
       toast.error('Error while calling getcities api')
     }
@@ -103,7 +124,7 @@ function Customer() {
         </div>
         <div>
         <select onChange={handleFilterChange}>
-          <option value="">All</option>
+          <option value="ALL">All</option>
           {renderOption()}
         </select>
         </div>
