@@ -22,6 +22,7 @@ function Login() {
     const response = await loginAPI(user);
     if(response.status == 200){
       sessionStorage.setItem("user_id",response.data.user_id);
+      sessionStorage.setItem("token",response.data.token);
       if (response.data != 0) {
         switch (response.data.role_id) {
           case 1:

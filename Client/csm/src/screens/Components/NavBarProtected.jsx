@@ -9,6 +9,7 @@ function NavBarProtected() {
     }
 
     const GoToLogin = () =>{
+        sessionStorage.clear();
         navigate('/login');
     }
 
@@ -18,6 +19,10 @@ function NavBarProtected() {
 
     const GoToContactUs = () =>{
         navigate('/contact');
+    }
+
+    const GoToServices = () =>{
+        navigate('/GoToServices');
     }
 
     const GoToTrackShipment = () =>{
@@ -38,6 +43,9 @@ function NavBarProtected() {
                 <ul className="navbar-nav mr-auto mb-2 mb-lg-0" style={{fontSize:"21px", marginLeft:"64px", paddingTop:"5px"}}>
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
                     <a className="nav-link" aria-current="page" onClick={GoToHome}>Home</a>
+                    </li>
+                    <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
+                    <a className="nav-link" onClick={GoToServices}>Services</a>
                     </li>
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
                     <a className="nav-link" onClick={GoToTrackShipment}>Track Your Shipment</a>

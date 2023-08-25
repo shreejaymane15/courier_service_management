@@ -1,11 +1,11 @@
 import axios from "axios";
 import { createUrl } from "../../utils/utils";
 
-export async function getRolesAPI(){
+export async function getRolesAPI(data){
     try{
         // debugger;
         let url = createUrl("/api/Admin/GetRoles");
-        const response = await axios.get(url);
+        const response = await axios.post(url, data);
         return response;
     }catch(ex){
         console.log(ex);
@@ -14,11 +14,11 @@ export async function getRolesAPI(){
 }
 
     
-export async function getEmployeesAPI(selectedFilter){
+export async function getEmployeesAPI(selectedFilter, data){
     try{
         // debugger;
         let url = createUrl(`/api/Admin/GetEmployees/${selectedFilter}`);
-        const response = await axios.get(url);
+        const response = await axios.put(url, data);
         return response;
     }catch(ex){
         console.log(ex);
@@ -28,11 +28,11 @@ export async function getEmployeesAPI(selectedFilter){
 
 
 
-export async function deleteEmployeeAPI(deleteEmployeeId){
+export async function deleteEmployeeAPI(id, data){
     try{
-        // debugger;
-        let url = createUrl(`/api/Admin/DeleteEmployee/${deleteEmployeeId}`);
-        const response = await axios.put(url)
+        debugger;
+        let url = createUrl(`/api/Admin/DeleteEmployee/${id}`);
+        const response = await axios.put(url,data)
         return response;
     }catch(ex){
         console.log(ex);
@@ -41,10 +41,11 @@ export async function deleteEmployeeAPI(deleteEmployeeId){
 }
 
 
-export async function getCitiesAPI(){
+export async function getCitiesAPI(data){
     try{
+        debugger;
         let url = createUrl("/api/Admin/GetCities");
-        const response = await axios.get(url);
+        const response = await axios.post(url, data);
         return response;
     }catch(ex){
         console.log(ex);
@@ -53,12 +54,12 @@ export async function getCitiesAPI(){
 }
 
     
-export async function getOrdersAPI(selectedFilter){
+export async function getOrdersAPI(selectedFilter, data){
     try{
-        // debugger;
+        debugger;
         const filterParam = selectedFilter != "ALL" ? `/${selectedFilter}` : ``;
         let url = createUrl(`/api/Admin/GetOrders${filterParam}`);
-        const response =  await axios.get(url)
+        const response =  await axios.put(url, data)
         return response;
     }catch(ex){
         console.log(ex);
@@ -67,11 +68,11 @@ export async function getOrdersAPI(selectedFilter){
 }
 
 
-export async function GetEmployeeDetailsAPI(id){
+export async function GetEmployeeDetailsAPI(id, data){
     try{
-        // debugger;
+        debugger;
         let url = createUrl(`/api/Admin/GetEmployeeDetails/${id}`);
-        const response = await axios.get(url);
+        const response = await axios.put(url, data);
         return response;
     }catch(ex){
         console.log(ex);
@@ -81,11 +82,11 @@ export async function GetEmployeeDetailsAPI(id){
 
 
 
-export async function UpdateEmployeeDetailsAPI(updateid, user){
+export async function UpdateEmployeeDetailsAPI(updateid, user, data){
     try{
-        // debugger;
+        debugger;
         let url = createUrl(`/api/Admin/UpdateEmployeeDetails/${updateid}`);
-        const response  = await axios.put(url, user);
+        const response  = await axios.put(url, {user, data});
         return response;
     }catch(ex){
         console.log(ex);
@@ -108,10 +109,10 @@ export async function AddEmployee(data){
 }
 
 
-export async function getCustomerCitiesAPI(){
+export async function getCustomerCitiesAPI(data){
     try{
         let url = createUrl("/api/Admin/GetCustomerCities");
-        const response = await axios.get(url);
+        const response = await axios.post(url, data);
         return response;
     }catch(ex){
         console.log(ex);
@@ -119,15 +120,37 @@ export async function getCustomerCitiesAPI(){
     }
 }
 
-export async function getCustomersAPI(selectedFilter){
+export async function getCustomersAPI(selectedFilter, data){
     try{
-        // debugger;
-        const filterParam = selectedFilter != "ALL" ? `/${selectedFilter}` : ``;
-        let url = createUrl(`/api/Admin/GetCustomers${filterParam}`);
-        const response =  await axios.get(url)
+        debugger;
+        const url = selectedFilter != "ALL" ? createUrl(`/api/Admin/GetCustomers/${selectedFilter}`) : createUrl("/api/Admin/GetAllCustomers");
+        const response = selectedFilter != "ALL" ? await axios.put(url, data) : await axios.post(url, data);
         return response;
     }catch(ex){
         console.log(ex);
         return null;
+    }
+}
+
+export async function getMyProfileAPI(data){
+    try{
+        let url = createUrl(`/api/Admin/GetMyProfile/`);
+        let response = await axios.post(url, data);          
+        return response; 
+    }catch(ex){
+        console.log(ex);
+        return null;
+    }
+}
+
+export async function saveMyProfileAPI(user, data){
+    try{
+        debugger;
+        let url = createUrl(`/api/Admin/SaveMyProfile/${data.user_id}`);
+        let response = await axios.put(url, {user, data});
+        return response;
+    }catch(ex){
+        console.log(ex);
+        return null;        
     }
 }

@@ -20,7 +20,7 @@ namespace CSM.Controllers
             try
             {
                 var employeeDetails = await Task.Run(() => db.User_Info.ToList()
-                                       .Where(User_Info => User_Info.role_id == 3 && User_Info.address == )
+                                       .Where(User_Info => User_Info.role_id == 3)
                                        .Select(User_Info => User_Info)
                                        .FirstOrDefault());
                 return Ok(employeeDetails);

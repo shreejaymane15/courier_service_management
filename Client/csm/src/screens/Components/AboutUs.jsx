@@ -1,9 +1,15 @@
 import NavBar from "./NavBar";
+import NavBarProtected from "./NavBarProtected";
+
+
+const id = sessionStorage.getItem("user_id");
+const token = sessionStorage.getItem("token");
+const isAuthenticated = id !== null && token !== null; 
 
 
 function AboutUs() {
     return (<>
-    <NavBar/>
+      {isAuthenticated ? <NavBarProtected /> : <NavBar />}
     <div>
       <section style={{ backgroundColor: '#f1f1f1', padding: '20px' }}>
         <h1 style={{ textAlign: 'center' }}>About Us</h1>

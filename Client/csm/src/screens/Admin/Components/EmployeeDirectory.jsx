@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { deleteEmployeeAPI, getEmployeesAPI, getRolesAPI } from "../Services/AdminService";
 import {toast} from 'react-toastify';
+import {useNavigate} from 'react-router-dom';
 
 function EmployeeDirectory({toggleComponent, updateData}) {
   
@@ -8,6 +9,18 @@ function EmployeeDirectory({toggleComponent, updateData}) {
   var [selectedFilter, setSelectedFilter] = useState("ADMIN");
   var [deleteEmployeeId, setDeleteEmployeeId] = useState("");
   var [roles, setRoles] = useState([]);
+
+
+  const navigate = useNavigate();
+
+
+  const id = sessionStorage.getItem("user_id");
+  const token = sessionStorage.getItem("token");
+  const data = {
+    user_id : id,
+    token :token
+  }
+
 
   const headerMapping = {
     'Employee ID': 'user_Id',
@@ -42,10 +55,16 @@ function EmployeeDirectory({toggleComponent, updateData}) {
     const deleteEmployeeBtn = async(props) => {
       // debugger;
       let id = props.target.id;
-      let response = await deleteEmployeeAPI(id);
+      let response = await deleteEmployeeAPI(id, data);
       if(response.status == 200){
-        toast.success('Employee Deleted Successfully');
-        setDeleteEmployeeId(id);
+        if(response.data == "EXPIRED" || response.data == "INVALID"){
+          navigate("/login");
+          toast.warning("Session Time Expired");
+        }
+        else{
+          toast.success('Employee Deleted Successfully');
+          setDeleteEmployeeId(id);
+        }    
       }else{
         toast.error('Error while calling get api')
       }
@@ -54,9 +73,15 @@ function EmployeeDirectory({toggleComponent, updateData}) {
 
     const loadEmployees = async(selectedFilter) => {
       // debugger;
-      let response = await getEmployeesAPI(selectedFilter);
+      let response = await getEmployeesAPI(selectedFilter, data);
       if(response.status == 200){
-        setEmployees(response.data);
+        if(response.data == "EXPIRED" || response.data == "INVALID"){
+          navigate("/login");
+          toast.warning("Session Time Expired");
+        }
+        else{
+          setEmployees(response.data);
+        }   
       }else{
         toast.error('Error while calling get api')
       }  
@@ -66,9 +91,15 @@ function EmployeeDirectory({toggleComponent, updateData}) {
 
     const loadRoles = async() => {
       // debugger;
-      let response = await getRolesAPI();
+      let response = await getRolesAPI(data);
       if(response.status == 200){
-        setRoles(response.data);
+        if(response.data == "EXPIRED" || response.data == "INVALID"){
+          navigate("/login");
+          toast.warning("Session Time Expired");
+        }
+        else{
+          setRoles(response.data);
+        }
       }else{
         toast.error('Error while calling roles api')
       }
@@ -102,17 +133,17 @@ function EmployeeDirectory({toggleComponent, updateData}) {
   
   
   
-    const renderEmployees = () =>
-      employees.map(employee => (
-        <tr key={employee.user_id}>
-          {Object.keys(headerMapping).map(label => (
-              <td>{employee[headerMapping[label]]}</td>
-              ))}
-          <td ><button className="btn btn-warning" id={employee[headerMapping['Employee ID']]} onClick={(props) => updateEmployee(props)}>Update</button></td>
-          <td ><button className="btn btn-danger"  id={employee[headerMapping['Employee ID']]} onClick={(props) => deleteEmployeeBtn(props)}>Delete</button></td>
-        </tr>
-      ));
-  
+  const renderEmployees = () =>
+    employees.map(employee => (
+      <tr key={employee.user_id}>
+        {Object.keys(headerMapping).map(label => (
+            <td>{employee[headerMapping[label]]}</td>
+            ))}
+        <td ><button className="btn btn-warning" id={employee[headerMapping['Employee ID']]} onClick={(props) => updateEmployee(props)}>Update</button></td>
+        <td ><button className="btn btn-danger"  id={employee[headerMapping['Employee ID']]} onClick={(props) => deleteEmployeeBtn(props)}>Delete</button></td>
+      </tr>
+    ));
+
       
     const renderHeader = () => {
       return (

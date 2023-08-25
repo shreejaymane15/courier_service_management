@@ -8,6 +8,7 @@ import Reports from "./Reports";
 import Update from "./Update";
 import Add from "./Add";
 import Customer from "./Customer";
+import MyProfile from "./MyProfile";
 
 function Admin() {
 
@@ -32,7 +33,8 @@ function Admin() {
       Reports: <Reports />,
       Update: <Update id={id} updateData={updateData} toggleComponent={toggleComponent}/>,
       Add:  <Add toggleComponent={toggleComponent}/>,
-      Customer: <Customer toggleComponent={toggleComponent}/>
+      Customer: <Customer toggleComponent={toggleComponent}/>,
+      MyProfile:<MyProfile/>
     };
 
 

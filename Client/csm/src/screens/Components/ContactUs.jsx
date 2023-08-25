@@ -1,5 +1,6 @@
 import { useState } from "react";
 import NavBar from "./NavBar";
+import NavBarProtected from "./NavBarProtected";
 
 
 function ContactUs() {
@@ -7,6 +8,11 @@ function ContactUs() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
+
+    const id = sessionStorage.getItem("user_id");
+    const token = sessionStorage.getItem("token");
+    const isAuthenticated = id !== null && token !== null; 
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,8 +26,8 @@ function ContactUs() {
       
     return (
 <>
-<NavBar/>
-<div className="container my-5 py-5 z-depth-1">
+{isAuthenticated ? <NavBarProtected/> : <NavBar />}
+  <div className="container my-5 py-5 z-depth-1">
 
 
   {/* <!--Section: Content--> */}

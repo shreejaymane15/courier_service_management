@@ -3,61 +3,104 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Razor.Tokenizer;
+using System.Web.Security;
+using System.Xml.XPath;
 
 namespace CSM.Controllers
 {
     public class AdminController : ApiController
     {
         CSMEntities1 db = new CSMEntities1();
+        JWTTokenizer tokenizer = new JWTTokenizer();
 
-        [HttpGet]
+        [HttpPut]
         [Route("api/Admin/GetOrders")]
-        public async Task<IHttpActionResult> GetOrders()
+        public async Task<IHttpActionResult> GetOrders([FromBody] CheckToken token)
         {
             try
             {
-                var orders = await Task.Run(()=>db.Orders.ToList());
-                return Ok(orders);
+                var user = await Task.Run(() =>db.User_Info
+                    .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                    .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var orders = await Task.Run(() => db.Orders.ToList());
+                    return Ok(orders);
+                }
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                // Log the exception for debugging purposes
-                Console.WriteLine(ex + "An error occurred while processing the request.");
+                Console.WriteLine(ex + " An error occurred while processing the request.");
                 return InternalServerError(ex);
             }
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/Admin/GetCities")]
-        public async Task<IHttpActionResult> GetCities()
+        public async Task<IHttpActionResult> GetCities([FromBody] CheckToken token)
         {
             try
             {
-                var cities = await Task.Run(() => db.Dispatchers.ToList()
-                                .Select(Dispatcher => Dispatcher.hub_location)
-                                .Distinct());
-                return Ok(cities);
+                var user = await Task.Run(() => db.User_Info.ToList()
+                                         .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                                         .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var cities = await Task.Run(() => db.Dispatchers.Select(d => d.hub_location).Distinct().ToList());
+                    return Ok(cities);
+                }
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                // Log the exception for debugging purposes
                 Console.WriteLine(ex + "An error occurred while processing the request.");
                 return InternalServerError(ex);
             }
         }
 
-
-        [HttpGet]
+        [HttpPut]
         [Route("api/Admin/GetOrders/{id}")]
-        public async Task<IHttpActionResult> GetOrders(string id)
+        public async Task<IHttpActionResult> GetOrders(string id, [FromBody] CheckToken token )
         {
             try{
-                var orders = await Task.Run(()=>db.Orders.ToList()
-                                .Where(Orders => id == Orders.receiver_address)
-                                .Select(Orders => Orders)
-                                .ToList());
-                return Ok(orders);
+
+                var user = await Task.Run(() => db.User_Info.ToList()
+                         .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                         .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var orders = await Task.Run(()=>db.Orders.ToList()
+                                    .Where(Orders => id == Orders.receiver_address)
+                                    .Select(Orders => Orders)
+                                    .ToList());
+                    return Ok(orders);
+                }
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -68,20 +111,36 @@ namespace CSM.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPut]
         [Route("api/Admin/GetEmployees/{id}")]
-        public async Task<IHttpActionResult> GetEmployees(string id)
+        public async Task<IHttpActionResult> GetEmployees(string id, [FromBody] CheckToken token)
         {
             try{
-                var roleId = await Task.Run((() => db.Roles.ToList()
-                          .Where(Roles => Roles.role_name == id)
-                          .Select(Roles => Roles.role_id).FirstOrDefault()));
 
-                var employees = await Task.Run(() => db.User_Info.ToList()
-                         .Where(User_Info => User_Info.role_id == roleId)
-                         .Select(User_Info => User_Info).ToList());
+                var user = await Task.Run(() => db.User_Info.ToList()
+                                     .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                                     .FirstOrDefault());
 
-                return Ok(employees);
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var roleId = await Task.Run((() => db.Roles.ToList()
+                              .Where(Roles => Roles.role_name == id)
+                              .Select(Roles => Roles.role_id).FirstOrDefault()));
+
+                    var employees = await Task.Run(() => db.User_Info.ToList()
+                             .Where(User_Info => User_Info.role_id == roleId)
+                             .Select(User_Info => User_Info).ToList());
+
+                    return Ok(employees);
+                }
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -91,18 +150,34 @@ namespace CSM.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/Admin/GetRoles")]
-        public async Task<IHttpActionResult> GetRoles()
+        public async Task<IHttpActionResult> GetRoles([FromBody] CheckToken token)
         {
             try
             {
-                var roles = await Task.Run(() => db.Roles
-                    .Where(role => role.role_id != 4)
-                    .Select(role => role.role_name)
-                    .Distinct()
-                    .ToList());
-                return Ok(roles);
+
+                var user = await Task.Run(() => db.User_Info.ToList()
+                     .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                     .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var roles = await Task.Run(() => db.Roles
+                            .Where(role => role.role_id != 4)
+                            .Select(role => role.role_name)
+                            .Distinct()
+                            .ToList());
+                        return Ok(roles);
+                }
+                return Ok(result);
+
             }
             catch (Exception ex)
             {
@@ -115,19 +190,34 @@ namespace CSM.Controllers
 
         [HttpPut]
         [Route("api/Admin/DeleteEmployee/{id}")]
-        public async Task<IHttpActionResult> DeleteEmployee(int id)
+        public async Task<IHttpActionResult> DeleteEmployee(int id, [FromBody] CheckToken token)
         {
             try
             {
-            var employeeToUpdate = await Task.Run(() => db.User_Info.ToList()
-                                    .Where(User_Info => User_Info.user_Id == id)
-                                    .Select(User_Info => User_Info)
-                                    .FirstOrDefault());
-            employeeToUpdate.status = "INACTIVE";
-            db.Delivery_Personnel.Remove(employeeToUpdate.Delivery_Personnel);
-            db.Dispatchers.Remove(employeeToUpdate.Dispatcher);
-            int result = db.SaveChanges();
-            return Ok(result);
+
+                var user = await Task.Run(() => db.User_Info.ToList()
+                     .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                     .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var employeeToUpdate = await Task.Run(() => db.User_Info.ToList()
+                                            .Where(User_Info => User_Info.user_Id == id)
+                                            .Select(User_Info => User_Info)
+                                            .FirstOrDefault());
+                    employeeToUpdate.status = "INACTIVE";
+                    int save = db.SaveChanges();
+                    return Ok(save);
+                }
+
+                return Ok(result);
+
             }
             catch (Exception ex)
             {
@@ -137,17 +227,32 @@ namespace CSM.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPut]
         [Route("api/Admin/GetEmployeeDetails/{id}")]
-        public async Task<IHttpActionResult> GetEmployeeDetails(int id)
+        public async Task<IHttpActionResult> GetEmployeeDetails(int id,[FromBody] CheckToken token)
         {
             try
             {
-                var employeeDetails = await Task.Run(() => db.User_Info.ToList()
-                                       .Where(User_Info => User_Info.user_Id == id)
-                                       .Select(User_Info => User_Info)
-                                       .FirstOrDefault());
-                return Ok(employeeDetails);
+                var user = await Task.Run(() => db.User_Info.ToList()
+                     .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                     .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var employeeDetails = await Task.Run(() => db.User_Info.ToList()
+                                               .Where(User_Info => User_Info.user_Id == id)
+                                               .Select(User_Info => User_Info)
+                                               .FirstOrDefault());
+                        return Ok(employeeDetails);
+                }
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -159,21 +264,37 @@ namespace CSM.Controllers
 
         [HttpPut]
         [Route("api/Admin/UpdateEmployeeDetails/{id}")]
-        public async Task<IHttpActionResult> UpdateEmployee(int id, [FromBody] User_Info user)
+        public async Task<IHttpActionResult> UpdateEmployee(int id, [FromBody] EmployeeData user)
         {
             try
             {
-                var employeeToUpdate = await Task.Run(() => db.User_Info.ToList()
-                    .Where(User_Info => User_Info.user_Id == id)
-                    .FirstOrDefault());
-                employeeToUpdate.first_name = user.first_name;
-                employeeToUpdate.last_name = user.last_name;
-                employeeToUpdate.address = user.address;
-                employeeToUpdate.mobile = user.mobile;
-                employeeToUpdate.email = user.email;
-                employeeToUpdate.status = user.status;
-                int result = db.SaveChanges();
+                var loginuser = await Task.Run(() => db.User_Info.ToList()
+                     .Where(u => u.user_Id == user.data.user_id && u.token == user.data.token)
+                     .FirstOrDefault());
+
+                if (loginuser == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(user.data.token);
+
+                if (result == "VALID")
+                {
+                    var employeeToUpdate = await Task.Run(() => db.User_Info.ToList()
+                                                    .Where(User_Info => User_Info.user_Id == id)
+                                                    .FirstOrDefault());
+                    employeeToUpdate.first_name = user.user.first_name;
+                    employeeToUpdate.last_name = user.user.last_name;
+                    employeeToUpdate.address = user.user.address;
+                    employeeToUpdate.mobile = user.user.mobile;
+                    employeeToUpdate.email = user.user.email;
+                    employeeToUpdate.status = user.user.status;
+                    int save = db.SaveChanges();
+                    return Ok(save);
+                }
+
                 return Ok(result);
+
             }
             catch (Exception ex)
             {
@@ -185,19 +306,72 @@ namespace CSM.Controllers
 
         [HttpPost]
         [Route("api/Admin/AddEmployeeDetails")]
-        public async Task<IHttpActionResult> AddEmployeeDetails([FromBody] EmployeeData data)
+        public async Task<IHttpActionResult> AddEmployeeDetails([FromBody] EmployeeData emp)
         {
             try
             {
-                User_Info newUser = new User_Info();
-                newUser = data.user;
-                newUser.status = "ACTIVE";
-                newUser.role_id = await Task.Run(() => db.Roles.ToList()
-                                       .Where(Roles => Roles.role_name == data.role_name)
-                                       .Select(Roles => Roles.role_id)
-                                       .FirstOrDefault());
-                db.User_Info.Add(newUser);
-                int result = db.SaveChanges();
+
+                var user = await Task.Run(() => db.User_Info.ToList()
+                                     .Where(u => u.user_Id == emp.data.user_id && u.token == emp.data.token)
+                                     .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+                string result = tokenizer.validateToken(emp.data.token);
+
+                if (result == "VALID")
+                {
+                    User_Info newUser = new User_Info();
+                    newUser = emp.user;
+                    newUser.status = "ACTIVE";
+                    newUser.role_id = await Task.Run(() => db.Roles.ToList()
+                                            .Where(Roles => Roles.role_name == emp.role_name)
+                                            .Select(Roles => Roles.role_id)
+                                            .FirstOrDefault());
+                    db.User_Info.Add(newUser);
+                    int save = db.SaveChanges();
+                    return Ok(save);
+                }
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/Admin/GetCustomerCities")]
+        public async Task<IHttpActionResult> GetCustomerCities([FromBody]CheckToken token)
+        {
+            try
+            {
+
+                var user = await Task.Run(() => db.User_Info.ToList()
+                                     .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                                     .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var cities = await Task.Run(() => db.User_Info.ToList()
+                                        .Where(User => User.role_id == 4)
+                                        .Select(User => User.address)
+                                        .Distinct());
+                    return Ok(cities);
+
+                }
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -208,17 +382,32 @@ namespace CSM.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("api/Admin/GetCustomerCities")]
-        public async Task<IHttpActionResult> GetCustomerCities()
+
+        [HttpPost]
+        [Route("api/Admin/GetAllCustomers")]
+        public async Task<IHttpActionResult> GetCustomers([FromBody] CheckToken token)
         {
             try
             {
-                var cities = await Task.Run(() => db.User_Info.ToList()
-                                .Where(User => User.role_id == 4)
-                                .Select(User => User.address)
-                                .Distinct());
-                return Ok(cities);
+                var user = await Task.Run(() => db.User_Info.ToList()
+                     .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                     .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var customers = await Task.Run(() => db.User_Info.ToList()
+                                               .Where(User => User.role_id == 4)
+                                               .Select(User => User));
+                    return Ok(customers);
+                }
+                return Ok(result);
+
             }
             catch (Exception ex)
             {
@@ -229,38 +418,35 @@ namespace CSM.Controllers
         }
 
 
-        [HttpGet]
-        [Route("api/Admin/GetCustomers")]
-        public async Task<IHttpActionResult> GetCustomers()
-        {
-            try
-            {
-                var customers = await Task.Run(() => db.User_Info.ToList()
-                                           .Where(User => User.role_id == 4)
-                                           .Select(User => User));
-                return Ok(customers);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception for debugging purposes
-                Console.WriteLine(ex + "An error occurred while processing the request.");
-                return InternalServerError(ex);
-            }
-        }
 
-
-
-        [HttpGet]
+        [HttpPut]
         [Route("api/Admin/GetCustomers/{id}")]
-        public async Task<IHttpActionResult> GetCustomers(string id)
+        public async Task<IHttpActionResult> GetCustomers(string id, [FromBody] CheckToken token)
         {
             try
             {
+                var user = await Task.Run(() => db.User_Info.ToList()
+                     .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                     .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
                 var customers = await Task.Run(() => db.User_Info.ToList()
-                                .Where(User => id == User.address && User.role_id == 4)
-                                .Select(User => User)
-                                .ToList());
-                return Ok(customers);
+                                    .Where(User => id == User.address && User.role_id == 4)
+                                    .Select(User => User)
+                                    .ToList());
+                    return Ok(customers);
+
+                }
+
+                return Ok(result);
+
             }
             catch (Exception ex)
             {
@@ -269,6 +455,85 @@ namespace CSM.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [HttpPost]
+        [Route("api/Admin/GetMyProfile")]
+        public async Task<IHttpActionResult> GetMyProfile([FromBody] CheckToken token)
+        {
+            try
+            {
+                var user = await Task.Run(() => db.User_Info.ToList()
+                     .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                     .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    return Ok(user);
+                }
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
+
+
+
+
+        [HttpPut]
+        [Route("api/Admin/SaveMyProfile/{id}")]
+        public async Task<IHttpActionResult> SaveMyProfile(int id, [FromBody] EmployeeData user)
+        {
+            try
+            {
+                var loginuser = await Task.Run(() => db.User_Info.ToList()
+                     .Where(u => u.user_Id == user.data.user_id && u.token == user.data.token)
+                     .FirstOrDefault());
+
+                if (loginuser == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(user.data.token);
+
+                if (result == "VALID")
+                {
+                    var employeeToUpdate = await Task.Run(() => db.User_Info.ToList()
+                                                    .Where(User_Info => User_Info.user_Id == id)
+                                                    .FirstOrDefault());
+                    employeeToUpdate.first_name = user.user.first_name;
+                    employeeToUpdate.last_name = user.user.last_name;
+                    employeeToUpdate.address = user.user.address;
+                    employeeToUpdate.mobile = user.user.mobile;
+                    SHA512Encryption sha512 = new SHA512Encryption();
+                    string encrypt = sha512.Encode(user.user.password);
+                    user.user.password = encrypt;
+                    employeeToUpdate.password = user.user.password;
+                    int save = db.SaveChanges();
+                    return Ok(save);
+                }
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
+
 
     }
 }

@@ -11,8 +11,8 @@ namespace CSM.Models
 {
     public class JWTTokenizer
     {
-        public string Token { get; set; }
-
+       
+        private string secretKey = "Sunbeam";
         public string GenerateToken(string data, TimeSpan expirationTime)
         {
             var payload = new Dictionary<string, object>
@@ -22,14 +22,12 @@ namespace CSM.Models
                 { "time", DateTimeOffset.UtcNow.ToUnixTimeSeconds()},
                 { "exp", (long)DateTime.UtcNow.Add(expirationTime).Subtract(new DateTime(1970, 1, 1)).TotalSeconds}
             };
-            X509Certificate2 certificate = new X509Certificate2();
 
-            IJwtAlgorithm algorithm = new RS256Algorithm(certificate);
+            IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
             IJsonSerializer serializer = new JsonNetSerializer();
             IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
             IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
-            var privateKey = certificate.GetRSAPrivateKey();
-            var token = encoder.Encode(payload, privateKey, null);
+            var token = encoder.Encode(payload, secretKey);
             return token;
         }
 
@@ -37,14 +35,13 @@ namespace CSM.Models
         {
             try
             {
-                X509Certificate2 certificate = new X509Certificate2();
+                IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
                 IJsonSerializer serializer = new JsonNetSerializer();
                 IDateTimeProvider provider = new UtcDateTimeProvider();
                 IJwtValidator validator = new JwtValidator(serializer, provider);
                 IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
-                IJwtAlgorithm algorithm = new RS256Algorithm(certificate);
                 IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder, algorithm);
-                var json = decoder.Decode(token);
+                var json = decoder.Decode(token, secretKey, verify: true);
                 if (json != null)
                 {
                     return "VALID";

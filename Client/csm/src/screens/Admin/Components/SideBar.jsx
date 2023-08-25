@@ -22,6 +22,9 @@ function SideBar({toggleComponent}) {
     toggleComponent("Reports");
   };
 
+  const toggleMyProfile = () => {
+    toggleComponent("MyProfile");
+  };
 
 
   return (<>
@@ -124,7 +127,8 @@ function SideBar({toggleComponent}) {
         <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
           <li className="nav-item">
             <a className="nav-link d-flex align-items-center "
-            style={{marginTop:"10px", marginLeft:"50px", color:"#000", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+            style={{marginTop:"10px", marginLeft:"50px", color:"#000", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}
+            onClick={toggleMyProfile}>
               My Profile
             </a>
           </li>

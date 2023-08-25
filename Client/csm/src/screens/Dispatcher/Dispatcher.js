@@ -5,7 +5,7 @@ import OrderSummary from "./OrderSummary";
 import NewOrder from "./NewOrder";
 import DispatcherEmployeeDirectory from "./DispatcherEmployeeDirectory";
 import RaisedTickets from "./RaisedTickets";
-import Tracking from "../Tracking";
+import Tracking from "../Components/Tracking";
 import Settings from "./Settings";
 import NavBarProtected from "../Components/NavBarProtected";
 
