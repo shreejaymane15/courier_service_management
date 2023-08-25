@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+  import { useEffect, useState } from "react";
 import axios from "axios";
+import { createUrl } from "../../utils/utils";
 
-function COrders() {
+function COrders({toggleComponent}) {
    
   var [orders, setOrders] = useState([]);
   var [selectedFilter, setSelectedFilter] = useState("ALL");
@@ -22,27 +23,12 @@ function COrders() {
 
   useEffect(() => {
     getOrders();
-    // getStatus();
   },[]);
 
   useEffect(() => {
     console.log(selectedFilter);
     getOrders();
   },[selectedFilter]);
-
-
-
-//   function getStatus(){
-//     axios.get("http://localhost:58447/api/Customer/GetStatus")
-//     .then((response) => {
-//       debugger;
-//       var responseData = response.data;
-//       setStatus(responseData);
-//     })
-//     .catch(error => {
-//       console.log(error);
-//     })
-//   }
 
     
   function getOrders(){
@@ -82,6 +68,12 @@ function COrders() {
 //     ));
 //   }
 
+const AddOrder = () =>{
+  debugger;
+  toggleComponent("Add");
+} 
+
+
 
 
   const renderOrders = () =>
@@ -120,6 +112,13 @@ function COrders() {
         <div>
           <h2>My Orders</h2>
         </div>
+        <div style={{display:"flex", flexDirection:"row" , alignItems:"center", justifyContent:"end"}}> 
+          <div style={{margin:"20px"}}>
+            <button className="btn btn-primary" 
+            style={{paddingLeft:"20px", paddingRight:"20px"}} 
+            onClick={AddOrder}>
+            Create Order</button>
+          </div>
         <div>
         <select onChange={handleFilterChange}>
           <option value="ALL">All</option>
@@ -129,6 +128,7 @@ function COrders() {
           {/* {renderOption()} */}
         </select>
         </div>
+      </div>
       </div>
       <table className="table table-bordered">
         {renderHeader()}

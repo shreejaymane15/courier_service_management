@@ -5,8 +5,11 @@ import { useState } from "react";
 import COrders from "./COrders";
 import Addresses from "./Addresses";
 import MyProfile from "./MyProfile";
-import Support from "./Support";
+import ComplaintSupport from "./ComplaintSupport";
+import Add from "./Add";
 import AccountSettings from "./AccountSettings";
+//import { AddOrder } from "../services/CustomerService";
+//import { AddNewOrder } from "../services/CustomerService";
 
 
 function Customer() {
@@ -19,11 +22,12 @@ function Customer() {
   
     const componentMapping = {
       Dashboard: <Dashboard />,
-      COrders: <COrders/>,
+      COrders: <COrders toggleComponent={toggleComponent}/>,
       Addresses: <Addresses/>,
       MyProfile: <MyProfile/>,
       AccountSettings: <AccountSettings />,
-      Support: <Support />,
+      Add:<Add toggleComponent={toggleComponent}/>,
+      ComplaintSupport: <ComplaintSupport/>,
     };
 
 
