@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getCitiesAPI, getOrdersAPI } from "../Services/AdminService";
 import {toast} from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from "../../utils/GlobalStates";
 
 
 function Orders() {
@@ -9,6 +10,7 @@ function Orders() {
   var [orders, setOrders] = useState([]);
   var [selectedFilter, setSelectedFilter] = useState("");
   var [cities, setCities] = useState([]);
+  var [authState, setAuthState] = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -26,12 +28,6 @@ function Orders() {
   };
 
 
-  const id = sessionStorage.getItem("user_id");
-  const token = sessionStorage.getItem("token");
-  const data = {
-    user_id : id,
-    token :token
-  }
 
 
   useEffect(() => {
@@ -47,11 +43,11 @@ function Orders() {
 
   const getOrders = async(selectedFilter) => {
     debugger;
-    const response = await getOrdersAPI(selectedFilter, data);
+    const response = await getOrdersAPI(selectedFilter, authState);
     if(response.status == 200){
       if(response.data == "EXPIRED" || response.data == "INVALID"){
         navigate("/login");
-        toast.warning("Session Time Expired");
+        // toast.warning("Session Time Expired");
       }
       else{
         setOrders(response.data);
@@ -64,11 +60,11 @@ function Orders() {
 
   
   const getCities = async() => {
-    const response = await getCitiesAPI(data);
+    const response = await getCitiesAPI(authState);
     if(response.status == 200){
       if(response.data == "EXPIRED" || response.data == "INVALID"){
         navigate("/login");
-        // toast.warning("Session Time Expired");
+        toast.warning("Session Time Expired");
       }
       else{
         setCities(response.data);

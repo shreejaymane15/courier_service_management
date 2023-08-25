@@ -1,8 +1,9 @@
 import { GoogleMap, InfoWindow, Marker, useLoadScript } from "@react-google-maps/api";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "../css/Map.css"
 import NavBar from "./NavBar";
-
+import { AuthContext } from "../utils/GlobalStates";
+import NavBarProtected from "./NavBarProtected";
 
 
 
@@ -21,6 +22,10 @@ function HubLocation(){
       { address: "Shivaji Nagar", lat: 18.5314, lng: 73.8446 },
       { address: "Baner", lat: 18.5642, lng: 73.7769 },
     ];
+
+    var [authState, setAuthState] = useContext(AuthContext);
+    const isAuthenticated = authState.id !== null && authState.token !== null; 
+    
   
     const onMapLoad = (map) => {
       setMapRef(map);
@@ -36,7 +41,7 @@ function HubLocation(){
     };
 
     return (<>
-        <NavBar/>
+        {isAuthenticated ? <NavBarProtected/> : <NavBar />}
         <div style={{marginTop:"10%", textAlign:"center"}}>
         <h4>Find an SwiftTransit authorized service center near you</h4>
         </div>

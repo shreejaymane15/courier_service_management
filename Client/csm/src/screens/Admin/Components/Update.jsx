@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { GetEmployeeDetailsAPI, UpdateEmployeeDetailsAPI } from "../Services/AdminService";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from "../../utils/GlobalStates";
 
 function Update({id, updateData, toggleComponent}) {
 
   var [user, setUser] = useState({first_name: "", last_name: "", email:"", address: "", mobile: "", status:""});
-
+  var [authState, setAuthState] = useContext(AuthContext);
 
   const navigate = useNavigate();
     
@@ -36,7 +37,7 @@ function Update({id, updateData, toggleComponent}) {
 
     const GetEmployeeDetails = async() =>{
       debugger;
-      let response = await GetEmployeeDetailsAPI(id,data);
+      let response = await GetEmployeeDetailsAPI(id,authState);
       if(response.status == 200){
         if(response.data == "EXPIRED" || response.data == "INVALID"){
           navigate("/login");
@@ -53,7 +54,7 @@ function Update({id, updateData, toggleComponent}) {
 
     const UpdateEmployeeDetails = async() =>{
         debugger;
-        let response = await UpdateEmployeeDetailsAPI(id, user, data)
+        let response = await UpdateEmployeeDetailsAPI(id, user, authState)
         if(response.status == 200){
           if(response.data == "EXPIRED" || response.data == "INVALID"){
             navigate("/login");

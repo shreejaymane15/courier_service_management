@@ -13,10 +13,13 @@ import Tracking from "./Tracking"
 import '../css/App.css'
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+import { AuthProvider } from "../utils/GlobalStates";
+
 
 function Controller() {
     return (
         <BrowserRouter>
+        <AuthProvider>
             <Routes>
                 <Route path='/' element={<Home/>}/>
                 <Route path='/login' element={<Login/>}/>
@@ -33,6 +36,7 @@ function Controller() {
             <div>
                 <ToastContainer/>
             </div>
+        </AuthProvider>
         </BrowserRouter>
     );
 }

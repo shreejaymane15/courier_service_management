@@ -1,37 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import '../css/Tracking.css'
 import NavBar from './NavBar';
 import NavBarProtected from './NavBarProtected';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { getTraackingDetailsAPI } from '../Services/TrackingService';
+import { AuthContext } from '../utils/GlobalStates';
+
+
 
 function Tracking() {
 
 
 const [orders, setOrders] = useState([]);
+var [authState, setAuthState] = useContext(AuthContext);
+
+  
 
 
 const navigate = useNavigate();
+const isAuthenticated = authState.id !== null && authState.token !== null; 
 
-const id = sessionStorage.getItem("user_id");
-const token = sessionStorage.getItem("token");
-const isAuthenticated = id !== null && token !== null; 
-
-
-
-
-const data = {
-  user_id : id,
-  token :token
-}
 
 
   const getTrackingDetails = async(event) => {
     debugger;
     event.preventDefault(); 
     var tracking_id = event.target.elements.tracking.value;
-    const response = await getTraackingDetailsAPI(tracking_id, data);
+    const response = await getTraackingDetailsAPI(tracking_id, authState);
     if(response.status == 200){
       if(response.data == "EXPIRED" || response.data == "INVALID"){
         navigate("/login");

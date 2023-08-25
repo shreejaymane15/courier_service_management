@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import NavBar from "./NavBar";
 import NavBarProtected from "./NavBarProtected";
-
+import { AuthContext } from "../utils/GlobalStates";
 
 function ContactUs() {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
+    var [authState, setAuthState] = useContext(AuthContext);
 
-    const id = sessionStorage.getItem("user_id");
-    const token = sessionStorage.getItem("token");
-    const isAuthenticated = id !== null && token !== null; 
+  
+  const isAuthenticated = authState.id !== null && authState.token !== null; 
+  
 
 
     const handleSubmit = (e) => {

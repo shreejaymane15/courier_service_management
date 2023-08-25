@@ -3,6 +3,9 @@ import Carousel from "./Carousel";
 import NavBar from "./NavBar";
 import "../css/Home.css";
 import NavBarProtected from "./NavBarProtected";
+import { useContext } from "react";
+import { AuthContext } from "../utils/GlobalStates";
+
 
 
 function Home() {
@@ -21,9 +24,9 @@ function Home() {
         navigate('/');
     }
 
-    const id = sessionStorage.getItem("user_id");
-    const token = sessionStorage.getItem("token");
-    const isAuthenticated = id !== null && token !== null; 
+    var [authState, setAuthState] = useContext(AuthContext);  
+    const isAuthenticated = authState.id !== null && authState.token !== null; 
+  
 
 
 

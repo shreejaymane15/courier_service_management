@@ -86,14 +86,18 @@ namespace CSM.Controllers
 
         [HttpPost]
         [Route("AddOrder")]
-        public IHttpActionResult AddOrder([FromBody] Order order)
+        public IHttpActionResult AddOrder([FromBody] EmployeeData data)
         {
             try
             {
-                order.status = "In Transit"; 
-                order.personnel_id = 3;
+                data.order.customer_id = data.data.user_id;
+                data.order.status = "In Transit";
+                data.order.personnel_id = (from Delivery in dbt.Delivery_Personnel.ToList()
+                               where Delivery.location.ToUpper() == data.order.receiver_address.ToUpper()
+                               select Delivery.personnel_id).FirstOrDefault();
+
               
-                dbt.Orders.Add(order);
+                dbt.Orders.Add(data.order);
                 int result = dbt.SaveChanges();
                 return Ok(result);
             }

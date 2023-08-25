@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import '../css/App.css';
 import { useNavigate } from 'react-router-dom';
 import { loginAPI } from '../Services/LoginServices';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../utils/GlobalStates';
+
 
 function Login() {
 
   const navigate = useNavigate();
   var [email, setEmail] = useState("");
   var [password, setPassword] = useState("");
+  const [authState,setAuthState] = useContext(AuthContext);
   
   const GoToSignUp = () =>{
     navigate("/register");
@@ -21,8 +24,13 @@ function Login() {
     };
     const response = await loginAPI(user);
     if(response.status == 200){
-      sessionStorage.setItem("user_id",response.data.user_id);
-      sessionStorage.setItem("token",response.data.token);
+      setAuthState({
+        ...authState,
+        user_id:response.data.user_id,
+        token:response.data.token
+      });
+      // sessionStorage.setItem("user_id",response.data.user_id);
+      // sessionStorage.setItem("token",response.data.token);
       if (response.data != 0) {
         switch (response.data.role_id) {
           case 1:

@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
-import { getCitiesAPI, getCustomerCitiesAPI, getCustomersAPI, getOrdersAPI } from "../Services/AdminService";
+import { useEffect, useState, useContext } from "react";
+import { getCustomerCitiesAPI, getCustomersAPI} from "../Services/AdminService";
 import {toast} from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../utils/GlobalStates";
+
 
 function Customer() {
    
@@ -9,14 +11,7 @@ function Customer() {
   var [selectedFilter, setSelectedFilter] = useState("ALL");
   var [cities, setCities] = useState([]);
   const navigate = useNavigate();
-
-
-  const id = sessionStorage.getItem("user_id");
-  const token = sessionStorage.getItem("token");
-  const data = {
-    user_id : id,
-    token :token
-  }
+  const[authState, setAuthState] = useContext(AuthContext);
 
   const headerMapping = {
     'Customer ID': 'user_Id',
@@ -42,7 +37,7 @@ function Customer() {
 
   const getCustomers = async(selectedFilter) => {
     debugger;
-    const response = await getCustomersAPI(selectedFilter, data);
+    const response = await getCustomersAPI(selectedFilter, authState);
     if(response.status == 200){
       if(response.data == "EXPIRED" || response.data == "INVALID"){
         navigate("/login");
@@ -59,7 +54,7 @@ function Customer() {
 
   
   const getCustomerCities = async() => {
-    const response = await getCustomerCitiesAPI(data);
+    const response = await getCustomerCitiesAPI(authState);
     if(response.status == 200){
       if(response.data == "EXPIRED" || response.data == "INVALID"){
         navigate("/login");

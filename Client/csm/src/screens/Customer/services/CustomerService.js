@@ -1,11 +1,12 @@
 import axios from "axios";
 import { createUrl } from "../../utils/utils";
 
-export async function AddOrderAPI(order){
+export async function AddOrderAPI(order, authState){
     try{
         debugger;
+        let data = {data: authState, order: order}
         let url = createUrl("/api/Customer/AddOrder");
-        const response = await axios.post(url, order);
+        const response = await axios.post(url, data);
         return response;  
     }catch(ex){
         console.log(ex);
@@ -13,11 +14,11 @@ export async function AddOrderAPI(order){
     }
 }
 
-export async function getPackageTypeAPI(){
+export async function getPackageTypeAPI(data){
     try{
-        // debugger;
+        debugger;
         let url = createUrl("/api/Customer/GetPackageType");
-        const response = await axios.get(url);
+        const response = await axios.post(url, data);
         return response;
     }catch(ex){
         console.log(ex);

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { deleteEmployeeAPI, getEmployeesAPI, getRolesAPI } from "../Services/AdminService";
 import {toast} from 'react-toastify';
 import {useNavigate} from 'react-router-dom';
+import { AuthContext } from "../../utils/GlobalStates";
 
 function EmployeeDirectory({toggleComponent, updateData}) {
   
@@ -9,17 +10,11 @@ function EmployeeDirectory({toggleComponent, updateData}) {
   var [selectedFilter, setSelectedFilter] = useState("ADMIN");
   var [deleteEmployeeId, setDeleteEmployeeId] = useState("");
   var [roles, setRoles] = useState([]);
-
+  var [authState, setAuthState] = useContext(AuthContext);
 
   const navigate = useNavigate();
 
 
-  const id = sessionStorage.getItem("user_id");
-  const token = sessionStorage.getItem("token");
-  const data = {
-    user_id : id,
-    token :token
-  }
 
 
   const headerMapping = {
@@ -55,7 +50,7 @@ function EmployeeDirectory({toggleComponent, updateData}) {
     const deleteEmployeeBtn = async(props) => {
       // debugger;
       let id = props.target.id;
-      let response = await deleteEmployeeAPI(id, data);
+      let response = await deleteEmployeeAPI(id, authState);
       if(response.status == 200){
         if(response.data == "EXPIRED" || response.data == "INVALID"){
           navigate("/login");
@@ -73,7 +68,7 @@ function EmployeeDirectory({toggleComponent, updateData}) {
 
     const loadEmployees = async(selectedFilter) => {
       // debugger;
-      let response = await getEmployeesAPI(selectedFilter, data);
+      let response = await getEmployeesAPI(selectedFilter, authState);
       if(response.status == 200){
         if(response.data == "EXPIRED" || response.data == "INVALID"){
           navigate("/login");
@@ -91,7 +86,7 @@ function EmployeeDirectory({toggleComponent, updateData}) {
 
     const loadRoles = async() => {
       // debugger;
-      let response = await getRolesAPI(data);
+      let response = await getRolesAPI(authState);
       if(response.status == 200){
         if(response.data == "EXPIRED" || response.data == "INVALID"){
           navigate("/login");

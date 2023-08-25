@@ -1,13 +1,15 @@
-  import { useEffect, useState } from "react";
+  import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { createUrl } from "../../utils/utils";
+import { AuthContext } from "../../utils/GlobalStates";
+
 
 function COrders({toggleComponent}) {
    
   var [orders, setOrders] = useState([]);
   var [selectedFilter, setSelectedFilter] = useState("ALL");
 //   var [status, setStatus] = useState([]);
-
+  var [authState, setAuthState] = useContext(AuthContext);
 
   const headerMapping = {
     'Order ID': 'order_id',
@@ -34,7 +36,7 @@ function COrders({toggleComponent}) {
   function getOrders(){
     debugger;
     if(selectedFilter != "ALL"){
-      axios.post(`http://localhost:58447/api/Customer/GetByStatus`,{Id: 3, Status: selectedFilter})
+      axios.post(`http://localhost:58447/api/Customer/GetByStatus`,{authState, Status: selectedFilter})
       .then((response) => {
       debugger;
       var responseData = response.data;
@@ -45,7 +47,7 @@ function COrders({toggleComponent}) {
       })
     }else if(selectedFilter == "ALL"){
       debugger;
-      axios.get(`http://localhost:58447/api/Customer/GetMyOrders/${3}`)
+      axios.get(`http://localhost:58447/api/Customer/GetMyOrders/${authState.user_id}`)
       .then((response) => {
       debugger;
       var responseData = response.data;

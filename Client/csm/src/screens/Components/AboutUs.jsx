@@ -1,14 +1,17 @@
+import { useContext } from "react";
 import NavBar from "./NavBar";
 import NavBarProtected from "./NavBarProtected";
-
-
-const id = sessionStorage.getItem("user_id");
-const token = sessionStorage.getItem("token");
-const isAuthenticated = id !== null && token !== null; 
+import { AuthContext } from "../utils/GlobalStates";
 
 
 function AboutUs() {
-    return (<>
+  
+  
+  var [authState, setAuthState] = useContext(AuthContext);
+  const isAuthenticated = authState.id !== null && authState.token !== null; 
+  
+  
+  return (<>
       {isAuthenticated ? <NavBarProtected /> : <NavBar />}
     <div>
       <section style={{ backgroundColor: '#f1f1f1', padding: '20px' }}>

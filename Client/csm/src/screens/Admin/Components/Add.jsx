@@ -1,20 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { AddEmployee, getRolesAPI } from "../Services/AdminService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../utils/GlobalStates";
 
 function Add({toggleComponent}) {
 
     var [user, setUser] = useState({first_name: "", last_name: "", email:"", password:"", address: "", mobile: ""});
     var [selectedFilter, setSelectedFilter] = useState("ADMIN");  
     var [roles, setRoles] = useState([]);
+    const[authState, setAuthState] = useContext(AuthContext);
 
-    const id = sessionStorage.getItem("user_id");
-    const token = sessionStorage.getItem("token");
-    const data = {
-      user_id : id,
-      token :token
-    }
   
     const navigate = useNavigate();
 
@@ -47,7 +43,7 @@ function Add({toggleComponent}) {
   
 
     const getRoles = async () => {
-      var response = await getRolesAPI(data);
+      var response = await getRolesAPI(authState);
       if(response.status == 200){
         if(response.data == "EXPIRED" || response.data == "INVALID"){
           navigate("/login");
@@ -65,6 +61,7 @@ function Add({toggleComponent}) {
   const Submit = async () =>{
     debugger;
     var role_name = selectedFilter;
+    var data = authState;
     var sentData = {data, user, role_name}
     const response = await AddEmployee(sentData);
     if(response.status == 200 && response.data != 0){

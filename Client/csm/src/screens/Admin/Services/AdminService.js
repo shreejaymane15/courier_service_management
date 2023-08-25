@@ -97,7 +97,7 @@ export async function UpdateEmployeeDetailsAPI(updateid, user, data){
 
 export async function AddEmployee(data){
     try{
-        // debugger;
+        debugger;
         let url = createUrl("/api/Admin/AddEmployeeDetails");
         const response = await axios.post(url, data);
         return response;  
@@ -120,11 +120,11 @@ export async function getCustomerCitiesAPI(data){
     }
 }
 
-export async function getCustomersAPI(selectedFilter, data){
+export async function getCustomersAPI(selectedFilter, authState){
     try{
         debugger;
         const url = selectedFilter != "ALL" ? createUrl(`/api/Admin/GetCustomers/${selectedFilter}`) : createUrl("/api/Admin/GetAllCustomers");
-        const response = selectedFilter != "ALL" ? await axios.put(url, data) : await axios.post(url, data);
+        const response = selectedFilter != "ALL" ? await axios.put(url, authState) : await axios.post(url, authState);
         return response;
     }catch(ex){
         console.log(ex);

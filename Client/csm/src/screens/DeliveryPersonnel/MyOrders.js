@@ -6,6 +6,10 @@ function MyOrders() {
   var [selectedFilter, setSelectedFilter] = useState("");
   var [cities, setCities] = useState([]);
 
+  const id = sessionStorage.getItem("user_id");
+  const token = sessionStorage.getItem("token");
+  
+
 
   const headerMapping = {
     'Order ID': 'order_id',
@@ -16,8 +20,6 @@ function MyOrders() {
     'Package Count': 'package_count',
     'Amount': 'amount',
     'Status': 'status',
-    'Customer ID': 'customer_id',
-    'Personnel ID': 'personnel_id'
   };
 
 
@@ -46,10 +48,10 @@ function MyOrders() {
   }
 
     
-  function getOrders(){
+  const getOrders = () =>{
     debugger;
     // const filterParam = selectedFilter != "ALL" ? `/${selectedFilter}` : ``;
-    const url = `http://localhost:58447/api/DeliveryPersonnel/GetMyOrders/7`;
+    const url = `http://localhost:58447/api/DeliveryPersonnel/GetMyOrders/${id}`;
     axios.get(url)
     .then((response) => {
       debugger;
