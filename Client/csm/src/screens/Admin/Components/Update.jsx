@@ -1,10 +1,27 @@
 import { useEffect, useState } from "react";
 import { GetEmployeeDetailsAPI, UpdateEmployeeDetailsAPI } from "../Services/AdminService";
 import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 
 function Update({id, updateData, toggleComponent}) {
 
-    var [user, setUser] = useState({first_name: "", last_name: "", email:"", address: "", mobile: "", status:""});
+  var [user, setUser] = useState({first_name: "", last_name: "", email:"", address: "", mobile: "", status:""});
+
+
+  const navigate = useNavigate();
+    
+
+
+    const user_id = sessionStorage.getItem("user_id");
+    const token = sessionStorage.getItem("token");
+    const data = {
+      user_id : user_id,
+      token :token
+    }
+  
+
+
+
 
 
     useEffect (() =>{
@@ -19,9 +36,15 @@ function Update({id, updateData, toggleComponent}) {
 
     const GetEmployeeDetails = async() =>{
       debugger;
-      let response = await GetEmployeeDetailsAPI(id);
+      let response = await GetEmployeeDetailsAPI(id,data);
       if(response.status == 200){
-        setUser(response.data);
+        if(response.data == "EXPIRED" || response.data == "INVALID"){
+          navigate("/login");
+          toast.warning("Session Time Expired");
+        }
+        else{
+          setUser(response.data);
+        }
       }else{
         toast.error('Error while getting employee details')
       }
@@ -30,10 +53,16 @@ function Update({id, updateData, toggleComponent}) {
 
     const UpdateEmployeeDetails = async() =>{
         debugger;
-        let response = await UpdateEmployeeDetailsAPI(id, user)
+        let response = await UpdateEmployeeDetailsAPI(id, user, data)
         if(response.status == 200){
-          toggleComponent("EmployeeDirectory");
-          toast.success("Employee Details Updated Succeessfully");
+          if(response.data == "EXPIRED" || response.data == "INVALID"){
+            navigate("/login");
+            toast.warning("Session Time Expired");
+          }
+          else{
+            toggleComponent("EmployeeDirectory");
+            toast.success("Employee Details Updated Succeessfully");
+          }            
         }else{
           toast.error("Error Occured During Updating");
         }

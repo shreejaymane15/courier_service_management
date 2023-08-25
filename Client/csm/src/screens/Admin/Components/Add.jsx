@@ -1,12 +1,22 @@
 import { useEffect, useState } from "react";
 import { AddEmployee, getRolesAPI } from "../Services/AdminService";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Add({toggleComponent}) {
 
     var [user, setUser] = useState({first_name: "", last_name: "", email:"", password:"", address: "", mobile: ""});
     var [selectedFilter, setSelectedFilter] = useState("ADMIN");  
     var [roles, setRoles] = useState([]);
+
+    const id = sessionStorage.getItem("user_id");
+    const token = sessionStorage.getItem("token");
+    const data = {
+      user_id : id,
+      token :token
+    }
+  
+    const navigate = useNavigate();
 
     useEffect(() => {
       getRoles();
@@ -37,19 +47,35 @@ function Add({toggleComponent}) {
   
 
     const getRoles = async () => {
-      var response = await getRolesAPI();
-      setRoles(response.data);
+      var response = await getRolesAPI(data);
+      if(response.status == 200){
+        if(response.data == "EXPIRED" || response.data == "INVALID"){
+          navigate("/login");
+          toast.warning("Session Time Expired");
+        }
+        else{
+          setRoles(response.data);
+        }    
+      }else{
+        toast.error("Failed To Load Roles");
+      }
     }
 
 
   const Submit = async () =>{
     debugger;
     var role_name = selectedFilter;
-    var data = {user, role_name}
-    const response = await AddEmployee(data);
+    var sentData = {data, user, role_name}
+    const response = await AddEmployee(sentData);
     if(response.status == 200 && response.data != 0){
-      toggleComponent("EmployeeDirectory");
-      toast.success("Employee Added Successfully");
+      if(response.data == "EXPIRED" || response.data == "INVALID"){
+        navigate("/login");
+        toast.warning("Session Time Expired");
+      }
+      else{
+        toggleComponent("EmployeeDirectory");
+        toast.success("Employee Added Successfully");
+      }  
     }else{
       toast.error("Failed To Add Employee");
     }
