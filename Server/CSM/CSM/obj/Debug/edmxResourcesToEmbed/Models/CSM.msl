@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Complaints">
       <EntityTypeMapping TypeName="CSMModel.Complaint">
         <MappingFragment StoreEntitySet="Complaint">
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
           <ScalarProperty Name="complaint_id" ColumnName="complaint_id" />
           <ScalarProperty Name="complaint1" ColumnName="complaint" />
           <ScalarProperty Name="status" ColumnName="status" />

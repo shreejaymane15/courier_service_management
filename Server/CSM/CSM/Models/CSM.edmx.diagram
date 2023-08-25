@@ -30,6 +30,7 @@
         <AssociationConnector Association="CSMModel.FK_Tracking_To_Order" ManuallyRouted="false" />
         <AssociationConnector Association="CSMModel.FK_Package_To_Package_Pricing" ManuallyRouted="false" />
         <AssociationConnector Association="CSMModel.FK_USER_TO_ROLE" ManuallyRouted="false" />
+        <AssociationConnector Association="CSMModel.FK_Complaint_ToTable" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

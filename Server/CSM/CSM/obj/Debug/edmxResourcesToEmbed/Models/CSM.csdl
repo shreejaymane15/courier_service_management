@@ -13,6 +13,8 @@
     <Property Name="customer_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Order" Relationship="Self.Fk_Complaint_To_Order" FromRole="Complaint" ToRole="Order" />
     <NavigationProperty Name="User_Info" Relationship="Self.Fk_Complaint_To_User_Info" FromRole="Complaint" ToRole="User_Info" />
+    <Property Name="role_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Role" Relationship="CSMModel.FK_Complaint_ToTable" FromRole="Complaint" ToRole="Role" />
   </EntityType>
   <EntityType Name="Delivery_Personnel">
     <Key>
@@ -110,6 +112,7 @@
     <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="role_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="User_Info" Relationship="Self.FK_USER_TO_ROLE" FromRole="Role" ToRole="User_Info" />
+    <NavigationProperty Name="Complaints" Relationship="CSMModel.FK_Complaint_ToTable" FromRole="Role" ToRole="Complaint" />
   </EntityType>
   <EntityType Name="Tracking">
     <Key>
@@ -142,7 +145,7 @@
     <NavigationProperty Name="Feedbacks" Relationship="Self.Fk_Feedback_To_User_Info" FromRole="User_Info" ToRole="Feedback" />
     <NavigationProperty Name="Orders" Relationship="Self.FK_Order_To_User_Info" FromRole="User_Info" ToRole="Order" />
     <NavigationProperty Name="Role" Relationship="Self.FK_USER_TO_ROLE" FromRole="User_Info" ToRole="Role" />
-    <Property Name="status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="Fk_Complaint_To_Order">
     <End Role="Order" Type="Self.Order" Multiplicity="1" />
@@ -380,5 +383,21 @@
       <End Role="Role" EntitySet="Roles" />
       <End Role="User_Info" EntitySet="User_Info" />
     </AssociationSet>
+    <AssociationSet Name="FK_Complaint_ToTable" Association="CSMModel.FK_Complaint_ToTable">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="Complaint" EntitySet="Complaints" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK_Complaint_ToTable">
+    <End Type="CSMModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="CSMModel.Complaint" Role="Complaint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="role_id" />
+      </Principal>
+      <Dependent Role="Complaint">
+        <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
