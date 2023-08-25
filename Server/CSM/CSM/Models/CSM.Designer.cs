@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Shreejay\CDAC\Project\courier_service_management\Server\CSM\CSM\Models\CSM.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\courier_service_management\Server\CSM\CSM\Models\CSM.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

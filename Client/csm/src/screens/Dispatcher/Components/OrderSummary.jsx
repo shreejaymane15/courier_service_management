@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import {getOrdersAPI, getHubLocationsAPI} from "../Services/DispatcherService";
+import {toast} from 'react-toastify';
 
-function NewOrder() {
+function OrderSummary() {
    
   var [orders, setOrders] = useState([]);
+  var [selectedFilter, setSelectedFilter] = useState("");
+  var [hubLocations, setHubLocations] = useState([]);
  
   const headerMapping = {
     'Order ID': 'order_id',
@@ -20,22 +23,31 @@ function NewOrder() {
 
 
   useEffect(() => {
-    getOrders();
+    loadOrders(selectedFilter);
+    getHubLocations();
   },[]);
 
-    
-  function getOrders(){
-    debugger;
-    const url = `http://localhost:58447/api/Dispatcher/GetOrders`;
-    axios.get(url)
-    .then((response) => {
-      debugger;
-      var responseData = response.data;
-      setOrders(responseData);
-    })
-    .catch(error => {
-      console.log(error);
-    })
+  useEffect(() => {
+    loadOrders(selectedFilter);
+  },[selectedFilter]);
+
+  const loadOrders = async(selectedFilter) => {
+    // debugger;
+    let response = await getOrdersAPI(selectedFilter);
+    if(response.status == 200){
+      setOrders(response.data);
+    }else{
+      toast.error('Error while calling get api')
+    }  
+  }
+  
+  const getHubLocations = async() => {
+    const response = await getHubLocationsAPI();
+    if(response.status == 200){
+      setHubLocations(response.data);
+    }else{
+      toast.error('Error while calling getcities api')
+    }
   }
 
 
@@ -79,4 +91,4 @@ function NewOrder() {
 </>  );
 
 }
-export default NewOrder;
+export default OrderSummary;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-
+import {getEmployeesAPI} from "../Services/DispatcherService";
+import {toast} from 'react-toastify';
 
 function DispatcherEmployeeDirectory() {
    
@@ -18,25 +18,20 @@ function DispatcherEmployeeDirectory() {
   
   
     useEffect(() => {
-      getEmployees();
+      loadEmployees();
     },[]);
-
-      
-    function getEmployees(props){
-      debugger;
-      var id = props.target.id;
-      const url = `http://localhost:58447/api/Dispatcher/GetEmployees/${id}`;  
-      axios.get(url)
-      .then((response) => {
-        debugger;
-        var responseData = response.data;
-        setEmployees(responseData);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    }
   
+    const loadEmployees = async(props) => {
+        // debugger;
+        let id = props.target.id;
+        let response = await getEmployeesAPI(id);
+        if(response.status == 200){
+          setEmployees(response.data);
+        }else{
+          toast.error('Error while calling get api')
+        }  
+      }  
+
     const renderEmployees = () =>
       employees.map(employee => (
         <tr key={employee.user_id}>
