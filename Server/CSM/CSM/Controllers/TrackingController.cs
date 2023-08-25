@@ -1,56 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CSM.Models;
+using System;
 using System.Linq;
-using System.Runtime.Remoting.Services;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
+using System.Web.Razor.Tokenizer;
 
 namespace CSM.Controllers
 {
     public class TrackingController : ApiController
     {
-        /*        // GET: Tracking
-                public ActionResult Index()
-                {
-                    return View();
-                }
-            }
-        }
 
-
-
-
-        [Route("api/[controller]")]
-        [ApiController]
-        public class TrackingController : ControllerBase
+        [HttpPut]
+        [Route("GetShipmentsDetails/{trackingNumber}")]
+        public async Task<IHttpActionResult> GetShipmentDetails(int trackingNumber, [FromBody] CheckToken token)
         {
-            private readonly ITrackingService _trackingService; // Interface for your tracking service
+            CSMEntities1 db = new CSMEntities1 ();
+            JWTTokenizer tokenizer = new JWTTokenizer();
 
-            public TrackingController(ITrackingService trackingService)
+            try
             {
-                _trackingService = trackingService;
-            }
+                var user = await Task.Run(() => db.User_Info
+                                    .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                                    .FirstOrDefault());
 
-            [HttpGet("shipments/{trackingNumber}")]
-            public async Task<IActionResult> GetShipmentDetails(string trackingNumber)
-            {
-                try
+                if (user == null)
+                    return Ok("INVALID");
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
                 {
-                    var shipment = await _trackingService.GetShipmentDetailsAsync(trackingNumber);
-                    if (shipment == null)
-                    {
-                        return NotFound("Shipment not found.");
-                    }
-
+                    var shipment = await Task.Run(() => db.Trackings.ToList()
+                                             .Where(Track => Track.tracking_id == trackingNumber)
+                                             .FirstOrDefault());
                     return Ok(shipment);
                 }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, $"An error occurred: {ex.Message}");
-                }
+
+                return Ok(result);
             }
-        */
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex + " An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
     }
 }
