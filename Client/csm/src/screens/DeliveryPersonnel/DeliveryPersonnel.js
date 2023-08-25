@@ -3,8 +3,8 @@ import NavBarProtected from "../Components/NavBarProtected";
 import DpDashboard from "./DpDashboard";
 import {useState} from 'react';
 import MyOrders from "./MyOrders";
-import AccountSettings from "./AccountSettings";
 import AdminSupport from "./AdminSupport";
+import Complaints from "./Complaints";
 
 
 
@@ -21,7 +21,7 @@ function DeliveryPersonnel() {
       MyOrders: <MyOrders/>,
       // ScheduledOrders: <ScheduledOrders />,
       // DeliveredOrders: <DeliveredOrders />,
-      AccountSetting:< AccountSettings/>,
+      Complaints:< Complaints/>,
       AdminSupport:<AdminSupport/>
     };
 
