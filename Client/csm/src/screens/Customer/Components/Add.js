@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
-import { AddEmployee, getRolesAPI } from "../Services/AdminService";
+import { AddOrder, getPackageTypeAPI } from "../services/CustomerService";
 import { toast } from "react-toastify";
 
 function Add({toggleComponent}) {
 
-    var [user, setUser] = useState({first_name: "", last_name: "", email:"", password:"", address: "", mobile: ""});
-    var [selectedFilter, setSelectedFilter] = useState("ADMIN");  
-    var [roles, setRoles] = useState([]);
+    var [order, setOrder] = useState({receiver_name: "", receiver_email: "", receiver_mobile:"", receiver_address:"", package_type:""});
+    var [selectedFilter, setSelectedFilter] = useState("ALL");  
+    var [types, setType] = useState([]);
 
     useEffect(() => {
-      getRoles();
+      getPackageType();
     },[]);
 
-                                                                             
     const onTextChange = (args) =>{
-        var copy = {...user};
+        var copy = {...order};
         copy[args.target.name] = args.target.value;
-        setUser(copy);
+        setOrder(copy);
     }
 
 
@@ -28,30 +27,30 @@ function Add({toggleComponent}) {
 
 
     const renderOption = () => {
-      return roles.map(role => (
-        <option key={role} value={role}>
-          {role}
+      return order.map(order => (
+        <option key={order} value={order}>
+          {order}
         </option>
       ));
     }
   
 
-    const getRoles = async () => {
-      var response = await getRolesAPI();
-      setRoles(response.data);
+    const getPackageType = async () => {
+      var response = await getPackageTypeAPI();
+      setType(response.data);
     }
 
 
   const Submit = async () =>{
     debugger;
-    var role_name = selectedFilter;
-    var data = {user, role_name}
-    const response = await AddEmployee(data);
+    var package_type = selectedFilter;
+    var data = {order}
+    const response = await AddOrder(data);
     if(response.status == 200 && response.data != 0){
-      toggleComponent("EmployeeDirectory");
-      toast.success("Employee Added Successfully");
+      toggleComponent("COrders");
+      toast.success("Order Created Successfully");
     }else{
-      toast.error("Failed To Add Employee");
+      toast.error("Failed To Create Order");
     }
   }
     
@@ -60,10 +59,10 @@ function Add({toggleComponent}) {
     <div className="Auth-form-content col">
         <h3 className="Auth-form-title">Add User</h3>
     <div className="form-group mt-1">
-            <label>First Name</label>
+            <label>Receiver Name</label>
             <input
               type="text"
-              name="first_name"
+              name="receiver_name"
               className="form-control mt-1"
               placeholder="e.g James"
               onChange={onTextChange}
@@ -71,21 +70,32 @@ function Add({toggleComponent}) {
               />
           </div>
           <div className="form-group mt-1">
-            <label>Last Name</label>
+            <label>Receiver Email</label>
             <input
               type="text"
-              name="last_name"
+              name="receiver_email"
               className="form-control mt-1"
-              placeholder="e.g Doe"
+              placeholder="e.g dsd@gmail.com"
               onChange={onTextChange}
               required
               />
           </div>
           <div className="form-group mt-1">
-            <label>Address</label>
+            <label>Receiver Mobile</label>
+            <input
+              type="number"
+              name="receiver_mobile"
+              className="form-control mt-1"
+              placeholder="e.g 9978077092"
+              onChange={onTextChange}
+              required
+              />
+          </div>
+          <div className="form-group mt-1">
+            <label>Receiver Address</label>
             <input
               type="text"
-              name="address"
+              name="receiver_address"
               className="form-control mt-1"
               placeholder="e.g Sangli"
               onChange={onTextChange}
@@ -93,44 +103,24 @@ function Add({toggleComponent}) {
               />
           </div>
           <div className="form-group mt-1">
-            <label>Mobile Number</label>
+            <label>Package Count</label>
             <input
               type="number"
-              name="mobile"
+              name="package_count"
               className="form-control mt-1"
-              placeholder="e.g 9923130244"
+              placeholder="Package Count"
               onChange={onTextChange}
               required
               />
           </div>
           <div className="form-group mt-1">
-            <label>Email address</label>
+            <label>Package Type</label>
             <input
-              type="email"
-              name="email"
+              type="text"
+              name="type"
               className="form-control mt-1"
-              placeholder="Email Address"
+              placeholder="Type"
               onChange={onTextChange}
-              required
-              />
-          </div>
-          <div className="form-group mt-1">
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              className="form-control mt-1"
-              placeholder="Password"
-              onChange={onTextChange}
-              required
-              />
-          </div>
-          <div className="form-group mt-1">
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              className="form-control mt-1"
-              placeholder="Password"
               required
               />
           </div>
@@ -138,7 +128,7 @@ function Add({toggleComponent}) {
           </div>
           <div className="form-group mt-1">
            <div>
-            <label>Role</label>
+            <label>Type</label>
            </div>
            <div>
             <select onChange={handleFilterChange}>
@@ -153,7 +143,7 @@ function Add({toggleComponent}) {
             </button>
           </div>
           <div className="col-md-6">
-            <button type="submit" className="btn btn-danger btn-block" onClick={() => toggleComponent("EmployeeDirectory")}>
+            <button type="submit" className="btn btn-danger btn-block" onClick={() => toggleComponent("COrders")}>
               Cancel
             </button>
           </div>

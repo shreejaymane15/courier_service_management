@@ -17,8 +17,8 @@ function CustomerSideBar({toggleComponent}) {
   };
 
 
-  const toggleComplaints = () => {
-    toggleComponent("Support");
+  const toggleComplaintSupport = () => {
+    toggleComponent("ComplaintSupport");
   };
 
   const toggleSignOut = () => {
@@ -26,67 +26,70 @@ function CustomerSideBar({toggleComponent}) {
   };
 
     return (<>
-        <div className="sidebar border border-right col-md-12 p-0 bg-body-tertiary">
-      <div
-        className="offcanvas-lg offcanvas-end bg-body-tertiary"
-        tabIndex={-1}
-        id="sidebarMenu"
-        aria-labelledby="sidebarMenuLabel"
-      >
-        <div className="offcanvas-header">
-          <h5 className="offcanvas-title" id="sidebarMenuLabel">
-            Company name
-          </h5>
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="offcanvas"
-            data-bs-target="#sidebarMenu"
-            aria-label="Close"
-          />
-        </div>
-        <div className="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
-          <ul className="nav flex-column">
-            <li className="nav-item">
-              <a
-                className="nav-link d-flex align-items-center gap-2 active"
-                aria-current="page"
-                onClick={toggleDashboard}
+       <div className="sidebar border border-right col-md-12 p-0 " style={{ height: "100vh", backgroundColor:"#CACFD2" }}>
+    <div
+      className="offcanvas-lg offcanvas-end bg-body-tertiary"
+      tabIndex={-1}
+      id="sidebarMenu"
+      aria-labelledby="sidebarMenuLabel">
+      <div className="d-md-flex flex-column" style={{backgroundColor:"#CACFD2"}}> 
+        <ul className="nav flex-column">
+          <li className="nav-item">
+            <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
+            <a
+              className="nav-link d-flex align-items-center active"
+              aria-current="page"
+              onClick={toggleDashboard}
+              style={{marginTop:"10px", marginLeft:"50px", color:"#000",justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}
               >
-                Dashboard
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleOrders}>
-                 My Orders
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleProfiles}>
-                My Profile
-              </a>
-            </li>       
-            <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleSettings}>
-                Account Settings
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleComplaints}>
-                Complaints and Support
-              </a>
-            </li>
-          <hr className="my-3" />
-            <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" onClick={toggleSignOut}>
-                Sign out
-              </a>
-            </li>
-          </ul>
-        </div>
+                   Dashboard
+            </a>
+            </button>
+          </li>
+          <li className="nav-item">
+          <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
+            <a className="nav-link d-flex align-items-center" 
+            onClick={toggleOrders}
+            style={{marginTop:"10px", marginLeft:"65px", color:"#000",justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+                  Orders
+            </a>
+            </button>
+          </li>
+          <li className="nav-item">
+          <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
+            <a className="nav-link d-flex align-items-center" 
+            onClick={toggleProfiles}
+            style={{marginTop:"10px", marginLeft:"20px", color:"#000",justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+                 Profile
+            </a>
+          </button>
+          </li>
+          <li className="nav-item">
+          <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
+            <a className="nav-link d-flex align-items-center" 
+            onClick={toggleSettings}
+            style={{marginTop:"10px", marginLeft:"50px", color:"#000",justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+                 Account Settings
+            </a>
+          </button>  
+          </li>
+          <li className="nav-item">
+          <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
+            <a className="nav-link d-flex align-items-center" 
+            onClick = {toggleComplaintSupport}
+            style={{marginTop:"10px", marginLeft:"60px", color:"#000", justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+                 Complaints and Support
+            </a>
+          </button>
+          </li>
+          
+        </ul>
+       
       </div>
     </div>
-    </>);
+  </div>
+  </>);
+   
 }
 
 export default CustomerSideBar;
