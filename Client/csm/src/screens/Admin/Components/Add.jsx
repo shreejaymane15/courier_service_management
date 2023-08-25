@@ -22,7 +22,7 @@ function Add({toggleComponent}) {
       getRoles();
     },[]);
 
-
+                                                                             
     const onTextChange = (args) =>{
         var copy = {...user};
         copy[args.target.name] = args.target.value;

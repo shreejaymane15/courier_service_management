@@ -1,12 +1,19 @@
 import CustomerSideBar from "./CustomerSideBar";
+<<<<<<< HEAD
+import NavBarProtected from "../../Components/NavBar";
+=======
 import NavBarProtected from "../../Components/NavBarProtected";
+>>>>>>> a14b9a55eba0ad9b2a2adc49d681967ab9911f1b
 import Dashboard from "./Dashboard";
 import { useState } from "react";
 import COrders from "./COrders";
 import Addresses from "./Addresses";
 import MyProfile from "./MyProfile";
-import Support from "./Support";
+import ComplaintSupport from "./ComplaintSupport";
+import Add from "./Add";
 import AccountSettings from "./AccountSettings";
+//import { AddOrder } from "../services/CustomerService";
+//import { AddNewOrder } from "../services/CustomerService";
 
 
 function Customer() {
@@ -19,11 +26,12 @@ function Customer() {
   
     const componentMapping = {
       Dashboard: <Dashboard />,
-      COrders: <COrders/>,
+      COrders: <COrders toggleComponent={toggleComponent}/>,
       Addresses: <Addresses/>,
       MyProfile: <MyProfile/>,
       AccountSettings: <AccountSettings />,
-      Support: <Support />,
+      Add:<Add toggleComponent={toggleComponent}/>,
+      ComplaintSupport: <ComplaintSupport/>,
     };
 
 

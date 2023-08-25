@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.UI.WebControls;
@@ -67,6 +68,87 @@ namespace CSM.Controllers
             profileToUpdate.email = profile.email;
             int result = dbt.SaveChanges();
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("Customer/GetPackageType")]
+        public async Task<IHttpActionResult> GetPackageType()
+        {
+            try
+            {
+                var type = await Task.Run(() => dbt.Package_Price.ToList()
+                    .Select(Package => Package)
+                    .ToList());
+                return Ok(type);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("Customer/AddOrder")]
+        public IHttpActionResult AddOrder([FromBody] Order order)
+        {
+            try
+            {
+                order.status = "In Transit"; 
+              
+                dbt.Orders.Add(order);
+                int result = dbt.SaveChanges();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/Customer/AddComplaint")]
+        public IHttpActionResult AddComplaint([FromBody] ComplaintData data)
+        {
+            try
+            {
+                Complaint newComplaint = new Complaint();
+                newComplaint.complaint1 = data.complaint;
+                newComplaint.placed_date = DateTime.Now;
+                newComplaint.customer_id = data.id;
+                newComplaint.order_id = data.order_id;
+                newComplaint.status = "IN PROCESS";
+
+                dbt.Complaints.Add(newComplaint);
+                int result = dbt.SaveChanges();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("GetOrderId/{id}")]
+        public async Task<IHttpActionResult> GetOrdeId(int id)
+        {
+            try
+            {
+                var OrderId = await Task.Run(() => dbt.Orders.ToList()
+                    .Where(Order => Order.customer_id == id)
+                    .Select(Order => Order.order_id).ToList());
+                return Ok(OrderId);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
     }
 }
