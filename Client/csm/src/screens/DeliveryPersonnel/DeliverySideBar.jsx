@@ -14,8 +14,8 @@ function DeliverySideBar({toggleComponent}) {
     toggleComponent("AdminSupport");
   };
 
-   const toggleAccountSetting = () => {
-    toggleComponent("AccountSetting");
+   const toggleComplaint = () => {
+    toggleComponent("Complaints");
   };
 
 
@@ -64,7 +64,7 @@ function DeliverySideBar({toggleComponent}) {
           <li className="nav-item">
           <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
             <a className="nav-link d-flex align-items-center" 
-            onClick = {toggleAccountSetting}
+            onClick = {toggleComplaint}
             style={{marginTop:"10px", marginLeft:"60px", color:"#000", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
               Complaints
             </a>

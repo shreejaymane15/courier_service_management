@@ -1,10 +1,19 @@
-﻿using CSM.Models;
+﻿using Antlr.Runtime.Misc;
+using CSM.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime;
+using System.Security.Policy;
+using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Http;
+using System.Web.UI.WebControls;
 
 namespace CSM.Controllers
 {
@@ -54,5 +63,57 @@ namespace CSM.Controllers
             return Ok(result);
 
         }
+
+        [HttpPost]
+        [Route("api/DeliveryPersonnel/AddComplaint")]
+        public IHttpActionResult AddComplaint([FromBody]ComplaintData data)
+        {
+            try
+            {
+                Complaint newComplaint = new Complaint();
+                newComplaint.complaint1 = data.complaint;
+                newComplaint.placed_date=DateTime.Now;  
+                newComplaint.customer_id=data.id;
+                newComplaint.order_id = data.order_id;
+                newComplaint.status = "IN PROCESS";
+
+                db.Complaints.Add(newComplaint);
+                int result = db.SaveChanges();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/DeliveryPersonnel/GetOrderId/{id}")]
+        public async Task<IHttpActionResult> GetOrdeId(int id)
+        {
+            try
+            {
+                var OrderId = await Task.Run(() => db.Orders.ToList()
+                    .Where(Order => Order.personnel_id == id)
+                    .Select(Order => Order.order_id).ToList());
+                return Ok(OrderId);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
     }
+
+   
 }
+
+
+
+
+
+
+
+

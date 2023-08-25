@@ -215,6 +215,7 @@
     <Compile Include="Models\Complaint.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ComplaintData.cs" />
     <Compile Include="Models\CSM.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
