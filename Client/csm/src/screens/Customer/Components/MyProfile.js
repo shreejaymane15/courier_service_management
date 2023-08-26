@@ -1,43 +1,31 @@
-
-import { useEffect, useState } from "react";
-//import axios from "axios";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyProfileAPI, saveMyProfileAPI } from "../services/CustomerService";
 import { toast } from "react-toastify";
-//import NavBar from "./NavBar";
-//import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { AuthContext } from "../../utils/GlobalStates";
 
 function MyProfile(){
 
     const [profile, setProfile] = useState({user_Id:"", first_name: "", last_name: "", email:"", password:"", address: "", mobile: "", role:""});
-    // const [user_id, setUserid] = useState("");
     const [editing, setEditing] = useState({});
-
+    const[authState, setAuthState] = useContext(AuthContext);
     const navigate = useNavigate();
-    //const history = useHistory();
-    
-    const user_id = sessionStorage.getItem("user_id");
-    const token = sessionStorage.getItem("token");
-    const data = {
-      user_id : user_id,
-      token :token
-    }
-    
+  
+
+
     useEffect(()=>{
         GetMyProfile();
-        //setUserid(window.sessionStorage.getItem("id"));
     }, [])
 
     useEffect(()=>{
         GetMyProfile();
-        //setUserid(window.sessionStorage.getItem("id"));
     }, [editing]);
 
     
 
 
     const GetMyProfile = async() => {
-        var response = await getMyProfileAPI(data);
+        var response = await getMyProfileAPI(authState);
         if(response.status == 200){
             if(response.data == "EXPIRED" || response.data == "INVALID"){
                 navigate("/login");
@@ -49,7 +37,7 @@ function MyProfile(){
         }else{
             toast.error("Error while Fetching Profile");
         }
-    } 
+    }
         
     function editProfile(id) {
         debugger;
@@ -67,8 +55,9 @@ function MyProfile(){
           [name]: value,
         }));
       };
+    
 
-    const saveProfile = async () => {
+      const saveProfile = async () => {
         if (profile && profile.first_name) {
           const profileToUpdate = profile;
       
@@ -80,7 +69,7 @@ function MyProfile(){
             "mobile": profileToUpdate.mobile
           }
       
-          var response = await saveMyProfileAPI(user, data);
+          var response = await saveMyProfileAPI(user, authState);
           if (response.status == 200) {
             if (response.data == "EXPIRED" || response.data == "INVALID") {
               navigate("/login");
@@ -122,8 +111,8 @@ return(<>
                                 resize: "none",
                                 textAlign: "center"
                             }}
-                            value={profile[profile.user_Id]?.first_name }
-                            onChange={(e) => handleEditChange(e,profile.user_Id)}>           
+                            value={profile.first_name}
+                            onChange={handleInputChange}>           
                         </input></td>
                     ) : (
                       <td>{profile.first_name}</td>
@@ -144,8 +133,8 @@ return(<>
                                 resize: "none",
                                 textAlign: "center"
                             }}
-                            value={profile[profile.user_Id]?.last_name }
-                            onChange={(e) => handleEditChange(e,profile.user_Id)}>           
+                            value={profile.last_name }
+                            onChange={handleInputChange}>           
                         </input></td>
                     ) : (
                       <td>{profile.last_name}</td>
@@ -154,47 +143,7 @@ return(<>
                         
                     <tr>
                         <td>Email</td>
-                        {editing[profile.user_Id]?(
-                        <td style={{textAlign: "center"}}>
-                        <input
-                            id={profile.user_Id}
-                            name="email"
-                            className="form-control mt-1"
-                            style={{
-                                border:"0",
-                                width: "100%",
-                                fontSize: "1.0rem",
-                                resize: "none",
-                                textAlign: "center"
-                            }}
-                            value={profile[profile.user_Id]?.email }
-                            onChange={(e) => handleEditChange(e,profile.user_Id)}>           
-                        </input></td>
-                    ) : (
                       <td>{profile.email}</td>
-                    )}
-                    </tr>
-                    <tr>
-                        <td>Password</td>
-                        {editing[profile.user_Id]?(
-                        <td style={{textAlign: "center"}}>
-                        <input
-                            id={profile.user_Id}
-                            name="password"
-                            className="form-control mt-1"
-                            style={{
-                                border:"0",
-                                width: "100%",
-                                fontSize: "1.0rem",
-                                resize: "none",
-                                textAlign: "center"
-                            }}
-                            value={profile[profile.user_Id]?.password }
-                            onChange={(e) => handleEditChange(e,profile.user_Id)}>           
-                        </input></td>
-                    ) : (
-                      <td>{profile.password}</td>
-                    )}
                     </tr>
                     <tr>
                         <td>Address</td>
@@ -210,8 +159,8 @@ return(<>
                                 resize: "none",
                                 textAlign: "center"
                             }}
-                            value={profile[profile.user_Id]?.address }
-                            onChange={(e) => handleEditChange(e,profile.user_Id)}>           
+                            value={profile.address}
+                            onChange={handleInputChange}>           
                         </input></td>
                     ) : (
                       <td>{profile.address}</td>
@@ -231,8 +180,8 @@ return(<>
                                 resize: "none",
                                 textAlign: "center"
                             }}
-                            value={profile[profile.user_Id]?.mobile || ""}
-                            onChange={(e) => handleEditChange(e, profile.user_Id)}>    
+                            value={profile.mobile}
+                            onChange={handleInputChange}>    
                         </textarea></td>
                     ) : (
                         <td>{profile.mobile}</td>
@@ -245,7 +194,7 @@ return(<>
         <div style={{display: 'flex',  justifyContent:"space-evenly", alignItems:'top'}}>
         {editing[profile.user_Id]?(
             <button className="btn btn-primary"
-                    onClick={()=>{saveProfile(profile.user_Id)}}>
+                    onClick={()=>{saveProfile()}}>
                 Save
             </button>):(
             <button className="btn btn-warning" 

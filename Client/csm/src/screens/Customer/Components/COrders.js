@@ -1,35 +1,19 @@
-  import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-<<<<<<< HEAD
-import { createUrl } from "../../utils/utils";
+import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../utils/GlobalStates";
-
-=======
-//import { createUrl } from "../../utils/utils";
 import {useNavigate} from 'react-router-dom';
-//import Add from "./Add";
->>>>>>> a10b6df798b80e9d30f2b0ae5aad0307ba7dd652
+import { getOrdersAPI, getStatusAPI } from "../services/CustomerService";
+import { toast } from "react-toastify";
+
 
 function COrders({toggleComponent}) {
    
   var [orders, setOrders] = useState([]);
   var [selectedFilter, setSelectedFilter] = useState("ALL");
   var [status, setStatus] = useState([]);
-//   var [status, setStatus] = useState([]);
-<<<<<<< HEAD
   var [authState, setAuthState] = useContext(AuthContext);
-=======
 
 const navigate = useNavigate();
-// const componentMapping={
-//  Add:<Add toggleComponent={Add}/>}
->>>>>>> a10b6df798b80e9d30f2b0ae5aad0307ba7dd652
 
-const id = sessionStorage.getItem("user_id");
-const token = sessionStorage.getItem("token");
-const data = {
-  user_id : id,
-  token :token}
 
   const headerMapping = {
     'Order ID': 'order_id',
@@ -44,12 +28,8 @@ const data = {
 
 
   useEffect(() => {
-<<<<<<< HEAD
-    getOrders();
-=======
     getOrders(selectedFilter);
     getStatus();
->>>>>>> a10b6df798b80e9d30f2b0ae5aad0307ba7dd652
   },[]);
 
   useEffect(() => {
@@ -58,62 +38,11 @@ const data = {
   },[selectedFilter]);
 
     
-<<<<<<< HEAD
-  function getOrders(){
-    debugger;
-    if(selectedFilter != "ALL"){
-      axios.post(`http://localhost:58447/api/Customer/GetByStatus`,{authState, Status: selectedFilter})
-      .then((response) => {
-      debugger;
-      var responseData = response.data;
-      setOrders(responseData);
-      })
-      .catch(error => {
-      console.log(error);
-      })
-    }else if(selectedFilter == "ALL"){
-      debugger;
-      axios.get(`http://localhost:58447/api/Customer/GetMyOrders/${authState.user_id}`)
-      .then((response) => {
-      debugger;
-      var responseData = response.data;
-      setOrders(responseData);
-      })
-      .catch(error => {
-      console.log(error);
-      })
-    }
-=======
-  // function getOrders(){
-  //   debugger;
-  //   if(selectedFilter != "ALL"){
-  //     axios.post(`http://localhost:58447/api/Customer/GetByStatus`,{Id: 3, Status: selectedFilter})
-  //     .then((response) => {
-  //     debugger;
-  //     var responseData = response.data;
-  //     setOrders(responseData);
-  //     })
-  //     .catch(error => {
-  //     console.log(error);
-  //     })
-  //   }else if(selectedFilter == "ALL"){
-  //     debugger;
-  //     axios.get(`http://localhost:58447/api/Customer/GetMyOrders/${3}`)
-  //     .then((response) => {
-  //     debugger;
-  //     var responseData = response.data;
-  //     setOrders(responseData);
-  //     })
-  //     .catch(error => {
-  //     console.log(error);
-  //     })
-  //   }
->>>>>>> a10b6df798b80e9d30f2b0ae5aad0307ba7dd652
-    
-  // }
+
 
   const getStatus = async() => {
-    const response = await getStatusAPI(data);
+    debugger;
+    const response = await getStatusAPI(authState);
     if(response.status == 200){
       if(response.data == "EXPIRED" || response.data == "INVALID"){
         navigate("/login");
@@ -127,9 +56,9 @@ const data = {
     }
   }
 
-  const getOrders = async(selectedFilter) => {
-    // debugger;
-    let response = await getOrdersAPI(selectedFilter, data);
+  const getOrders = async() => {
+    debugger;
+    let response = await getOrdersAPI(selectedFilter, authState);
     if(response.status == 200){
       if(response.data == "EXPIRED" || response.data == "INVALID"){
         navigate("/login");
@@ -145,13 +74,7 @@ const data = {
 
 
 
-//   const renderOption = () => {
-//     return status.map(status => (
-//       <option key={status} value={status}>
-//         {status}
-//       </option>
-//     ));
-//   }
+
 
 const AddOrder = () =>{
   debugger;

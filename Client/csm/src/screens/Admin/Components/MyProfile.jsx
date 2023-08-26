@@ -7,7 +7,6 @@ import { AuthContext } from "../../utils/GlobalStates";
 function MyProfile(){
 
     const [profile, setProfile] = useState({user_Id:"", first_name: "", last_name: "", email:"", password:"", address: "", mobile: "", role:""});
-    // const [user_id, setUserid] = useState("");
     const [editing, setEditing] = useState({});
     const[authState, setAuthState] = useContext(AuthContext);
     const navigate = useNavigate();

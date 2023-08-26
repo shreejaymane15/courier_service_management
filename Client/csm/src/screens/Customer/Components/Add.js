@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { AddOrder, AddOrderAPI, getPackageTypeAPI } from "../services/CustomerService";
+import { useEffect, useState, useContext } from "react";
+import { AddOrderAPI, getPackageTypeAPI } from "../services/CustomerService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../utils/GlobalStates";
 
 function Add({toggleComponent}) {
 
@@ -9,24 +10,10 @@ function Add({toggleComponent}) {
     var [selectedFilter, setSelectedFilter] = useState("ALL");
     var [selectedAmount, setSelectedAmout] = useState("");  
     var [types, setTypes] = useState([]);
+    var [authState, setAuthState] = useContext(AuthContext);
 
 
-    const id = sessionStorage.getItem("user_id");
-    const token = sessionStorage.getItem("token");
-    const data = {
-      user_id : id,
-      token :token
-    }
-  
 
-
-    const id = sessionStorage.getItem("user_id");
-    const token = sessionStorage.getItem("token");
-    const data = {
-      user_id : id,
-      token :token}
-
-      
     const navigate = useNavigate();
     useEffect(() => {
       getPackageType();
@@ -58,7 +45,7 @@ function Add({toggleComponent}) {
 
     const getPackageType = async () => {
       debugger;
-      var response = await getPackageTypeAPI();
+      var response = await getPackageTypeAPI(authState);
       if(response.status == 200){
         setTypes(response.data);
       }else{
@@ -69,8 +56,8 @@ function Add({toggleComponent}) {
 
   const Submit = async () =>{
     debugger;
-    order.customer_id = id;
-    const response = await AddOrderAPI(order);
+    order.customer_id = authState;
+    const response = await AddOrderAPI(order, authState);
     if(response.status == 200 && response.data != 0){
       if(response.data == "EXPIRED" || response.data == "INVALID"){
         navigate("/login");

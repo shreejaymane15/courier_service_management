@@ -207,15 +207,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-<<<<<<< HEAD
-=======
     <Compile Include="Models\ComplaintData.cs" />
->>>>>>> a10b6df798b80e9d30f2b0ae5aad0307ba7dd652
     <Compile Include="Models\CheckToken.cs" />
     <Compile Include="Models\Complaint.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ComplaintData.cs" />
     <Compile Include="Models\CSM.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

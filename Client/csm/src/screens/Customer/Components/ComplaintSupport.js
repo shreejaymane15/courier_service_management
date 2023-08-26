@@ -1,38 +1,35 @@
-
-import React, { useEffect ,useState } from 'react';
-import axios from 'axios';
+import React, { useEffect ,useState, useContext } from 'react';
 import "../../css/Complaint.css";
 import { toast } from 'react-toastify';
-import { getOrderIdAPI } from '../services/CustomerService';
-
+import { addComplaintAPI, getOrderIdAPI } from '../services/CustomerService';
+import { AuthContext } from "../../utils/GlobalStates";
+import { useNavigate } from 'react-router-dom';
 
 function ComplaintSupport () {
     var [OrderId, setOrderId] = useState([]);
     var [selectedFilter, setSelectedFilter] = useState(""); 
     const [complaint, setComplaint] = useState('');
-
-    const id = sessionStorage.getItem("user_id");
-    const token = sessionStorage.getItem("token");
-    const data = {
-      user_id : id,
-      token :token
-    }
+    const[authState, setAuthState] = useContext(AuthContext);
+    const navigate = useNavigate();
 
   useEffect(() => {
     GetOrderId();
   },[]);
 
   const handleSubmit = async () => {
-    var data = { complaint: complaint, customer_id: 3 ,order_id : selectedFilter};
-    try {
-      const response = await axios.post('http://localhost:58447/api/Customer/AddComplaint', data);
-      toast.success('Complaint submitted');
-      // You can reset the complaint state or display a success message here
-    } catch (error) {
+    debugger;
+    var data = { complaint: complaint, data:authState ,order_id : selectedFilter};
+    const response = await addComplaintAPI(data);
+    if(response.status == 200){
+      if(response.data == "EXPIRED" || response.data == "INVALID"){
+        navigate("/login");
+      }else{
+        toast.success('Complaint submitted');
+      }
+    }else{
       toast.error('Error submitting complaint');
-      // Handle the error here
     }
-  };
+  }
 
   const renderOption = () => {
     return OrderId.map(order => (

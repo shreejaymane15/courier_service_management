@@ -8,8 +8,7 @@ import MyProfile from "./MyProfile";
 import ComplaintSupport from "./ComplaintSupport";
 import Add from "./Add";
 import AccountSettings from "./AccountSettings";
-//import { AddOrder } from "../services/CustomerService";
-//import { AddNewOrder } from "../services/CustomerService";
+
 
 
 function Customer() {
