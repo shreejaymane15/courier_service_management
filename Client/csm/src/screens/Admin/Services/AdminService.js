@@ -132,10 +132,11 @@ export async function getCustomersAPI(selectedFilter, authState){
     }
 }
 
-export async function getMyProfileAPI(data){
+export async function getMyProfileAPI(authState){
     try{
+        debugger;
         let url = createUrl(`/api/Admin/GetMyProfile/`);
-        let response = await axios.post(url, data);          
+        let response = await axios.post(url, authState);          
         return response; 
     }catch(ex){
         console.log(ex);
@@ -143,10 +144,11 @@ export async function getMyProfileAPI(data){
     }
 }
 
-export async function saveMyProfileAPI(user, data){
+export async function saveMyProfileAPI(user, authState){
     try{
         debugger;
-        let url = createUrl(`/api/Admin/SaveMyProfile/${data.user_id}`);
+        var data = authState;
+        let url = createUrl(`/api/Admin/SaveMyProfile/${authState.user_id}`);
         let response = await axios.put(url, {user, data});
         return response;
     }catch(ex){

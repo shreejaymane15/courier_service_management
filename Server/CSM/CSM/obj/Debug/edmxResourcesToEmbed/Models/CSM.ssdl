@@ -11,6 +11,7 @@
     <Property Name="resolved_date" Type="date" />
     <Property Name="order_id" Type="int" Nullable="false" />
     <Property Name="customer_id" Type="int" Nullable="false" />
+    <Property Name="role_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Delivery_Personnel">
     <Key>

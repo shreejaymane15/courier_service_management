@@ -13,6 +13,7 @@
     <Property Name="customer_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Order" Relationship="Self.Fk_Complaint_To_Order" FromRole="Complaint" ToRole="Order" />
     <NavigationProperty Name="User_Info" Relationship="Self.Fk_Complaint_To_User_Info" FromRole="Complaint" ToRole="User_Info" />
+    <Property Name="role_id" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="Delivery_Personnel">
     <Key>

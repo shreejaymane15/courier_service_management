@@ -1,22 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyProfileAPI, saveMyProfileAPI } from "../Services/AdminService";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../utils/GlobalStates";
 
 function MyProfile(){
 
     const [profile, setProfile] = useState({user_Id:"", first_name: "", last_name: "", email:"", password:"", address: "", mobile: "", role:""});
     // const [user_id, setUserid] = useState("");
     const [editing, setEditing] = useState({});
-
+    const[authState, setAuthState] = useContext(AuthContext);
     const navigate = useNavigate();
-
-    const user_id = sessionStorage.getItem("user_id");
-    const token = sessionStorage.getItem("token");
-    const data = {
-      user_id : user_id,
-      token :token
-    }
   
 
 
@@ -32,7 +26,7 @@ function MyProfile(){
 
 
     const GetMyProfile = async() => {
-        var response = await getMyProfileAPI(data);
+        var response = await getMyProfileAPI(authState);
         if(response.status == 200){
             if(response.data == "EXPIRED" || response.data == "INVALID"){
                 navigate("/login");
@@ -76,7 +70,7 @@ function MyProfile(){
             "mobile": profileToUpdate.mobile
           }
       
-          var response = await saveMyProfileAPI(user, data);
+          var response = await saveMyProfileAPI(user, authState);
           if (response.status == 200) {
             if (response.data == "EXPIRED" || response.data == "INVALID") {
               navigate("/login");

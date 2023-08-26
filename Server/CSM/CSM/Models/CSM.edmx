@@ -16,6 +16,7 @@
           <Property Name="resolved_date" Type="date" />
           <Property Name="order_id" Type="int" Nullable="false" />
           <Property Name="customer_id" Type="int" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Delivery_Personnel">
           <Key>
@@ -318,6 +319,7 @@
           <Property Name="customer_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Order" Relationship="Self.Fk_Complaint_To_Order" FromRole="Complaint" ToRole="Order" />
           <NavigationProperty Name="User_Info" Relationship="Self.Fk_Complaint_To_User_Info" FromRole="Complaint" ToRole="User_Info" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Delivery_Personnel">
           <Key>
@@ -696,6 +698,7 @@
           <EntitySetMapping Name="Complaints">
             <EntityTypeMapping TypeName="CSMModel.Complaint">
               <MappingFragment StoreEntitySet="Complaint">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
                 <ScalarProperty Name="complaint_id" ColumnName="complaint_id" />
                 <ScalarProperty Name="complaint1" ColumnName="complaint" />
                 <ScalarProperty Name="status" ColumnName="status" />
