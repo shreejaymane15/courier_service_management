@@ -1,8 +1,18 @@
-﻿using CSM.Models;
+﻿    using CSM.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+<<<<<<< HEAD
+=======
+using System.Web.Http.Cors;
+using System.Web.Razor.Tokenizer;
+using System.Web.Security;
+using System.Xml.XPath;
+using System.Web.UI.WebControls;
+>>>>>>> a10b6df798b80e9d30f2b0ae5aad0307ba7dd652
+
+
 
 namespace CSM.Controllers
 {
@@ -10,59 +20,161 @@ namespace CSM.Controllers
     public class CustomerController : ApiController
     {
         CSMEntities1 dbt = new CSMEntities1();
+        JWTTokenizer tokenizer = new JWTTokenizer();
+        /*  [HttpGet]
+          [Route("GetMyOrders/{id}")]
+          public IHttpActionResult GetMyOrders(int id)
+          {
+              var orders = (from Order in dbt.Orders.ToList()
+                            where Order.customer_id == id
+                            select Order).ToList();
 
-        [HttpGet]
-        [Route("GetMyOrders/{id}")]
-        public IHttpActionResult GetMyOrders(int id)
+              return Ok(orders);
+
+          }*/
+
+        [HttpPut]
+        [Route("api/Customer/GetMyOrders/{id}")]
+        public async Task<IHttpActionResult> GetMyOrders(int id, [FromBody] CheckToken token)
         {
-            var orders = (from Order in dbt.Orders.ToList()
-                          where Order.customer_id == id
-                          select Order).ToList();
+            try
+            {
 
-            return Ok(orders);
+                var user = await Task.Run(() => dbt.User_Info.ToList()
+                                     .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                                     .FirstOrDefault());
 
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                   
+
+                    var orders = (from Order in dbt.Orders.ToList()
+                                  where Order.customer_id == id
+                                  select Order).ToList();
+
+                    return Ok(orders);
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
 
 
         [HttpPost]
-        [Route("GetByStatus")]
-        public IHttpActionResult GetByStatus([FromBody] MyOrder myorder)
+        [Route("api/Customer/GetStatus")]
+        public async Task<IHttpActionResult> GetStatus([FromBody] CheckToken token)
         {
-            var orders = (from Order in dbt.Orders.ToList()
-                          where Order.customer_id == myorder.Id && Order.status == myorder.Status
-                          select Order).ToList();
+            try
+            {
+                var user = await Task.Run(() => dbt.User_Info.ToList()
+                                         .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                                         .FirstOrDefault());
 
-            return Ok(orders);
+                if (user == null)
+                    return Ok("INVALID");
 
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var status = await Task.Run(() => dbt.Orders.Select(d => d.status).Distinct().ToList());
+                    return Ok(status);
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
 
-        [HttpGet]
-        [Route("GetMyProfile/{id}")]
-        public IHttpActionResult GetMyProfile(int id)
+        [HttpPost]
+        [Route("api/Customer/GetMyProfile")]
+        public async Task<IHttpActionResult> GetMyProfile([FromBody] CheckToken token)
         {
-            var profile = (from User_Info in dbt.User_Info.ToList()
-                           where User_Info.user_Id == id
-                           select User_Info).FirstOrDefault();
+            try
+            {
+                var user = await Task.Run(() => dbt.User_Info.ToList()
+                     .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                     .FirstOrDefault());
 
-            return Ok(profile);
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    return Ok(user);
+                }
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
-
 
         [HttpPut]
-        [Route("UpdateProfileDetails/{id}")]
-        public IHttpActionResult UpdateProfile(int id, [FromBody] User_Info profile)
+        [Route("api/Customer/SaveMyProfile/{id}")]
+        public async Task<IHttpActionResult> SaveMyProfile(int id, [FromBody] EmployeeData user)
         {
-            var profileToUpdate = dbt.User_Info.ToList()
-                .Where(User_Info => User_Info.user_Id == id)
-                .Select(User_Info => User_Info)
-                .FirstOrDefault();
-            profileToUpdate.first_name = profile.first_name;
-            profileToUpdate.last_name = profile.last_name;
-            profileToUpdate.address = profile.address;
-            profileToUpdate.mobile = profile.mobile;
-            profileToUpdate.email = profile.email;
-            int result = dbt.SaveChanges();
-            return Ok(result);
+            try
+            {
+                var loginuser = await Task.Run(() => dbt.User_Info.ToList()
+                     .Where(u => u.user_Id == user.data.user_id && u.token == user.data.token)
+                     .FirstOrDefault());
+
+                if (loginuser == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(user.data.token);
+
+                if (result == "VALID")
+                {
+                    var employeeToUpdate = await Task.Run(() => dbt.User_Info.ToList()
+                                                    .Where(User_Info => User_Info.user_Id == id)
+                                                    .FirstOrDefault());
+                    employeeToUpdate.first_name = user.user.first_name;
+                    employeeToUpdate.last_name = user.user.last_name;
+                    employeeToUpdate.address = user.user.address;
+                    employeeToUpdate.mobile = user.user.mobile;
+                    SHA512Encryption sha512 = new SHA512Encryption();
+                    string encrypt = sha512.Encode(user.user.password);
+                    user.user.password = encrypt;
+                    employeeToUpdate.password = user.user.password;
+                    int save = dbt.SaveChanges();
+                    return Ok(save);
+                }
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
         }
 
         [HttpGet]
@@ -85,6 +197,7 @@ namespace CSM.Controllers
         }
 
         [HttpPost]
+<<<<<<< HEAD
         [Route("AddOrder")]
         public IHttpActionResult AddOrder([FromBody] EmployeeData data)
         {
@@ -99,6 +212,29 @@ namespace CSM.Controllers
               
                 dbt.Orders.Add(data.order);
                 int result = dbt.SaveChanges();
+=======
+        [Route("Customer/AddOrder")]
+        public async Task<IHttpActionResult> AddOrder([FromBody] OrderData order)
+        {
+            try
+            {
+                var user = await Task.Run(() => dbt.User_Info.ToList()
+                                    .Where(u => u.user_Id == order.data.user_id && u.token == order.data.token)
+                                    .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+                string result = tokenizer.validateToken(order.data.token);
+                if (result == "VALID")
+                {
+                    order.status = "In Transit";
+
+                    dbt.Orders.Add();
+                    int save = dbt.SaveChanges();
+                    return Ok(save);
+                }
+>>>>>>> a10b6df798b80e9d30f2b0ae5aad0307ba7dd652
                 return Ok(result);
             }
             catch (Exception ex)
@@ -109,23 +245,40 @@ namespace CSM.Controllers
             }
         }
 
+
+
+
         [HttpPost]
         [Route("api/Customer/AddComplaint")]
-        public IHttpActionResult AddComplaint([FromBody] ComplaintData data)
+        
+            public async Task<IHttpActionResult> AddComplaint([FromBody] ComplaintData data)
         {
             try
             {
-                Complaint newComplaint = new Complaint();
-                newComplaint.complaint1 = data.complaint;
-                newComplaint.placed_date = DateTime.Now;
-                newComplaint.customer_id = data.id;
-                newComplaint.order_id = data.order_id;
-                newComplaint.status = "IN PROCESS";
+                var user = await Task.Run(() => dbt.User_Info.ToList()
+                                     .Where(u => u.user_Id == data.data.user_id && u.token == data.data.token)
+                                     .FirstOrDefault());
 
-                dbt.Complaints.Add(newComplaint);
-                int result = dbt.SaveChanges();
-                return Ok(result);
-            }
+                if (user == null)
+                    return Ok("INVALID");
+
+                string result = tokenizer.validateToken(data.data.token);
+                if (result == "VALID")
+                {
+                    Complaint newComplaint = new Complaint();
+                    newComplaint.complaint1 = data.complaint;
+                    newComplaint.placed_date = DateTime.Now;
+                    newComplaint.customer_id = data.id;
+                    newComplaint.order_id = data.order_id;
+                    newComplaint.status = "IN PROCESS";
+
+                    dbt.Complaints.Add(newComplaint);
+                    int save = dbt.SaveChanges();
+                    return Ok(save);
+                }
+
+                  return Ok(result);
+                }
             catch (Exception ex)
             {
                 return InternalServerError(ex);

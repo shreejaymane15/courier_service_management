@@ -53,7 +53,7 @@ function Orders() {
         setOrders(response.data);
       }
     }else{
-      toast.error('Error while calling getorders api')
+      toast.error('Error while calling get orders api')
     }
   }
 

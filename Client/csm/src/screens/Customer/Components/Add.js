@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AddOrder, AddOrderAPI, getPackageTypeAPI } from "../services/CustomerService";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Add({toggleComponent}) {
 
@@ -19,6 +20,14 @@ function Add({toggleComponent}) {
   
 
 
+    const id = sessionStorage.getItem("user_id");
+    const token = sessionStorage.getItem("token");
+    const data = {
+      user_id : id,
+      token :token}
+
+      
+    const navigate = useNavigate();
     useEffect(() => {
       getPackageType();
     },[]);
@@ -63,8 +72,14 @@ function Add({toggleComponent}) {
     order.customer_id = id;
     const response = await AddOrderAPI(order);
     if(response.status == 200 && response.data != 0){
-      toggleComponent("COrders");
-      toast.success("Order Created Successfully");
+      if(response.data == "EXPIRED" || response.data == "INVALID"){
+        navigate("/login");
+        toast.warning("Session Time Expired");}
+        else{
+          toggleComponent("COrders");
+          toast.success("Order Created Successfully");
+        }
+     
     }else{
       toast.error("Failed To Create Order");
     }

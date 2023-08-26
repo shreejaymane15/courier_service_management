@@ -1,15 +1,35 @@
   import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+<<<<<<< HEAD
 import { createUrl } from "../../utils/utils";
 import { AuthContext } from "../../utils/GlobalStates";
 
+=======
+//import { createUrl } from "../../utils/utils";
+import {useNavigate} from 'react-router-dom';
+//import Add from "./Add";
+>>>>>>> a10b6df798b80e9d30f2b0ae5aad0307ba7dd652
 
 function COrders({toggleComponent}) {
    
   var [orders, setOrders] = useState([]);
   var [selectedFilter, setSelectedFilter] = useState("ALL");
+  var [status, setStatus] = useState([]);
 //   var [status, setStatus] = useState([]);
+<<<<<<< HEAD
   var [authState, setAuthState] = useContext(AuthContext);
+=======
+
+const navigate = useNavigate();
+// const componentMapping={
+//  Add:<Add toggleComponent={Add}/>}
+>>>>>>> a10b6df798b80e9d30f2b0ae5aad0307ba7dd652
+
+const id = sessionStorage.getItem("user_id");
+const token = sessionStorage.getItem("token");
+const data = {
+  user_id : id,
+  token :token}
 
   const headerMapping = {
     'Order ID': 'order_id',
@@ -24,7 +44,12 @@ function COrders({toggleComponent}) {
 
 
   useEffect(() => {
+<<<<<<< HEAD
     getOrders();
+=======
+    getOrders(selectedFilter);
+    getStatus();
+>>>>>>> a10b6df798b80e9d30f2b0ae5aad0307ba7dd652
   },[]);
 
   useEffect(() => {
@@ -33,6 +58,7 @@ function COrders({toggleComponent}) {
   },[selectedFilter]);
 
     
+<<<<<<< HEAD
   function getOrders(){
     debugger;
     if(selectedFilter != "ALL"){
@@ -57,8 +83,65 @@ function COrders({toggleComponent}) {
       console.log(error);
       })
     }
+=======
+  // function getOrders(){
+  //   debugger;
+  //   if(selectedFilter != "ALL"){
+  //     axios.post(`http://localhost:58447/api/Customer/GetByStatus`,{Id: 3, Status: selectedFilter})
+  //     .then((response) => {
+  //     debugger;
+  //     var responseData = response.data;
+  //     setOrders(responseData);
+  //     })
+  //     .catch(error => {
+  //     console.log(error);
+  //     })
+  //   }else if(selectedFilter == "ALL"){
+  //     debugger;
+  //     axios.get(`http://localhost:58447/api/Customer/GetMyOrders/${3}`)
+  //     .then((response) => {
+  //     debugger;
+  //     var responseData = response.data;
+  //     setOrders(responseData);
+  //     })
+  //     .catch(error => {
+  //     console.log(error);
+  //     })
+  //   }
+>>>>>>> a10b6df798b80e9d30f2b0ae5aad0307ba7dd652
     
+  // }
+
+  const getStatus = async() => {
+    const response = await getStatusAPI(data);
+    if(response.status == 200){
+      if(response.data == "EXPIRED" || response.data == "INVALID"){
+        navigate("/login");
+        // toast.warning("Session Time Expired");
+      }
+      else{
+        setStatus(response.data);
+      }
+    }else{
+      toast.error('Error while calling getStatusapi')
+    }
   }
+
+  const getOrders = async(selectedFilter) => {
+    // debugger;
+    let response = await getOrdersAPI(selectedFilter, data);
+    if(response.status == 200){
+      if(response.data == "EXPIRED" || response.data == "INVALID"){
+        navigate("/login");
+        toast.warning("Session Time Expired");
+      }
+      else{
+        setOrders(response.data);
+      }   
+    }else{
+      toast.error('Error while calling get api')
+    }  
+  }  
 
 
 
