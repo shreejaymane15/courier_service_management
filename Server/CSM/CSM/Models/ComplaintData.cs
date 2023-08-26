@@ -10,6 +10,8 @@ namespace CSM.Models
         public int id { get; set; }
         public string complaint { get; set; }
 
+        public CheckToken data { get; set; }
+
         public int order_id { get; set; }
     }
 }

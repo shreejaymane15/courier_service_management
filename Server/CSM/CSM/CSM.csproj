@@ -207,11 +207,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-<<<<<<< HEAD
-    <Compile Include="Models\ComplainData.cs" />
-=======
+    <Compile Include="Models\ComplaintData.cs" />
     <Compile Include="Models\CheckToken.cs" />
->>>>>>> a14b9a55eba0ad9b2a2adc49d681967ab9911f1b
     <Compile Include="Models\Complaint.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>
