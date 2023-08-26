@@ -1,7 +1,9 @@
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+//import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { getMyProfileAPI, saveMyProfileAPI } from "../services/CustomerService";
+import { toast } from "react-toastify";
 //import NavBar from "./NavBar";
 //import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -13,6 +15,13 @@ function MyProfile(){
 
     const navigate = useNavigate();
     //const history = useHistory();
+    
+    const user_id = sessionStorage.getItem("user_id");
+    const token = sessionStorage.getItem("token");
+    const data = {
+      user_id : user_id,
+      token :token
+    }
     
     useEffect(()=>{
         GetMyProfile();
@@ -27,18 +36,20 @@ function MyProfile(){
     
 
 
-    function GetMyProfile(){
-        
-      axios.get(`http://localhost:58447/api/Customer/GetMyProfile/${3}`)
-      .then((response) => {
-      debugger;
-      var responseData = response.data;
-      setProfile(responseData);
-      })
-      .catch(error => {
-      console.log(error);        
-    })
-    }  
+    const GetMyProfile = async() => {
+        var response = await getMyProfileAPI(data);
+        if(response.status == 200){
+            if(response.data == "EXPIRED" || response.data == "INVALID"){
+                navigate("/login");
+                toast.warning("Session Time Expired");
+            }
+            else{
+                setProfile(response.data);
+            }
+        }else{
+            toast.error("Error while Fetching Profile");
+        }
+    } 
         
     function editProfile(id) {
         debugger;
@@ -49,42 +60,41 @@ function MyProfile(){
     }      
 
 
-    function handleEditChange(e,id) {
-        setProfile(prevProfile => ({
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setProfile((prevProfile) => ({
           ...prevProfile,
-          [id]: {
-            ...prevProfile[id],
-            [e.target.name]: e.target.value
-          }
+          [name]: value,
         }));
-    }
+      };
 
-    function saveProfile(id) {
-        const profileToUpdate = profile[id];
-        debugger;
-        var details = {
+    const saveProfile = async () => {
+        if (profile && profile.first_name) {
+          const profileToUpdate = profile;
+      
+          var user = {
             "first_name": profileToUpdate.first_name,
             "last_name": profileToUpdate.last_name,
-            "email": profileToUpdate.email,
             "password": profileToUpdate.password,
             "address": profileToUpdate.address,
             "mobile": profileToUpdate.mobile
-          };
-
-          axios.put(`http://localhost:58447/api/Customer/UpdateProfileDetails/${3}`, details)
-          .then((response) => {
-          debugger;
-          var result = response.data;
-          if(result != 0){
-            setEditing("");
-          }else{
-
           }
-          })
-          .catch(error => {
-          console.log(error);        
-        })
- 
+      
+          var response = await saveMyProfileAPI(user, data);
+          if (response.status == 200) {
+            if (response.data == "EXPIRED" || response.data == "INVALID") {
+              navigate("/login");
+              toast.warning("Session Time Expired");
+            }
+            else {
+              setEditing(false);
+            }
+          } else {
+            toast.error("Error while Fetching Profile");
+          }
+        }else{
+            toast.error("Error while Fetching Profile");
+        }
     }
 
 

@@ -11,7 +11,12 @@ function ComplaintSupport () {
     var [selectedFilter, setSelectedFilter] = useState(""); 
     const [complaint, setComplaint] = useState('');
 
-
+    const id = sessionStorage.getItem("user_id");
+    const token = sessionStorage.getItem("token");
+    const data = {
+      user_id : id,
+      token :token
+    }
 
   useEffect(() => {
     GetOrderId();

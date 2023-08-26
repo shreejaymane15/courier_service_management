@@ -11,4 +11,13 @@ namespace CSM.Models
         public CheckToken data { get; set; }
         public string role_name { get; set; }
     }
+
+    public class OrderData
+    {
+         public Order order { get; set; }
+          public CheckToken data { get; set; }
+
+        public string status{ get; set; }
+
+    }
 }
