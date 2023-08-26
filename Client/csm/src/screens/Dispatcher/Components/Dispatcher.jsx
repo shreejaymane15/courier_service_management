@@ -1,13 +1,13 @@
-import DispatcherSideBar from "./DispatcherSideBar";
+import DispatcherSideBar from "./DispatcherSidebar";
 import { useState } from "react";
 import DispatcherDashboard from "./DispatcherDashboard";
 import OrderSummary from "./OrderSummary";
 import NewOrder from "./NewOrder";
 import DispatcherEmployeeDirectory from "./DispatcherEmployeeDirectory";
 import RaisedTickets from "./RaisedTickets";
-import Tracking from "../Components/Tracking";
+import Tracking from "../../Components/Tracking";
 import Settings from "./Settings";
-import NavBarProtected from "../Components/NavBarProtected";
+import NavBarProtected from "../../Components/NavBarProtected";
 
 function DispatcherDash() {
 

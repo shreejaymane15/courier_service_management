@@ -7,7 +7,7 @@ import ContactUs from "./ContactUs";
 import HubLocation from "./HubLocation";
 import Admin from "../Admin/Components/Admin";
 import Customer from "../Customer/Components/Customer";
-import Dispatcher from "../Dispatcher/Dispatcher";
+import Dispatcher from "../Dispatcher/Components/Dispatcher";
 import DeliveryPersonnel from "../DeliveryPersonnel/DeliveryPersonnel";
 import Tracking from "./Tracking"
 import '../css/App.css'
