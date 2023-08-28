@@ -48,6 +48,7 @@
     <Property Name="receiver_mobile" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="receiver_address" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="package_count" Type="int" Nullable="false" />
+    <Property Name="package_type" Type="varchar" MaxLength="100" />
     <Property Name="amount" Type="real" Nullable="false" />
     <Property Name="status" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="customer_id" Type="int" Nullable="false" />

@@ -321,5 +321,68 @@ namespace CSM.Controllers
                 return InternalServerError(ex);
             }
         }
+
+
+        [HttpPut]
+        [Route("GetMyComplaints")]
+        public async Task<IHttpActionResult> GetMyComplaints([FromBody] CheckToken token)
+        {
+            try
+            {
+                var user = await Task.Run(() => dbt.User_Info
+                    .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                    .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var complaints = await Task.Run(() => dbt.Complaints.ToList()
+                                           .Where(Complaint => Complaint.customer_id == token.user_id && Complaint.role_id == 4)
+                                           .ToList());
+                    return Ok(complaints);
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex + " An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("GetComplaintStatus")]
+        public async Task<IHttpActionResult> GetComplaintStatus([FromBody] CheckToken token)
+        {
+            try
+            {
+                var user = await Task.Run(() => dbt.User_Info.ToList()
+                                         .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                                         .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+                    var status = await Task.Run(() => dbt.Complaints.Select(d => d.status).Distinct().ToList());
+                    return Ok(status);
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
     }
 }

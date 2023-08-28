@@ -11,7 +11,7 @@ function ContactUs() {
     var [authState, setAuthState] = useContext(AuthContext);
 
   
-  const isAuthenticated = authState.id !== null && authState.token !== null; 
+  const isAuthenticated = authState.id !== "" && authState.token !== ""; 
   
 
 

@@ -8,6 +8,7 @@ import MyProfile from "./MyProfile";
 import ComplaintSupport from "./ComplaintSupport";
 import Add from "./Add";
 import AccountSettings from "./AccountSettings";
+import AddComplaint from "./AddComplaint";
 
 
 
@@ -26,7 +27,8 @@ function Customer() {
       MyProfile: <MyProfile/>,
       AccountSettings: <AccountSettings />,
       Add:<Add toggleComponent={toggleComponent}/>,
-      ComplaintSupport: <ComplaintSupport/>,
+      ComplaintSupport: <ComplaintSupport toggleComponent={toggleComponent}/>,
+      AddComplaint:<AddComplaint/>
     };
 
 

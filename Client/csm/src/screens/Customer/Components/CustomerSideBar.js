@@ -21,9 +21,6 @@ function CustomerSideBar({toggleComponent}) {
     toggleComponent("ComplaintSupport");
   };
 
-  const toggleSignOut = () => {
-    toggleComponent("Sign Out");
-  };
 
     return (<>
        <div className="sidebar border border-right col-md-12 p-0 " style={{ height: "100vh", backgroundColor:"#CACFD2" }}>
@@ -40,7 +37,7 @@ function CustomerSideBar({toggleComponent}) {
               className="nav-link d-flex align-items-center active"
               aria-current="page"
               onClick={toggleDashboard}
-              style={{marginTop:"10px", marginLeft:"50px", color:"#000",justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}
+              style={{marginTop:"10px", marginLeft:"30px", color:"#000",justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}
               >
                    Dashboard
             </a>
@@ -50,7 +47,7 @@ function CustomerSideBar({toggleComponent}) {
           <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
             <a className="nav-link d-flex align-items-center" 
             onClick={toggleOrders}
-            style={{marginTop:"10px", marginLeft:"65px", color:"#000",justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+            style={{marginTop:"10px", marginLeft:"25px", color:"#000",justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
                   Orders
             </a>
             </button>
@@ -68,7 +65,7 @@ function CustomerSideBar({toggleComponent}) {
           <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
             <a className="nav-link d-flex align-items-center" 
             onClick={toggleSettings}
-            style={{marginTop:"10px", marginLeft:"50px", color:"#000",justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+            style={{marginTop:"10px", marginLeft:"20px", color:"#000",justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
                  Account Settings
             </a>
           </button>  
@@ -77,7 +74,7 @@ function CustomerSideBar({toggleComponent}) {
           <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
             <a className="nav-link d-flex align-items-center" 
             onClick = {toggleComplaintSupport}
-            style={{marginTop:"10px", marginLeft:"60px", color:"#000", justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+            style={{marginTop:"10px", marginLeft:"20px", color:"#000", justifyContent:"center", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
                  Complaints and Support
             </a>
           </button>

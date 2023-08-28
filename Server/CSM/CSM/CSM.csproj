@@ -243,6 +243,7 @@
     <Compile Include="Models\Order.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrdersToDisplay.cs" />
     <Compile Include="Models\Package.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>

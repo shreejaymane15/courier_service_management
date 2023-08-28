@@ -85,44 +85,7 @@ function SideBar({toggleComponent}) {
             </a>
           </button>
           </li>
-          {/* <li className="nav-item">
-            <a className="nav-link d-flex align-items-center gap-2" href="#">
-              Integrations
-            </a>
-          </li> */}
         </ul>
-        {/* <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-          <span>Saved reports</span>
-          <a
-            className="link-secondary"
-            href="#"
-            aria-label="Add a new report"
-          >
-          </a>
-        </h6>
-        <ul className="nav flex-column mb-auto">
-          <li className="nav-item">
-            <a className="nav-link d-flex align-items-center" href="#">
-              Current month
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link d-flex align-items-center" href="#">
-              Last quarter
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link d-flex align-items-center" href="#">
-              Social engagement
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link d-flex align-items-center" href="#">
-              Year-end sale
-            </a>
-          </li>
-        </ul> */}
-        {/* <hr className="my-3" /> */}
         <ul className="nav flex-column">
         <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
           <li className="nav-item">
@@ -133,14 +96,6 @@ function SideBar({toggleComponent}) {
             </a>
           </li>
           </button>
-          {/* <li className="nav-item">
-          <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
-            <a className="nav-link d-flex align-items-center"
-            style={{marginTop:"10px", marginLeft:"60px", color:"#000"}}>
-              Sign out
-            </a>
-          </button>
-          </li> */}
         </ul>
       </div>
     </div>

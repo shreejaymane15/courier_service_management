@@ -1,48 +1,107 @@
-import React, { useEffect ,useState, useContext } from 'react';
-import "../../css/Complaint.css";
-import { toast } from 'react-toastify';
-import { addComplaintAPI, getOrderIdAPI } from '../services/CustomerService';
+import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../utils/GlobalStates";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import { getComplaintsAPI, getComplaintStatusAPI } from "../services/CustomerService";
+import { toast } from "react-toastify";
 
-function ComplaintSupport () {
-    var [OrderId, setOrderId] = useState([]);
-    var [selectedFilter, setSelectedFilter] = useState(""); 
-    const [complaint, setComplaint] = useState('');
-    const[authState, setAuthState] = useContext(AuthContext);
-    const navigate = useNavigate();
+
+function ComplaintSupport({toggleComponent}) {
+   
+  var [complaints, setComplaints] = useState([]);
+  var [selectedFilter, setSelectedFilter] = useState("ALL");
+  var [ComplaintStatus, setComplaintStatus] = useState([]);
+  var [authState, setAuthState] = useContext(AuthContext);
+
+const navigate = useNavigate();
+
+
+  const headerMapping = {
+    'Complaint Id': 'complaint_id',
+    'Complaint Description': 'complaint1',
+    'Status': 'status',
+    'Complaint Date': 'placed_date',
+    'Resolved Date': 'resolved_date',
+    'Order Id': 'order_id',
+    
+  };
+
 
   useEffect(() => {
-    GetOrderId();
+    getComplaints(selectedFilter);
+    getComplaintStatus();
   },[]);
 
-  const handleSubmit = async () => {
+  useEffect(() => {
+    console.log(selectedFilter);
+    getComplaints();
+  },[selectedFilter]);
+
+  const getComplaintStatus = async() => {
     debugger;
-    var data = { complaint: complaint, data:authState ,order_id : selectedFilter};
-    const response = await addComplaintAPI(data);
+    const response = await getComplaintStatusAPI(authState);
     if(response.status == 200){
       if(response.data == "EXPIRED" || response.data == "INVALID"){
         navigate("/login");
-      }else{
-        toast.success('Complaint submitted');
+        toast.warning("Session Time Expired");
+      }
+      else{
+        setComplaintStatus(response.data);
       }
     }else{
-      toast.error('Error submitting complaint');
+      toast.error('Error while calling getStatusAPI')
     }
   }
 
-  const renderOption = () => {
-    return OrderId.map(order => (
-      <option key={order} value={order}>
-        {order}
-      </option>
+  const getComplaints = async() => {
+    debugger;
+    const response = await getComplaintsAPI(selectedFilter, authState);
+    if(response.status == 200){
+      if(response.data == "EXPIRED" || response.data == "INVALID"){
+        navigate("/login");
+        toast.warning("Session Time Expired");
+      }
+      else{
+        setComplaints(response.data);
+      }   
+    }else{
+      toast.error('Error while calling get api')
+    }  
+  }  
+
+
+
+
+
+const AddComplaint = () =>{
+  debugger;
+  toggleComponent("AddComplaint");
+} 
+
+
+
+
+  const renderComplaints = () =>
+    complaints.map(complaint=> (
+      <tr key={complaint.complaint_id}>
+        {Object.keys(headerMapping).map(label => (
+            <td key={label}>{complaint[headerMapping[label]]}</td>
+        ))}
+      </tr>
     ));
+
+    
+  const renderHeader = () => {
+    return (
+      <thead>
+      <tr>
+          {Object.keys(headerMapping).map(label => (
+              <th key={label}>{label}</th>
+          ))}
+      </tr>
+      </thead>
+    );
   }
 
-  const GetOrderId = async () => {
-    var response = await getOrderIdAPI();
-    setOrderId(response.data);
-  }
 
   const handleFilterChange = (event) => {
     const selectedValue = event.target.value;
@@ -50,33 +109,38 @@ function ComplaintSupport () {
   };
 
 
-  return (
-    <div style={{ padding: '100px', margin: '150px' }}>
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        {/* You can place any content you want here */}
-      </div>
-      <div className="form-group mt-1">
-           <div>
-            <label>Order ID</label>
-           </div>
-           <div>
-            <select onChange={handleFilterChange}>
-            {renderOption()}
-            </select>
-           </div>
-          </div>
-      <div>
-        <textarea
-          value={complaint}
-          onChange={(e) => setComplaint(e.target.value)}
-          placeholder="Enter your complaint"
-          rows="4" cols="95"
-          required
-        />
-        <button className='button' onClick={handleSubmit}>Submit Complaint</button>
-      </div>
-    </div>
-  );
-};
 
+  return (<>
+    <div style={{ margin: '50px' }}>
+      <div style={{display:"flex", flexDirection:"row" , alignItems:"center", justifyContent:"space-between"}}> 
+        <div>
+          <h2>My Complaints</h2>
+        </div>
+        <div style={{display:"flex", flexDirection:"row" , alignItems:"center", justifyContent:"end"}}> 
+          <div style={{margin:"20px"}}>
+            <button className="btn btn-primary" 
+            style={{paddingLeft:"20px", paddingRight:"20px"}} 
+            onClick={AddComplaint}>
+            New Complaint</button>
+          </div>
+        <div>
+        <select onChange={handleFilterChange}>
+          <option value="ALL">All</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+          {/* {renderOption()} */}
+        </select>
+        </div>
+      </div>
+      </div>
+      <table className="table table-bordered">
+        {renderHeader()}
+        <tbody>
+        {renderComplaints()}
+        </tbody>
+      </table>
+    </div>
+</>  );
+
+}
 export default ComplaintSupport;

@@ -105,3 +105,27 @@ export async function addComplaintAPI(data){
     }
 }
 
+export async function getComplaintsAPI(selectedFilter, data) {
+    try {
+        const filterParam = selectedFilter !== "ALL" ? `/${selectedFilter}` : ``;
+        let url = createUrl(`/api/Customer/GetMyComplaints${filterParam}`);
+        let response = await axios.put(url, data);
+        return response;
+    } catch (ex) {
+        console.log(ex);
+        return null;
+    }
+}
+
+export async function getComplaintStatusAPI(data){
+    try{
+        debugger;
+        let url = createUrl("/api/Customer/GetComplaintStatus");
+        let response = await axios.post(url, data);
+        return response;      
+        }
+     catch(ex){
+        console.log(ex);
+        return null;
+    }
+    }

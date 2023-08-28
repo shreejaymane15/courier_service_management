@@ -32,6 +32,7 @@ namespace CSM.Models
         public int personnel_id { get; set; }
         public string receiver_name { get; set; }
         public string receiver_email { get; set; }
+        public string package_type { get; set; }
     
         public virtual ICollection<Complaint> Complaints { get; set; }
         public virtual Delivery_Personnel Delivery_Personnel { get; set; }

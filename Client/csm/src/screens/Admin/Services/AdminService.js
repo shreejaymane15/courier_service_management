@@ -135,8 +135,8 @@ export async function getCustomersAPI(selectedFilter, authState){
 export async function getMyProfileAPI(authState){
     try{
         debugger;
-        let url = createUrl(`/api/Admin/GetMyProfile/`);
-        let response = await axios.post(url, authState);          
+        const url = createUrl(`/api/Admin/GetMyProfile`);
+        let response = await axios.put(url, authState);          
         return response; 
     }catch(ex){
         console.log(ex);

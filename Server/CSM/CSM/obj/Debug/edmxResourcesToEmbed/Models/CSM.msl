@@ -46,6 +46,7 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="CSMModel.Order">
         <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="package_type" ColumnName="package_type" />
           <ScalarProperty Name="receiver_email" ColumnName="receiver_email" />
           <ScalarProperty Name="receiver_name" ColumnName="receiver_name" />
           <ScalarProperty Name="order_id" ColumnName="order_id" />

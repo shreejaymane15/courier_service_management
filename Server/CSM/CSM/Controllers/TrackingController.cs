@@ -10,33 +10,19 @@ namespace CSM.Controllers
     public class TrackingController : ApiController
     {
 
-        [HttpPut]
-        [Route("GetShipmentsDetails/{trackingNumber}")]
-        public async Task<IHttpActionResult> GetShipmentDetails(int trackingNumber, [FromBody] CheckToken token)
+        [HttpGet]
+        [Route("api/Tracking/GetShipmentsDetails/{id}")]
+        public async Task<IHttpActionResult> GetShipmentDetails(int id)
         {
             CSMEntities1 db = new CSMEntities1 ();
-            JWTTokenizer tokenizer = new JWTTokenizer();
 
             try
             {
-                var user = await Task.Run(() => db.User_Info
-                                    .Where(u => u.user_Id == token.user_id && u.token == token.token)
-                                    .FirstOrDefault());
 
-                if (user == null)
-                    return Ok("INVALID");
-
-                string result = tokenizer.validateToken(token.token);
-
-                if (result == "VALID")
-                {
                     var shipment = await Task.Run(() => db.Trackings.ToList()
-                                             .Where(Track => Track.tracking_id == trackingNumber)
+                                             .Where(Track => Track.tracking_id == id)
                                              .FirstOrDefault());
                     return Ok(shipment);
-                }
-
-                return Ok(result);
             }
             catch (Exception ex)
             {

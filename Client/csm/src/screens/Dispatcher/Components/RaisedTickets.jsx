@@ -1,26 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext} from "react";
 import {getComplaintsAPI, getRolesAPI} from "../Services/DispatcherService";
 import {toast} from 'react-toastify';
-
+import {useNavigate } from "react-router-dom";
+import { AuthContext } from "../../utils/GlobalStates";
 
 function RaisedTickets() {
    
     var [complaints, setComplaints] = useState([]);
-    var [selectedFilter, setSelectedFilter] = useState("");
+    var [selectedFilter, setSelectedFilter] = useState("3");
     var [roles, setRoles] = useState([]);
+    var [authState, setAuthState] = useContext(AuthContext);
+    const navigate = useNavigate();
+    
   
     const headerMapping = {
       'Complaint ID': 'complaint_id',
-      'Complaint': 'complaint',
+      'Complaint': 'complaint1',
       'Status': 'status',
       'Placed Date': 'placed_date',
-      'Resolved Date': 'resolved_date'
+      'Resolved Date': 'resolved_date',
+      'Order_id': 'order_id',
+      'Customer_id':'customer_id'
     };
   
   
     useEffect(() => {
       loadComplaints(selectedFilter);
-      loadRoles();
     },[]);
   
     useEffect(() => {
@@ -30,23 +35,20 @@ function RaisedTickets() {
     const loadComplaints = async(selectedFilter) => {
         // debugger;
         // let id = props.target.id;
-        let response = await getComplaintsAPI(selectedFilter);
+        let response = await getComplaintsAPI(selectedFilter, authState);
         if(response.status == 200){
-          setComplaints(response.data);
+          debugger;
+          if(response.data == "EXPIRED" || response.data == "INVALID"){
+            navigate("/login");
+            toast.warning("Session Time Expired");
+          }
+          else{
+            setComplaints(response.data);
+          }       
         }else{
-          toast.error('Error while calling get api')
-        }  
-      } 
-      
-      const loadRoles = async() => {
-        // debugger;
-        let response = await getRolesAPI();
-        if(response.status == 200){
-          setRoles(response.data);
-        }else{
-          toast.error('Error while calling roles api')
+          toast.error("Error Fetching Package Types");
         }
-      }
+      } 
 
 
       const renderOption = () => {

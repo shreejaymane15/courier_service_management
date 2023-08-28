@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { loginAPI } from '../Services/LoginServices';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../utils/GlobalStates';
-
+import NavBar from '../Components/NavBar'
 
 function Login() {
 
@@ -29,8 +29,7 @@ function Login() {
         user_id:response.data.user_id,
         token:response.data.token
       });
-      // sessionStorage.setItem("user_id",response.data.user_id);
-      // sessionStorage.setItem("token",response.data.token);
+
       if (response.data != 0) {
         switch (response.data.role_id) {
           case 1:
@@ -57,6 +56,9 @@ function Login() {
   
 
   return (<>
+  <div>
+    <NavBar></NavBar>
+  </div>
   <div className="Auth-form-container">
       <div className="Auth-form-content">
         <h3 className="Auth-form-title">Sign In</h3>

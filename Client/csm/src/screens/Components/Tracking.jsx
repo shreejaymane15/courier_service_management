@@ -12,14 +12,14 @@ import { AuthContext } from '../utils/GlobalStates';
 function Tracking() {
 
 
-const [orders, setOrders] = useState([]);
+const [tracking, setTracking] = useState([]);
 var [authState, setAuthState] = useContext(AuthContext);
 
   
 
-
+debugger;
 const navigate = useNavigate();
-const isAuthenticated = authState.id !== null && authState.token !== null; 
+const isAuthenticated = authState.user_id !== "" && authState.token !== "";
 
 
 
@@ -34,7 +34,7 @@ const isAuthenticated = authState.id !== null && authState.token !== null;
         toast.warning("Session Time Expired");
       }
       else{
-        setOrders(response.data);
+        setTracking(response.data);
       }
     }else{
       toast.error('Error while calling getorders api');
@@ -42,7 +42,7 @@ const isAuthenticated = authState.id !== null && authState.token !== null;
   }
 
     return (<>
-      {isAuthenticated ? <NavBarProtected /> : <NavBar/>}
+      {isAuthenticated ? <NavBarProtected/> : <NavBar/>}
         <div>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
         <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />

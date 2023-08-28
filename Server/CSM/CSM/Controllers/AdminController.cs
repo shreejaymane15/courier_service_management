@@ -454,7 +454,7 @@ namespace CSM.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("api/Admin/GetMyProfile")]
         public async Task<IHttpActionResult> GetMyProfile([FromBody] CheckToken token)
         {

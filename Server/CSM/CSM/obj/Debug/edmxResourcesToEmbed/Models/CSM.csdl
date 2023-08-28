@@ -67,6 +67,7 @@
     <NavigationProperty Name="Trackings" Relationship="Self.FK_Tracking_To_Order" FromRole="Order" ToRole="Tracking" />
     <Property Name="receiver_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="receiver_email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="package_type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Package">
     <Key>

@@ -1,15 +1,22 @@
 import {useNavigate} from 'react-router-dom';
+import { AuthContext } from '../utils/GlobalStates';
+import { useContext } from 'react';
 
 function NavBarProtected() {
     const navigate = useNavigate();
-
+    var [authState, setAuthState] = useContext(AuthContext);
 
     const GoToHome = () =>{
         navigate('/');
     }
 
     const GoToLogin = () =>{
-        sessionStorage.clear();
+        debugger;
+        setAuthState({
+            ...authState,
+            user_id:"",
+            token:""
+          });
         navigate('/login');
     }
 

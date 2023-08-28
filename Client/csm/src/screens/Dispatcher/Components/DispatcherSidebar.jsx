@@ -20,98 +20,87 @@ function DispatcherSideBar({toggleComponent}) {
       toggleComponent("RaisedTickets");
     };
   
-    const toggleTracking = () => {
-      toggleComponent("Tracking");
+    const toggleMyProfile = () => {
+      toggleComponent("MyProfile");
     };
-  
-    const toggleSettings = () => {
-      toggleComponent("Settings");
-    };
-    
-  
-      return (<>
-          
-          <div className="sidebar border border-right col-md-12 p-0 bg-body-tertiary">
-        <div
-          className="offcanvas-lg offcanvas-end bg-body-tertiary"
-          tabIndex={-1}
-          id="sidebarMenu"
-          aria-labelledby="sidebarMenuLabel"
-        >
-          <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="sidebarMenuLabel">
-              Company name
-            </h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="offcanvas"
-              data-bs-target="#sidebarMenu"
-              aria-label="Close"
-            />
-          </div>
-         
-          <div className="offcanvas-body d-md-flex flex-column overflow-y-auto">
-  
-            <ul className="nav flex-column">
+
+    return (<>
+      <div className="sidebar border border-right col-md-12 p-0 " style={{ height: "100vh", backgroundColor:"#CACFD2" }}>
+      <div
+        className="offcanvas-lg offcanvas-end bg-body-tertiary"
+        tabIndex={-1}
+        id="sidebarMenu"
+        aria-labelledby="sidebarMenuLabel"
+      >
+        <div className="d-md-flex flex-column" style={{backgroundColor:"#CACFD2"}}> 
+          <ul className="nav flex-column">
             <li className="nav-item">
+              <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
               <a
-                className="nav-link d-flex align-items-center gap-2 active"
+                className="nav-link d-flex align-items-center active"
                 aria-current="page"
                 onClick={toggleDispatcherDashboard}
-              >
+                style={{marginTop:"10px", marginLeft:"50px", color:"#000", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}
+                >
                 Dashboard
               </a>
+              </button>
             </li>
-              <li className="nav-item">
-                <a
-                 
-                  className="nav-link d-flex align-items-center"
-                  
-                  onClick={toggleOrderSummary}
-                >
-                 Order Summary
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link d-flex align-items-center" onClick={toggleNewOrder}>
-                  Create New Order
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link d-flex align-items-center" onClick={toggleDispatcherEmployeeDirectory}>
-                  Employee Directory
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link d-flex align-items-center"onClick={toggleRaisedTickets}>
-                  Raised Tickets
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link d-flex align-items-center" onClick={toggleTracking}>
-                  Order Tracking
-                </a>
-              </li>
-             
-            </ul>
-            <hr className="my-3" />
-            <ul className="nav flex-column mb-auto">
-              <li className="nav-item">
-                <a className="nav-link d-flex align-items-center" onClick={toggleSettings}>
-                  Settings
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link d-flex align-items-center " href="#">
-                  Sign out
-                </a>
-              </li>
-            </ul>
-          </div>
+            <li className="nav-item">
+            <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
+              <a className="nav-link d-flex align-items-center" 
+              onClick={toggleOrderSummary}
+              style={{marginTop:"10px", marginLeft:"40px", color:"#000", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+              Order Summary
+              </a>
+              </button>
+            </li>
+            <li className="nav-item">
+            <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
+              <a className="nav-link d-flex align-items-center" 
+              onClick={toggleNewOrder}
+              style={{marginTop:"10px", marginLeft:"20px", color:"#000", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+              Create New Order
+              </a>
+            </button>
+            </li>
+            <li className="nav-item">
+            <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
+              <a className="nav-link d-flex align-items-center" 
+              onClick={toggleDispatcherEmployeeDirectory}
+              style={{marginTop:"10px", marginLeft:"20px", color:"#000",fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+              Employee Directory
+              </a>
+            </button>  
+            </li>
+            <li className="nav-item">
+            <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
+              <a className="nav-link d-flex align-items-center" 
+              onClick={toggleRaisedTickets}
+              style={{marginTop:"10px", marginLeft:"40px", color:"#000", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+              Raised Tickets
+              </a>
+            </button>
+            </li>
+          </ul>
+          <ul className="nav flex-column">
+          <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
+            <li className="nav-item">
+              <a className="nav-link d-flex align-items-center "
+              style={{marginTop:"10px", marginLeft:"50px", color:"#000", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}
+              onClick={toggleMyProfile}>
+                My Profile
+              </a>
+            </li>
+            </button>
+          </ul>
         </div>
       </div>
-      </>);
+    </div>
+    </>);
   }
   
   export default DispatcherSideBar;
+
+
+

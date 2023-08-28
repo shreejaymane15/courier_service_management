@@ -6,8 +6,8 @@ import NewOrder from "./NewOrder";
 import DispatcherEmployeeDirectory from "./DispatcherEmployeeDirectory";
 import RaisedTickets from "./RaisedTickets";
 import Tracking from "../../Components/Tracking";
-import Settings from "./Settings";
 import NavBarProtected from "../../Components/NavBarProtected";
+import MyProfile from "./MyProfile";
 
 function DispatcherDash() {
 
@@ -20,11 +20,11 @@ function DispatcherDash() {
     const componentMapping = {
       Dashboard: <DispatcherDashboard />,
       OrderSummary: <OrderSummary />,
-      NewOrder: <NewOrder />,
-      DispatcherEmployeeDirectory: <DispatcherEmployeeDirectory />,
+      NewOrder: <NewOrder toggleComponent={toggleComponent}/>,
+      DispatcherEmployeeDirectory: <DispatcherEmployeeDirectory/>,
       RaisedTickets: <RaisedTickets />,
       OrderTracking: < Tracking/>,
-      Settings: <Settings />,
+      MyProfile: <MyProfile/>,
     };
 
     return (<>
