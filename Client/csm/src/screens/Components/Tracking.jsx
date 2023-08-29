@@ -14,38 +14,78 @@ function Tracking() {
 
 const [tracking, setTracking] = useState([]);
 var [authState, setAuthState] = useContext(AuthContext);
-
-  
-
-debugger;
 const navigate = useNavigate();
 const isAuthenticated = authState.user_id !== "" && authState.token !== "";
 
 
 
-  const getTrackingDetails = async(event) => {
-    debugger;
-    event.preventDefault(); 
-    var tracking_id = event.target.elements.tracking.value;
-    const response = await getTraackingDetailsAPI(tracking_id, authState);
-    if(response.status == 200){
-      if(response.data == "EXPIRED" || response.data == "INVALID"){
-        navigate("/login");
-        toast.warning("Session Time Expired");
-      }
-      else{
-        setTracking(response.data);
-      }
-    }else{
-      toast.error('Error while calling getorders api');
+const headerMapping = {
+  'Tracking ID': 'tracking_id',
+  'Departed From': 'departed_from',
+  'Reached At': 'reached_at',
+  'Destination': 'destination',
+  'Status': 'status',
+  'Update At': 'updated_at',
+  'Order Id':'order_id',
+  'Amount': 'order.amount',
+  'Status': 'order.status',
+  'Personnel ID': 'order.personnel_id'
+};
+
+
+const getTrackingDetails = async(event) => {
+  debugger;
+  event.preventDefault(); 
+  var tracking_id = event.target.elements.tracking.value;
+  const response = await getTraackingDetailsAPI(tracking_id, authState);
+  if(response.status == 200){
+    if(response.data == "EXPIRED" || response.data == "INVALID"){
+      navigate("/login");
+      toast.warning("Session Time Expired");
     }
+    else{
+      const trackingData = Array.isArray(response.data) ? response.data : [response.data];
+      setTracking(trackingData);
+    }
+  }else{
+    toast.error('Error while calling getorders api');
   }
+}
+
+
+const renderTracking = () =>
+  tracking.map((track) => (
+    <tr key={track.order_id}>
+      {Object.keys(headerMapping).map((label) => (
+        <td key={label}>
+          {label === 'Amount' && track.order ? track.order.amount : ''}
+          {label === 'Personnel ID' && track.order ? track.order.personnel_id : ''}
+          {label !== 'Amount' && label !== 'Personnel ID' && track[headerMapping[label]]}
+        </td>
+      ))}
+    </tr>
+  ));
+
+    
+const renderHeader = () => {
+  return (
+    <thead>
+    <tr>
+        {Object.keys(headerMapping).map(label => (
+            <th key={label}>{label}</th>
+        ))}
+    </tr>
+    </thead>
+  );
+}
+
+
+
 
     return (<>
       {isAuthenticated ? <NavBarProtected/> : <NavBar/>}
         <div>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
-        <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
         <link href="assets/css/main.css" rel="stylesheet" />
         <div className="container mt-5">
@@ -53,8 +93,8 @@ const isAuthenticated = authState.user_id !== "" && authState.token !== "";
             <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
             <h2 data-aos="fade-up">Track your Courier</h2>
             <form action="#" className="form-search d-flex align-items-stretch" data-aos="fade-up" data-aos-delay={200} onSubmit={getTrackingDetails}>
-                <input type="text" name="tracking" className="form-control" placeholder="Enter tracking id..."/>
-                <button type="submit" className="btn btn-primary ml-2">Track</button>
+            <input type="text" name="tracking" className="form-control" placeholder="Enter tracking id..." />
+            <button type="submit" className="btn btn-primary ml-2">Track</button>
             </form>
             {/* <center><p data-aos="fade-up" data-aos-delay={100} /><h5>Fill the tracking id correctly</h5><p /></center> */}
             </div>
@@ -62,6 +102,17 @@ const isAuthenticated = authState.user_id !== "" && authState.token !== "";
             <img src="assets/img/hero-img.svg" className="img-fluid" alt="" />
             </div>
         </div>
+        {tracking.length > 0 && (
+        <div className="mt-4">
+          <h3>Tracking Details</h3>
+          <table className="table table-bordered">
+              {renderHeader()}
+            <tbody>
+              {renderTracking()}
+            </tbody>
+          </table>
+        </div>
+        )}
         </div>
         <footer id="footer" className="footer mt-5">
           <div className="container">

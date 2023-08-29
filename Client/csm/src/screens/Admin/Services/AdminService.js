@@ -16,7 +16,7 @@ export async function getRolesAPI(data){
     
 export async function getEmployeesAPI(selectedFilter, data){
     try{
-        // debugger;
+        debugger;
         let url = createUrl(`/api/Admin/GetEmployees/${selectedFilter}`);
         const response = await axios.put(url, data);
         return response;
@@ -53,7 +53,8 @@ export async function getCitiesAPI(data){
     }
 }
 
-    
+
+
 export async function getOrdersAPI(selectedFilter, data){
     try{
         debugger;
@@ -66,7 +67,6 @@ export async function getOrdersAPI(selectedFilter, data){
         return null;
     }
 }
-
 
 export async function GetEmployeeDetailsAPI(id, data){
     try{

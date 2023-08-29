@@ -25,5 +25,6 @@ namespace CSM.Models
     
         public virtual Order Order { get; set; }
         public virtual User_Info User_Info { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

@@ -36,7 +36,7 @@ function Home() {
                 <div className="column">
                     <Carousel/>
                 </div>
-                <div style={{position:"absolute", display:"flex", marginLeft:"57.9%", marginTop:"10.5%"}}>
+                <div style={{position:"absolute", display:"flex", marginLeft:"54.9%", marginTop:"13.5%"}}>
                     <div style={{border:"solid green", padding: "32px 64px 32px 16px"}}>
                         <a style={{fontFamily:"sans-serif", fontSize:"28px", color:"black", textDecoration:"none"}} onClick={GoToTracking}>
                         <img src="/Images/Package_Icon.jpg" style={{width:"80px", height:"80px", paddingRight:"15px"}}/>
@@ -45,7 +45,7 @@ function Home() {
                         </a>
                     </div>
                 </div>
-                <div style={{position:"absolute", display:"flex", marginLeft:"57.9%", marginTop:"20.1%"}}>
+                {/* <div style={{position:"absolute", display:"flex", marginLeft:"57.9%", marginTop:"20.1%"}}>
                     <div style={{border:"solid green", padding: "32px 64px 32px 16px"}}>
                         <a style={{fontFamily:"sans-serif", fontSize:"27.2px", color:"black", textDecoration:"none"}} onClick={GoToAdmin}>
                         <img src="/Images/Package Home Pick Up.png" style={{width:"80px", height:"80px", paddingRight:"15px"}} />
@@ -53,8 +53,8 @@ function Home() {
                         <img src="/Images/circle-right.svg" alt="arrow" style={{paddingLeft:"163.5px"}}/>
                         </a>
                     </div>
-                </div>
-                <div style={{position:"absolute", display:"flex", marginLeft:"57.9%", marginTop:"29.75%"}}>
+                </div> */}
+                <div style={{position:"absolute", display:"flex", marginLeft:"54.9%", marginTop:"26.75%"}}>
                     <div style={{border:"solid green", padding: "32px 64px 32px 16px"}}>
                         <a style={{fontFamily:"sans-serif", fontSize:"25.45px", color:"black", textDecoration:"none"}} onClick={GoToHubLocation}>
                         <img src="/Images/Package_Icon.jpg" style={{width:"80px", height:"80px", paddingRight:"15px"}}/>

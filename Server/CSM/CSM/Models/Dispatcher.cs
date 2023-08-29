@@ -14,15 +14,9 @@ namespace CSM.Models
     
     public partial class Dispatcher
     {
-        public Dispatcher()
-        {
-            this.Packages = new HashSet<Package>();
-        }
-    
         public int dispatcher_id { get; set; }
         public string hub_location { get; set; }
     
         public virtual User_Info User_Info { get; set; }
-        public virtual ICollection<Package> Packages { get; set; }
     }
 }

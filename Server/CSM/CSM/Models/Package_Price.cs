@@ -14,14 +14,7 @@ namespace CSM.Models
     
     public partial class Package_Price
     {
-        public Package_Price()
-        {
-            this.Packages = new HashSet<Package>();
-        }
-    
         public string package_type { get; set; }
         public decimal package_price1 { get; set; }
-    
-        public virtual ICollection<Package> Packages { get; set; }
     }
 }

@@ -21,6 +21,7 @@ function Orders() {
     'Receiver Mobile': 'receiver_mobile',
     'Receiver Address': 'receiver_address',
     'Package Count': 'package_count',
+    'Package Type':'package_type',
     'Amount': 'amount',
     'Status': 'status',
     'Customer ID': 'customer_id',
@@ -124,7 +125,7 @@ function Orders() {
         </div>
         <div>
         <select onChange={handleFilterChange}>
-          <option value="">All</option>
+          <option value="ALL">All</option>
           {renderOption()}
         </select>
         </div>

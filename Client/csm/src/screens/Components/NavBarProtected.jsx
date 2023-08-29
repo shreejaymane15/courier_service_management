@@ -28,9 +28,21 @@ function NavBarProtected() {
         navigate('/contact');
     }
 
-    const GoToServices = () =>{
-        navigate('/GoToServices');
+
+    const GoToDashboard = () =>{
+        if(authState.role_id == 1){
+            navigate('/admin');
+        }else if(authState.role_id == 2){
+            navigate('/dispatcher');
+        }else if(authState.role_id == 3){
+            navigate('/delivery_personnel');
+        }
     }
+
+
+    // const GoToServices = () =>{
+    //     navigate('/GoToServices');
+    // }
 
     const GoToTrackShipment = () =>{
         navigate('/trackshipment');
@@ -47,13 +59,16 @@ function NavBarProtected() {
                 </a>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <a className="navbar-brand" style={{fontSize:"25px"}} onClick={GoToHome}>SwiftTransit</a>
-                <ul className="navbar-nav mr-auto mb-2 mb-lg-0" style={{fontSize:"21px", marginLeft:"64px", paddingTop:"5px"}}>
+                <ul className="navbar-nav mr-auto mb-2 mb-lg-0" style={{fontSize:"21px", marginLeft:"200px"}}>
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
                     <a className="nav-link" aria-current="page" onClick={GoToHome}>Home</a>
                     </li>
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
-                    <a className="nav-link" onClick={GoToServices}>Services</a>
+                    <a className="nav-link" aria-current="page" onClick={GoToDashboard}>Dashboard</a>
                     </li>
+                    {/* <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
+                    <a className="nav-link" onClick={GoToServices}>Services</a>
+                    </li> */}
                     <li className="nav-item" style={{marginLeft:"16px", marginRight:"16px"}}>
                     <a className="nav-link" onClick={GoToTrackShipment}>Track Your Shipment</a>
                     </li>
@@ -64,10 +79,10 @@ function NavBarProtected() {
                     <a className="nav-link" onClick={GoToContactUs}>Contact Us</a>
                     </li>
                 </ul>
-                <form className="d-flex" role="search">
+                {/* <form className="d-flex" role="search">
                     <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                     <button className="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                </form> */}
                 <div className="d-grid gap-2 d-md-flex justify-content-md-end" style={{marginLeft:"32px", marginRight:"32px"}}>
                 <button className="btn btn-outline-success me-2" type="button" onClick={GoToLogin}>Log Out</button>
                 </div>

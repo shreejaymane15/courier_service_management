@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {getEmployeesAPI} from "../Services/DispatcherService";
 import {toast} from 'react-toastify';
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../utils/GlobalStates";
 
 function DispatcherEmployeeDirectory() {
    
     var [employees, setEmployees] = useState([]);
+    var [authState, setAuthState] = useContext(AuthContext);
+    const navigate = useNavigate();
+    
   
     const headerMapping = {
       'Employee ID': 'user_Id',
@@ -21,27 +26,32 @@ function DispatcherEmployeeDirectory() {
       loadEmployees();
     },[]);
   
-    const loadEmployees = async(props) => {
-        // debugger;
-        let id = props.target.id;
-        let response = await getEmployeesAPI(id);
-        if(response.status == 200){
-          setEmployees(response.data);
-        }else{
-          toast.error('Error while calling get api')
-        }  
+    const loadEmployees = async(selectedFilter) => {
+      debugger;
+      let response = await getEmployeesAPI(authState);
+      if(response.status == 200){
+        if(response.data == "EXPIRED" || response.data == "INVALID"){
+          navigate("/login");
+          toast.warning("Session Time Expired");
+        }
+        else{
+          setEmployees(user_info);
+        }   
+      }else{
+        toast.error('Error while calling get api')
       }  
+    }  
 
     const renderEmployees = () =>
-      employees.map(employee => (
-        <tr key={employee.user_id}>
-          {Object.keys(headerMapping).map(label => (
-              <td>{employee[headerMapping[label]]}</td>
-              ))}
-        </tr>
-      ));
-  
-      
+    employees.map(employee => (
+      <tr key={employee.user_id}>
+        {Object.keys(headerMapping).map(label => (
+            <td>{employee[headerMapping[label]]}</td>
+            ))}
+      </tr>
+    ));
+
+
     const renderHeader = () => {
       return (
         <thead>

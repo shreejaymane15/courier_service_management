@@ -67,7 +67,7 @@ function SideBar({toggleComponent}) {
             </a>
           </button>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
           <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
             <a className="nav-link d-flex align-items-center" 
             onClick={toggleCustomers}
@@ -84,7 +84,7 @@ function SideBar({toggleComponent}) {
               Reports
             </a>
           </button>
-          </li>
+          </li> */}
         </ul>
         <ul className="nav flex-column">
         <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>

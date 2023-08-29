@@ -8,11 +8,8 @@
         <EntityTypeShape EntityType="CSMModel.Complaint" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CSMModel.Delivery_Personnel" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CSMModel.Dispatcher" Width="1.5" PointX="5.25" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSMModel.Feedback" Width="1.5" PointX="9.75" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CSMModel.Order" Width="1.5" PointX="7.5" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSMModel.Package" Width="1.5" PointX="12.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSMModel.Package_Price" Width="1.5" PointX="10.5" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CSMModel.Payment" Width="1.5" PointX="9.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CSMModel.Package_Price" Width="1.5" PointX="9.625" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CSMModel.Role" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CSMModel.Tracking" Width="1.5" PointX="9.75" PointY="19.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CSMModel.User_Info" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
@@ -21,16 +18,11 @@
         <AssociationConnector Association="CSMModel.FK_Delivery_Personnel_To_Delivery_Personnel" ManuallyRouted="false" />
         <AssociationConnector Association="CSMModel.FK_Delivery_Personnel_To_User_Info" ManuallyRouted="false" />
         <AssociationConnector Association="CSMModel.Fk_Dispatcher_TO_User_Info" ManuallyRouted="false" />
-        <AssociationConnector Association="CSMModel.FK_Package_To_Dispatcher" ManuallyRouted="false" />
-        <AssociationConnector Association="CSMModel.Fk_Feedback_To_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="CSMModel.Fk_Feedback_To_User_Info" ManuallyRouted="false" />
         <AssociationConnector Association="CSMModel.FK_Order_To_User_Info" ManuallyRouted="false" />
-        <AssociationConnector Association="CSMModel.FK_Package_To_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="CSMModel.FK_Payment_To_Order" ManuallyRouted="false" />
         <AssociationConnector Association="CSMModel.FK_Tracking_To_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="CSMModel.FK_Package_To_Package_Pricing" ManuallyRouted="false" />
         <AssociationConnector Association="CSMModel.FK_USER_TO_ROLE" ManuallyRouted="false" />
         <AssociationConnector Association="CSMModel.FK_Complaint_ToTable" />
+        <AssociationConnector Association="CSMModel.Fk_Complaint_To_Role" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

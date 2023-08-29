@@ -1,11 +1,11 @@
 import axios from "axios";
 import { createUrl } from "../../utils/utils";
 
-export async function getEmployeesAPI(id){
+export async function getEmployeesAPI(data){
     try{
-        // debugger;
-        let url = createUrl(`/api/Dispatcher/GetEmployees/${id}`);
-        const response = await axios.get(url);
+        debugger;
+        let url = createUrl(`/api/Dispatcher/GetEmployees`);
+        const response = await axios.put(url, data);
         return response;
     }catch(ex){
         console.log(ex);

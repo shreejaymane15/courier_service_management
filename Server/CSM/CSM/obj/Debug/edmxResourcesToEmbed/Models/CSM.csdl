@@ -14,6 +14,7 @@
     <NavigationProperty Name="Order" Relationship="Self.Fk_Complaint_To_Order" FromRole="Complaint" ToRole="Order" />
     <NavigationProperty Name="User_Info" Relationship="Self.Fk_Complaint_To_User_Info" FromRole="Complaint" ToRole="User_Info" />
     <Property Name="role_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Role" Relationship="CSMModel.Fk_Complaint_To_Role" FromRole="Complaint" ToRole="Role" />
   </EntityType>
   <EntityType Name="Delivery_Personnel">
     <Key>
@@ -31,20 +32,6 @@
     <Property Name="dispatcher_id" Type="Int32" Nullable="false" />
     <Property Name="hub_location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="User_Info" Relationship="Self.Fk_Dispatcher_TO_User_Info" FromRole="Dispatcher" ToRole="User_Info" />
-    <NavigationProperty Name="Packages" Relationship="Self.FK_Package_To_Dispatcher" FromRole="Dispatcher" ToRole="Package" />
-  </EntityType>
-  <EntityType Name="Feedback">
-    <Key>
-      <PropertyRef Name="feedback_id" />
-    </Key>
-    <Property Name="feedback_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="rating" Type="Int32" Nullable="false" />
-    <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="feedback_date" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="order_id" Type="Int32" Nullable="false" />
-    <Property Name="customer_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Order" Relationship="Self.Fk_Feedback_To_Order" FromRole="Feedback" ToRole="Order" />
-    <NavigationProperty Name="User_Info" Relationship="Self.Fk_Feedback_To_User_Info" FromRole="Feedback" ToRole="User_Info" />
   </EntityType>
   <EntityType Name="Order">
     <Key>
@@ -60,30 +47,11 @@
     <Property Name="personnel_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Complaints" Relationship="Self.Fk_Complaint_To_Order" FromRole="Order" ToRole="Complaint" />
     <NavigationProperty Name="Delivery_Personnel" Relationship="Self.FK_Delivery_Personnel_To_Delivery_Personnel" FromRole="Order" ToRole="Delivery_Personnel" />
-    <NavigationProperty Name="Feedback" Relationship="Self.Fk_Feedback_To_Order" FromRole="Order" ToRole="Feedback" />
     <NavigationProperty Name="User_Info" Relationship="Self.FK_Order_To_User_Info" FromRole="Order" ToRole="User_Info" />
-    <NavigationProperty Name="Packages" Relationship="Self.FK_Package_To_Order" FromRole="Order" ToRole="Package" />
-    <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_To_Order" FromRole="Order" ToRole="Payment" />
     <NavigationProperty Name="Trackings" Relationship="Self.FK_Tracking_To_Order" FromRole="Order" ToRole="Tracking" />
     <Property Name="receiver_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="receiver_email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="package_type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="Package">
-    <Key>
-      <PropertyRef Name="package_id" />
-    </Key>
-    <Property Name="package_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="length" Type="Int32" Nullable="false" />
-    <Property Name="width" Type="Int32" Nullable="false" />
-    <Property Name="height" Type="Int32" Nullable="false" />
-    <Property Name="weight" Type="Int32" Nullable="false" />
-    <Property Name="type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="order_id" Type="Int32" Nullable="false" />
-    <Property Name="dispatcher_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Dispatcher" Relationship="Self.FK_Package_To_Dispatcher" FromRole="Package" ToRole="Dispatcher" />
-    <NavigationProperty Name="Order" Relationship="Self.FK_Package_To_Order" FromRole="Package" ToRole="Order" />
-    <NavigationProperty Name="Package_Price" Relationship="Self.FK_Package_To_Package_Pricing" FromRole="Package" ToRole="Package_Price" />
   </EntityType>
   <EntityType Name="Package_Price">
     <Key>
@@ -91,19 +59,6 @@
     </Key>
     <Property Name="package_type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="package_price1" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-    <NavigationProperty Name="Packages" Relationship="Self.FK_Package_To_Package_Pricing" FromRole="Package_Price" ToRole="Package" />
-  </EntityType>
-  <EntityType Name="Payment">
-    <Key>
-      <PropertyRef Name="payment_id" />
-    </Key>
-    <Property Name="payment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="amount" Type="Single" Nullable="false" />
-    <Property Name="payment_date" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="UTR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="order_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Order" Relationship="Self.FK_Payment_To_Order" FromRole="Payment" ToRole="Order" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -112,6 +67,7 @@
     <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="role_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="User_Info" Relationship="Self.FK_USER_TO_ROLE" FromRole="Role" ToRole="User_Info" />
+    <NavigationProperty Name="Complaints" Relationship="CSMModel.Fk_Complaint_To_Role" FromRole="Role" ToRole="Complaint" />
   </EntityType>
   <EntityType Name="Tracking">
     <Key>
@@ -141,7 +97,6 @@
     <NavigationProperty Name="Complaints" Relationship="Self.Fk_Complaint_To_User_Info" FromRole="User_Info" ToRole="Complaint" />
     <NavigationProperty Name="Delivery_Personnel" Relationship="Self.FK_Delivery_Personnel_To_User_Info" FromRole="User_Info" ToRole="Delivery_Personnel" />
     <NavigationProperty Name="Dispatcher" Relationship="Self.Fk_Dispatcher_TO_User_Info" FromRole="User_Info" ToRole="Dispatcher" />
-    <NavigationProperty Name="Feedbacks" Relationship="Self.Fk_Feedback_To_User_Info" FromRole="User_Info" ToRole="Feedback" />
     <NavigationProperty Name="Orders" Relationship="Self.FK_Order_To_User_Info" FromRole="User_Info" ToRole="Order" />
     <NavigationProperty Name="Role" Relationship="Self.FK_USER_TO_ROLE" FromRole="User_Info" ToRole="Role" />
     <Property Name="status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -207,42 +162,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Package_To_Dispatcher">
-    <End Role="Dispatcher" Type="Self.Dispatcher" Multiplicity="1" />
-    <End Role="Package" Type="Self.Package" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Dispatcher">
-        <PropertyRef Name="dispatcher_id" />
-      </Principal>
-      <Dependent Role="Package">
-        <PropertyRef Name="dispatcher_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="Fk_Feedback_To_Order">
-    <End Role="Order" Type="Self.Order" Multiplicity="1" />
-    <End Role="Feedback" Type="Self.Feedback" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="order_id" />
-      </Principal>
-      <Dependent Role="Feedback">
-        <PropertyRef Name="feedback_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="Fk_Feedback_To_User_Info">
-    <End Role="User_Info" Type="Self.User_Info" Multiplicity="1" />
-    <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User_Info">
-        <PropertyRef Name="user_Id" />
-      </Principal>
-      <Dependent Role="Feedback">
-        <PropertyRef Name="customer_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Order_To_User_Info">
     <End Role="User_Info" Type="Self.User_Info" Multiplicity="1" />
     <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -255,30 +174,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Package_To_Order">
-    <End Role="Order" Type="Self.Order" Multiplicity="1" />
-    <End Role="Package" Type="Self.Package" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="order_id" />
-      </Principal>
-      <Dependent Role="Package">
-        <PropertyRef Name="order_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Payment_To_Order">
-    <End Role="Order" Type="Self.Order" Multiplicity="1" />
-    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="order_id" />
-      </Principal>
-      <Dependent Role="Payment">
-        <PropertyRef Name="order_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Tracking_To_Order">
     <End Role="Order" Type="Self.Order" Multiplicity="1" />
     <End Role="Tracking" Type="Self.Tracking" Multiplicity="*" />
@@ -288,18 +183,6 @@
       </Principal>
       <Dependent Role="Tracking">
         <PropertyRef Name="order_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Package_To_Package_Pricing">
-    <End Role="Package_Price" Type="Self.Package_Price" Multiplicity="1" />
-    <End Role="Package" Type="Self.Package" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Package_Price">
-        <PropertyRef Name="package_type" />
-      </Principal>
-      <Dependent Role="Package">
-        <PropertyRef Name="type" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -319,11 +202,8 @@
     <EntitySet Name="Complaints" EntityType="Self.Complaint" />
     <EntitySet Name="Delivery_Personnel" EntityType="Self.Delivery_Personnel" />
     <EntitySet Name="Dispatchers" EntityType="Self.Dispatcher" />
-    <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
     <EntitySet Name="Orders" EntityType="Self.Order" />
-    <EntitySet Name="Packages" EntityType="Self.Package" />
     <EntitySet Name="Package_Price" EntityType="Self.Package_Price" />
-    <EntitySet Name="Payments" EntityType="Self.Payment" />
     <EntitySet Name="Roles" EntityType="Self.Role" />
     <EntitySet Name="Trackings" EntityType="Self.Tracking" />
     <EntitySet Name="User_Info" EntityType="Self.User_Info" />
@@ -347,41 +227,33 @@
       <End Role="User_Info" EntitySet="User_Info" />
       <End Role="Dispatcher" EntitySet="Dispatchers" />
     </AssociationSet>
-    <AssociationSet Name="FK_Package_To_Dispatcher" Association="Self.FK_Package_To_Dispatcher">
-      <End Role="Dispatcher" EntitySet="Dispatchers" />
-      <End Role="Package" EntitySet="Packages" />
-    </AssociationSet>
-    <AssociationSet Name="Fk_Feedback_To_Order" Association="Self.Fk_Feedback_To_Order">
-      <End Role="Order" EntitySet="Orders" />
-      <End Role="Feedback" EntitySet="Feedbacks" />
-    </AssociationSet>
-    <AssociationSet Name="Fk_Feedback_To_User_Info" Association="Self.Fk_Feedback_To_User_Info">
-      <End Role="User_Info" EntitySet="User_Info" />
-      <End Role="Feedback" EntitySet="Feedbacks" />
-    </AssociationSet>
     <AssociationSet Name="FK_Order_To_User_Info" Association="Self.FK_Order_To_User_Info">
       <End Role="User_Info" EntitySet="User_Info" />
       <End Role="Order" EntitySet="Orders" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Package_To_Order" Association="Self.FK_Package_To_Order">
-      <End Role="Order" EntitySet="Orders" />
-      <End Role="Package" EntitySet="Packages" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Payment_To_Order" Association="Self.FK_Payment_To_Order">
-      <End Role="Order" EntitySet="Orders" />
-      <End Role="Payment" EntitySet="Payments" />
     </AssociationSet>
     <AssociationSet Name="FK_Tracking_To_Order" Association="Self.FK_Tracking_To_Order">
       <End Role="Order" EntitySet="Orders" />
       <End Role="Tracking" EntitySet="Trackings" />
     </AssociationSet>
-    <AssociationSet Name="FK_Package_To_Package_Pricing" Association="Self.FK_Package_To_Package_Pricing">
-      <End Role="Package_Price" EntitySet="Package_Price" />
-      <End Role="Package" EntitySet="Packages" />
-    </AssociationSet>
     <AssociationSet Name="FK_USER_TO_ROLE" Association="Self.FK_USER_TO_ROLE">
       <End Role="Role" EntitySet="Roles" />
       <End Role="User_Info" EntitySet="User_Info" />
     </AssociationSet>
+    <AssociationSet Name="Fk_Complaint_To_Role" Association="CSMModel.Fk_Complaint_To_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="Complaint" EntitySet="Complaints" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="Fk_Complaint_To_Role">
+    <End Type="CSMModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="CSMModel.Complaint" Role="Complaint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="role_id" />
+      </Principal>
+      <Dependent Role="Complaint">
+        <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

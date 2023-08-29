@@ -17,11 +17,13 @@ namespace CSM.Models
         public Role()
         {
             this.User_Info = new HashSet<User_Info>();
+            this.Complaints = new HashSet<Complaint>();
         }
     
         public int role_id { get; set; }
         public string role_name { get; set; }
     
         public virtual ICollection<User_Info> User_Info { get; set; }
+        public virtual ICollection<Complaint> Complaints { get; set; }
     }
 }

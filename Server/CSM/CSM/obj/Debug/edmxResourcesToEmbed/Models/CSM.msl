@@ -31,18 +31,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Feedbacks">
-      <EntityTypeMapping TypeName="CSMModel.Feedback">
-        <MappingFragment StoreEntitySet="Feedback">
-          <ScalarProperty Name="feedback_id" ColumnName="feedback_id" />
-          <ScalarProperty Name="rating" ColumnName="rating" />
-          <ScalarProperty Name="comment" ColumnName="comment" />
-          <ScalarProperty Name="feedback_date" ColumnName="feedback_date" />
-          <ScalarProperty Name="order_id" ColumnName="order_id" />
-          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="CSMModel.Order">
         <MappingFragment StoreEntitySet="Order">
@@ -60,37 +48,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Packages">
-      <EntityTypeMapping TypeName="CSMModel.Package">
-        <MappingFragment StoreEntitySet="Package">
-          <ScalarProperty Name="package_id" ColumnName="package_id" />
-          <ScalarProperty Name="length" ColumnName="length" />
-          <ScalarProperty Name="width" ColumnName="width" />
-          <ScalarProperty Name="height" ColumnName="height" />
-          <ScalarProperty Name="weight" ColumnName="weight" />
-          <ScalarProperty Name="type" ColumnName="type" />
-          <ScalarProperty Name="order_id" ColumnName="order_id" />
-          <ScalarProperty Name="dispatcher_id" ColumnName="dispatcher_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Package_Price">
       <EntityTypeMapping TypeName="CSMModel.Package_Price">
         <MappingFragment StoreEntitySet="Package_Price">
           <ScalarProperty Name="package_type" ColumnName="package_type" />
           <ScalarProperty Name="package_price1" ColumnName="package_price" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Payments">
-      <EntityTypeMapping TypeName="CSMModel.Payment">
-        <MappingFragment StoreEntitySet="Payment">
-          <ScalarProperty Name="payment_id" ColumnName="payment_id" />
-          <ScalarProperty Name="amount" ColumnName="amount" />
-          <ScalarProperty Name="payment_date" ColumnName="payment_date" />
-          <ScalarProperty Name="UTR" ColumnName="UTR" />
-          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-          <ScalarProperty Name="order_id" ColumnName="order_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -17,8 +17,6 @@ namespace CSM.Models
         public Order()
         {
             this.Complaints = new HashSet<Complaint>();
-            this.Packages = new HashSet<Package>();
-            this.Payments = new HashSet<Payment>();
             this.Trackings = new HashSet<Tracking>();
         }
     
@@ -36,10 +34,7 @@ namespace CSM.Models
     
         public virtual ICollection<Complaint> Complaints { get; set; }
         public virtual Delivery_Personnel Delivery_Personnel { get; set; }
-        public virtual Feedback Feedback { get; set; }
         public virtual User_Info User_Info { get; set; }
-        public virtual ICollection<Package> Packages { get; set; }
-        public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<Tracking> Trackings { get; set; }
     }
 }

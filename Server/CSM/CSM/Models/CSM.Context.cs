@@ -28,11 +28,8 @@ namespace CSM.Models
         public DbSet<Complaint> Complaints { get; set; }
         public DbSet<Delivery_Personnel> Delivery_Personnel { get; set; }
         public DbSet<Dispatcher> Dispatchers { get; set; }
-        public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Package> Packages { get; set; }
         public DbSet<Package_Price> Package_Price { get; set; }
-        public DbSet<Payment> Payments { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Tracking> Trackings { get; set; }
         public DbSet<User_Info> User_Info { get; set; }

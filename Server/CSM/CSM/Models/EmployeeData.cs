@@ -12,6 +12,4 @@ namespace CSM.Models
         public string role_name { get; set; }
         public Order order { get; set; }
     }
-
-
 }

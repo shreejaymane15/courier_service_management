@@ -12,6 +12,7 @@ namespace CSM.Controllers
         CSMEntities1 db = new CSMEntities1();
         JWTTokenizer tokenizer = new JWTTokenizer();
 
+
         [HttpPut]
         [Route("api/Admin/GetOrders")]
         public async Task<IHttpActionResult> GetOrders([FromBody] CheckToken token)
@@ -72,6 +73,7 @@ namespace CSM.Controllers
                 return InternalServerError(ex);
             }
         }
+
 
         [HttpPut]
         [Route("api/Admin/GetOrders/{id}")]
@@ -328,6 +330,20 @@ namespace CSM.Controllers
                                             .Select(Roles => Roles.role_id)
                                             .FirstOrDefault());
                     db.User_Info.Add(newUser);
+                    if (newUser.role_id == 2)
+                    {
+                        Dispatcher dispatcher = new Dispatcher();
+                        dispatcher.dispatcher_id = newUser.user_Id;
+                        dispatcher.hub_location = newUser.address;
+                        db.Dispatchers.Add(dispatcher);
+                    }
+                    else if (newUser.role_id == 3)
+                    {
+                        Delivery_Personnel delivery_Personnel = new Delivery_Personnel();
+                        delivery_Personnel.personnel_id = newUser.user_Id;
+                        delivery_Personnel.location = newUser.address;
+                        db.Delivery_Personnel.Add(delivery_Personnel);
+                    }
                     int save = db.SaveChanges();
                     return Ok(save);
                 }

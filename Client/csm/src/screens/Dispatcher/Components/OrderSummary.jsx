@@ -103,9 +103,9 @@ function OrderSummary() {
       <div className="mb-4" style={{display:"flex", flexDirection:"row" , alignItems:"center", justifyContent:"end"}}>
         <select onChange={handleFilterChange}>
           <option value="ALL">All</option>
-          <option value="Departed From">Departed From</option>
+          {/* <option value="Departed From">Departed From</option>
           <option value="Reached At">Reached At</option>
-          <option value="Destination">Destination</option>
+          <option value="Destination">Destination</option> */}
         </select>
       </div>
       <div style={{ overflowX: 'auto' }}>

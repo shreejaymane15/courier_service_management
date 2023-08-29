@@ -27,7 +27,8 @@ function Login() {
       setAuthState({
         ...authState,
         user_id:response.data.user_id,
-        token:response.data.token
+        token:response.data.token,
+        role_id:response.data.role_id
       });
 
       if (response.data != 0) {
@@ -60,14 +61,14 @@ function Login() {
     <NavBar></NavBar>
   </div>
   <div className="Auth-form-container">
-      <div className="Auth-form-content">
+      <div className="Auth-form-content mb-5">
         <h3 className="Auth-form-title">Sign In</h3>
-        <div className="text-center">
+        {/* <div className="text-center">
           Not Registered?{" "}
           <span className="link-primary" onClick={GoToSignUp}>
             Sign Up
           </span>
-        </div>
+        </div> */}
         <div className="form-group mt-3">
           <label>Email address</label>
           <input
@@ -93,9 +94,9 @@ function Login() {
             Submit
           </button>
         </div>
-        <p className="forgot-password text-center mt-2">
+        {/* <p className="forgot-password text-center mt-2">
         <a href="#"> Forgot password?</a>
-        </p>
+        </p> */}
       </div>
   </div>
   </>);

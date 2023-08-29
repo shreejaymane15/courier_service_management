@@ -11,7 +11,7 @@ namespace CSM.Controllers
         CSMEntities1 db = new CSMEntities1();
         JWTTokenizer tokenizer = new JWTTokenizer();
 
-
+/*
         [HttpGet]
         [Route("api/Dispatcher/GetEmployees")]
         public async Task<IHttpActionResult> GetEmployees()
@@ -31,7 +31,7 @@ namespace CSM.Controllers
                 return InternalServerError(ex);
             }
         }
-
+*/
 
 
         [HttpPost]
@@ -240,6 +240,46 @@ namespace CSM.Controllers
                 return InternalServerError(ex);
             }
         }
+
+
+        [HttpPut]
+        [Route("api/Dispatcher/GetEmployees")]
+        public async Task<IHttpActionResult> GetEmployees([FromBody] CheckToken token)
+        {
+            try
+            {
+
+                var user = await Task.Run(() => db.User_Info.ToList()
+                                     .Where(u => u.user_Id == token.user_id && u.token == token.token)
+                                     .FirstOrDefault());
+
+                if (user == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(token.token);
+
+                if (result == "VALID")
+                {
+
+
+                    var employees = await Task.Run( () => (from Dispatcher in db.Dispatchers.ToList()
+                                    join DeliveryPersonnal in db.Delivery_Personnel on Dispatcher.hub_location equals DeliveryPersonnal.location
+                                    where Dispatcher.dispatcher_id == token.user_id
+                                    select DeliveryPersonnal).ToList());;
+                    return Ok(employees);
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
+
 
         [HttpPut]
         [Route("api/Dispatcher/GetComplaints/{id}")]

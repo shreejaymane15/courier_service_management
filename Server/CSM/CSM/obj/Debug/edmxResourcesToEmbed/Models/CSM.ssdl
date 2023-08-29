@@ -27,17 +27,6 @@
     <Property Name="dispatcher_id" Type="int" Nullable="false" />
     <Property Name="hub_location" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
-  <EntityType Name="Feedback">
-    <Key>
-      <PropertyRef Name="feedback_id" />
-    </Key>
-    <Property Name="feedback_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="rating" Type="int" Nullable="false" />
-    <Property Name="comment" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="feedback_date" Type="date" Nullable="false" />
-    <Property Name="order_id" Type="int" Nullable="false" />
-    <Property Name="customer_id" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="Order">
     <Key>
       <PropertyRef Name="order_id" />
@@ -54,36 +43,12 @@
     <Property Name="customer_id" Type="int" Nullable="false" />
     <Property Name="personnel_id" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="Package">
-    <Key>
-      <PropertyRef Name="package_id" />
-    </Key>
-    <Property Name="package_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="length" Type="int" Nullable="false" />
-    <Property Name="width" Type="int" Nullable="false" />
-    <Property Name="height" Type="int" Nullable="false" />
-    <Property Name="weight" Type="int" Nullable="false" />
-    <Property Name="type" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="order_id" Type="int" Nullable="false" />
-    <Property Name="dispatcher_id" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="Package_Price">
     <Key>
       <PropertyRef Name="package_type" />
     </Key>
     <Property Name="package_type" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="package_price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Payment">
-    <Key>
-      <PropertyRef Name="payment_id" />
-    </Key>
-    <Property Name="payment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="amount" Type="real" Nullable="false" />
-    <Property Name="payment_date" Type="date" Nullable="false" />
-    <Property Name="UTR" Type="varchar" MaxLength="100" />
-    <Property Name="STATUS" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="order_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -119,6 +84,18 @@
     <Property Name="role_id" Type="int" Nullable="false" />
     <Property Name="token" Type="varchar" MaxLength="255" />
   </EntityType>
+  <Association Name="Fk_Complaint_To_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="role_id" />
+      </Principal>
+      <Dependent Role="Complaint">
+        <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="Fk_Complaint_To_User_Info">
     <End Role="User_Info" Type="Self.User_Info" Multiplicity="1" />
     <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
@@ -171,18 +148,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="Fk_Feedback_To_User_Info">
-    <End Role="User_Info" Type="Self.User_Info" Multiplicity="1" />
-    <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User_Info">
-        <PropertyRef Name="user_Id" />
-      </Principal>
-      <Dependent Role="Feedback">
-        <PropertyRef Name="customer_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Order_To_User_Info">
     <End Role="User_Info" Type="Self.User_Info" Multiplicity="1" />
     <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -192,42 +157,6 @@
       </Principal>
       <Dependent Role="Order">
         <PropertyRef Name="customer_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Package_To_Dispatcher">
-    <End Role="Dispatcher" Type="Self.Dispatcher" Multiplicity="1" />
-    <End Role="Package" Type="Self.Package" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Dispatcher">
-        <PropertyRef Name="dispatcher_id" />
-      </Principal>
-      <Dependent Role="Package">
-        <PropertyRef Name="dispatcher_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Package_To_Order">
-    <End Role="Order" Type="Self.Order" Multiplicity="1" />
-    <End Role="Package" Type="Self.Package" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Order">
-        <PropertyRef Name="order_id" />
-      </Principal>
-      <Dependent Role="Package">
-        <PropertyRef Name="order_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Package_To_Package_Pricing">
-    <End Role="Package_Price" Type="Self.Package_Price" Multiplicity="1" />
-    <End Role="Package" Type="Self.Package" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Package_Price">
-        <PropertyRef Name="package_type" />
-      </Principal>
-      <Dependent Role="Package">
-        <PropertyRef Name="type" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -249,14 +178,15 @@
     <EntitySet Name="Complaint" EntityType="Self.Complaint" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Delivery_Personnel" EntityType="Self.Delivery_Personnel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Dispatcher" EntityType="Self.Dispatcher" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Package_Price" EntityType="Self.Package_Price" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tracking" EntityType="Self.Tracking" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User_Info" EntityType="Self.User_Info" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="Fk_Complaint_To_Role" Association="Self.Fk_Complaint_To_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Complaint" EntitySet="Complaint" />
+    </AssociationSet>
     <AssociationSet Name="Fk_Complaint_To_User_Info" Association="Self.Fk_Complaint_To_User_Info">
       <End Role="User_Info" EntitySet="User_Info" />
       <End Role="Complaint" EntitySet="Complaint" />
@@ -273,25 +203,9 @@
       <End Role="User_Info" EntitySet="User_Info" />
       <End Role="Dispatcher" EntitySet="Dispatcher" />
     </AssociationSet>
-    <AssociationSet Name="Fk_Feedback_To_User_Info" Association="Self.Fk_Feedback_To_User_Info">
-      <End Role="User_Info" EntitySet="User_Info" />
-      <End Role="Feedback" EntitySet="Feedback" />
-    </AssociationSet>
     <AssociationSet Name="FK_Order_To_User_Info" Association="Self.FK_Order_To_User_Info">
       <End Role="User_Info" EntitySet="User_Info" />
       <End Role="Order" EntitySet="Order" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Package_To_Dispatcher" Association="Self.FK_Package_To_Dispatcher">
-      <End Role="Dispatcher" EntitySet="Dispatcher" />
-      <End Role="Package" EntitySet="Package" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Package_To_Order" Association="Self.FK_Package_To_Order">
-      <End Role="Order" EntitySet="Order" />
-      <End Role="Package" EntitySet="Package" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Package_To_Package_Pricing" Association="Self.FK_Package_To_Package_Pricing">
-      <End Role="Package_Price" EntitySet="Package_Price" />
-      <End Role="Package" EntitySet="Package" />
     </AssociationSet>
     <AssociationSet Name="FK_USER_TO_ROLE" Association="Self.FK_USER_TO_ROLE">
       <End Role="Role" EntitySet="Role" />

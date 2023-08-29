@@ -198,7 +198,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DeliveryPersonnelController.cs" />
     <Compile Include="Controllers\DispatcherController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -234,9 +233,6 @@
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EmployeeData.cs" />
-    <Compile Include="Models\Feedback.cs">
-      <DependentUpon>CSM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\JWTTokenizer.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\MyOrder.cs" />
@@ -244,13 +240,7 @@
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrdersToDisplay.cs" />
-    <Compile Include="Models\Package.cs">
-      <DependentUpon>CSM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Package_Price.cs">
-      <DependentUpon>CSM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Payment.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs">
