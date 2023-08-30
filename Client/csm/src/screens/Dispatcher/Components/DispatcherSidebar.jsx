@@ -1,7 +1,7 @@
 function DispatcherSideBar({toggleComponent}) {
 
     const toggleDispatcherDashboard = () => {
-      toggleComponent("DispatcherDashboard");
+      toggleComponent("Dashboard");
     };
   
     const toggleOrderSummary = () => {

@@ -7,7 +7,7 @@ import ContactUs from "./ContactUs";
 import HubLocation from "./HubLocation";
 import Admin from "../Admin/Components/Admin";
 import Dispatcher from "../Dispatcher/Components/Dispatcher";
-import DeliveryPersonnel from "../DeliveryPersonnel/DeliveryPersonnel";
+import DeliveryPersonnel from "../DeliveryPersonnel/Components/DeliveryPersonnel";
 import Tracking from "./Tracking"
 import '../css/App.css'
 import { ToastContainer } from "react-toastify";

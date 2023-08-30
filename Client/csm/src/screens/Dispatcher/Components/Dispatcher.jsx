@@ -18,7 +18,7 @@ function DispatcherDash() {
     };
   
     const componentMapping = {
-      Dashboard: <DispatcherDashboard />,
+      Dashboard: <DispatcherDashboard/>,
       OrderSummary: <OrderSummary />,
       NewOrder: <NewOrder toggleComponent={toggleComponent}/>,
       DispatcherEmployeeDirectory: <DispatcherEmployeeDirectory/>,

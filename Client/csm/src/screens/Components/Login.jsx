@@ -17,43 +17,47 @@ function Login() {
     navigate("/register");
   }
 
-  const sendLoginData = async() => {
-    const user = {
-      email: email,
-      password: password
-    };
-    const response = await loginAPI(user);
-    if(response.status == 200){
-      setAuthState({
-        ...authState,
-        user_id:response.data.user_id,
-        token:response.data.token,
-        role_id:response.data.role_id
-      });
-
-      if (response.data != 0) {
-        switch (response.data.role_id) {
-          case 1:
-            navigate("/admin");              
-            break;
-          case 2:
-            navigate("/dispatcher");              
-            break;
-          case 3:
-            navigate("/deliverypersonnel");              
-            break;
-          case 4:
-            navigate("/customer");              
-            break;
-          default:
-            break;
-        }
-      } 
-      toast.success(`Welcome ${response.data.first_name}!`);
+const sendLoginData = async() => {
+  if(email == "" || password == ""){
+      toast.warning("Please Enter Email And Password");
     }else{
-      toast.error("Customer Login Failed. Please Try Again!");
+        const user = {
+          email: email,
+          password: password
+        };
+      const response = await loginAPI(user);
+      if(response.status == 200){
+        setAuthState({
+          ...authState,
+          user_id:response.data.user_id,
+          token:response.data.token,
+          role_id:response.data.role_id
+        });
+
+        if (response.data != 0) {
+          switch (response.data.role_id) {
+            case 1:
+              navigate("/admin");              
+              break;
+            case 2:
+              navigate("/dispatcher");              
+              break;
+            case 3:
+              navigate("/deliverypersonnel");              
+              break;
+            case 4:
+              navigate("/customer");              
+              break;
+            default:
+              break;
+          }
+        } 
+        toast.success(`Welcome ${response.data.first_name}!`);
+      }else{
+        toast.error("Customer Login Failed. Please Try Again!");
+      }
     }
-  }
+}
   
 
   return (<>

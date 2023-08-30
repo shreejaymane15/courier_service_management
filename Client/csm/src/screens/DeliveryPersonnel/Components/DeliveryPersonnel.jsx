@@ -1,10 +1,11 @@
 import DeliverySideBar from "./DeliverySideBar";
-import NavBarProtected from "../Components/NavBarProtected";
+import NavBarProtected from "../../Components/NavBarProtected";
 import DpDashboard from "./DpDashboard";
 import {useState} from 'react';
 import MyOrders from "./MyOrders";
 import AdminSupport from "./AdminSupport";
 import Complaints from "./Complaints";
+import MyProfile from "./MyProfile";
 
 
 
@@ -22,7 +23,8 @@ function DeliveryPersonnel() {
       // ScheduledOrders: <ScheduledOrders />,
       // DeliveredOrders: <DeliveredOrders />,
       Complaints:< Complaints/>,
-      AdminSupport:<AdminSupport/>
+      AdminSupport:<AdminSupport/>,
+      MyProfile:<MyProfile/>
     };
 
 return (<>

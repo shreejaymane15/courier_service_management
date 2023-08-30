@@ -250,6 +250,7 @@
     <Compile Include="Models\Tracking.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UpdateEmployee.cs" />
     <Compile Include="Models\User_Info.cs">
       <DependentUpon>CSM.tt</DependentUpon>
     </Compile>

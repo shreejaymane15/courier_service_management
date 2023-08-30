@@ -1,27 +1,16 @@
-import React, { useEffect ,useState } from 'react';
+import React, { useContext, useEffect ,useState } from 'react';
 import axios from 'axios';
-import "./css/complaint.css"
+import "../css/complaint.css"
 import { toast } from 'react-toastify';
-import { getOrderIdAPI } from './Services/DpService';
-
-
-
-const id = sessionStorage.getItem("user_id");
-const token = sessionStorage.getItem("token");
-const isAuthenticated = id !== null && token !== null; 
-
-
-
-
-const data = {
-  user_id : id,
-  token :token
-}
+import { getOrderIdAPI } from '../Services/DpService';
+import { AuthContext } from "../../utils/GlobalStates";
+import { createUrl } from '../../utils/utils';
 
 function Complaints () {
     var [OrderId, setOrderId] = useState([]);
     var [selectedFilter, setSelectedFilter] = useState(""); 
     const [complaint, setComplaint] = useState('');
+    var [authState, setAuthState] = useContext(AuthContext);
 
 
 
@@ -30,11 +19,14 @@ function Complaints () {
   },[]);
 
   const handleSubmit = async () => {
-    var data = { complaint: complaint, id: id ,order_id : selectedFilter};
+    debugger;
+    var data = { complaint: complaint, id: authState.user_id ,order_id : selectedFilter};
     try {
-      const response = await axios.post('http://localhost:58447/api/DeliveryPersonnel/AddComplaint', data);
-      toast.success('Complaint submitted');
-      // You can reset the complaint state or display a success message here
+      const url = createUrl("/api/DeliveryPersonnel/AddComplaint");
+      const response = await axios.post(url, data);
+      if(response.status == 200 && response.data != null){
+        toast.success('Complaint submitted');
+      }
     } catch (error) {
       toast.error('Error submitting complaint');
       // Handle the error here
@@ -50,7 +42,7 @@ function Complaints () {
   }
 
   const GetOrderId = async () => {
-    var response = await getOrderIdAPI();
+    var response = await getOrderIdAPI(authState);
     setOrderId(response.data);
   }
 

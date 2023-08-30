@@ -18,6 +18,11 @@ function DeliverySideBar({toggleComponent}) {
     toggleComponent("Complaints");
   };
 
+  const toggleMyProfile = () => {
+    toggleComponent("MyProfile");
+  };
+
+
 
 
   return (<>
@@ -67,6 +72,15 @@ function DeliverySideBar({toggleComponent}) {
             onClick = {toggleComplaint}
             style={{marginTop:"10px", marginLeft:"60px", color:"#000", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
               Complaints
+            </a>
+          </button>
+          </li>
+          <li className="nav-item">
+          <button className="btn btn-light" style={{width:"100%", marginTop:"40px", paddingBottom:"10px", backgroundColor:"#CACFD2"}}>
+            <a className="nav-link d-flex align-items-center" 
+            onClick = {toggleMyProfile}
+            style={{marginTop:"10px", marginLeft:"60px", color:"#000", fontSize:"20px",fontFamily: 'Josefin Sans, sans-serif', fontWeight:"bold"}}>
+              My Profile
             </a>
           </button>
           </li>

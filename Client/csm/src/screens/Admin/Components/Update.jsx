@@ -6,24 +6,11 @@ import { AuthContext } from "../../utils/GlobalStates";
 
 function Update({id, updateData, toggleComponent}) {
 
-  var [user, setUser] = useState({first_name: "", last_name: "", email:"", address: "", mobile: "", status:""});
+  const [user, setUser] = useState({ first_name: "", last_name: "", email: "", address: "", mobile: "", status: "" });
   var [authState, setAuthState] = useContext(AuthContext);
 
   const navigate = useNavigate();
     
-
-
-    const user_id = sessionStorage.getItem("user_id");
-    const token = sessionStorage.getItem("token");
-    const data = {
-      user_id : user_id,
-      token :token
-    }
-  
-
-
-
-
 
     useEffect (() =>{
       GetEmployeeDetails();
@@ -54,7 +41,15 @@ function Update({id, updateData, toggleComponent}) {
 
     const UpdateEmployeeDetails = async() =>{
         debugger;
-        let response = await UpdateEmployeeDetailsAPI(id, user, authState)
+        var user1 = {
+            "user_id": id,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "address": user.address,
+            "mobile": user.mobile,
+            "status": user.status
+        }
+        let response = await UpdateEmployeeDetailsAPI(user1, authState)
         if(response.status == 200){
           if(response.data == "EXPIRED" || response.data == "INVALID"){
             navigate("/login");

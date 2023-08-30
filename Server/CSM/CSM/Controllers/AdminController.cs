@@ -264,31 +264,30 @@ namespace CSM.Controllers
 
         [HttpPut]
         [Route("api/Admin/UpdateEmployeeDetails/{id}")]
-        public async Task<IHttpActionResult> UpdateEmployee(int id, [FromBody] EmployeeData user)
+        public async Task<IHttpActionResult> UpdateEmployeeDetails(int id, [FromBody] UpdateEmployee employee)
         {
             try
             {
-                var loginuser = await Task.Run(() => db.User_Info.ToList()
-                     .Where(u => u.user_Id == user.data.user_id && u.token == user.data.token)
+                var user = await Task.Run(() => db.User_Info.ToList()
+                     .Where(u => u.user_Id == employee.data.user_id && u.token == employee.data.token)
                      .FirstOrDefault());
 
-                if (loginuser == null)
+                if (user == null)
                     return Ok("INVALID");
 
 
-                string result = tokenizer.validateToken(user.data.token);
+                string result = tokenizer.validateToken(employee.data.token);
 
                 if (result == "VALID")
                 {
                     var employeeToUpdate = await Task.Run(() => db.User_Info.ToList()
                                                     .Where(User_Info => User_Info.user_Id == id)
                                                     .FirstOrDefault());
-                    employeeToUpdate.first_name = user.user.first_name;
-                    employeeToUpdate.last_name = user.user.last_name;
-                    employeeToUpdate.address = user.user.address;
-                    employeeToUpdate.mobile = user.user.mobile;
-                    employeeToUpdate.email = user.user.email;
-                    employeeToUpdate.status = user.user.status;
+                    employeeToUpdate.first_name = employee.user.first_name;
+                    employeeToUpdate.last_name = employee.user.last_name;
+                    employeeToUpdate.address = employee.user.address;
+                    employeeToUpdate.mobile = employee.user.mobile;
+                    employeeToUpdate.status = employee.user.status;
                     int save = db.SaveChanges();
                     return Ok(save);
                 }
@@ -324,6 +323,9 @@ namespace CSM.Controllers
                 {
                     User_Info newUser = new User_Info();
                     newUser = emp.user;
+                    SHA512Encryption sha512 = new SHA512Encryption();
+                    string encrypt = sha512.Encode(emp.user.password);
+                    newUser.password = encrypt;
                     newUser.status = "ACTIVE";
                     newUser.role_id = await Task.Run(() => db.Roles.ToList()
                                             .Where(Roles => Roles.role_name == emp.role_name)
@@ -529,10 +531,6 @@ namespace CSM.Controllers
                     employeeToUpdate.last_name = user.user.last_name;
                     employeeToUpdate.address = user.user.address;
                     employeeToUpdate.mobile = user.user.mobile;
-                    SHA512Encryption sha512 = new SHA512Encryption();
-                    string encrypt = sha512.Encode(user.user.password);
-                    user.user.password = encrypt;
-                    employeeToUpdate.password = user.user.password;
                     int save = db.SaveChanges();
                     return Ok(save);
                 }

@@ -1,169 +1,168 @@
-function DispatcherDashboard() {
-    return (<main className="col-md-12 ms-sm-auto px-md-4">      
-    <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-      <h1 className="h2">Dashboard</h1>
-      <div className="btn-toolbar mb-2 mb-md-0">
-        <div className="btn-group me-2">
-          <button type="button" className="btn btn-sm btn-outline-secondary">
-            Share
-          </button>
-          <button type="button" className="btn btn-sm btn-outline-secondary">
-            Export
-          </button>
-        </div>
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1"
-        >
-          <svg className="bi">
-            <use xlinkHref="#calendar3" />
-          </svg>
-          This week
-        </button>
+import "../../css/style.css"
+
+function DispatcherDashboard (){
+    return(<>
+    
+    <div class="container">
+    <section class="main">
+      <div class="main-top">
+        <h1>Delivery Personnel Details:</h1>
+        <i class="fas fa-user-cog"></i>
       </div>
-    </div>
-    <canvas
-      className="my-4 w-100"
-      id="myChart"
-      width={724}
-      height={305}
-      style={{
-        display: "block",
-        boxSizing: "border-box",
-        height: 244,
-        width: 579
-      }}
-    />
-    <h2>Section title</h2>
-    <div className="table-responsive small">
-      <table className="table table-striped table-sm">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Header</th>
-            <th scope="col">Header</th>
-            <th scope="col">Header</th>
-            <th scope="col">Header</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1,001</td>
-            <td>random</td>
-            <td>data</td>
-            <td>placeholder</td>
-            <td>text</td>
-          </tr>
-          <tr>
-            <td>1,002</td>
-            <td>placeholder</td>
-            <td>irrelevant</td>
-            <td>visual</td>
-            <td>layout</td>
-          </tr>
-          <tr>
-            <td>1,003</td>
-            <td>data</td>
-            <td>rich</td>
-            <td>dashboard</td>
-            <td>tabular</td>
-          </tr>
-          <tr>
-            <td>1,003</td>
-            <td>information</td>
-            <td>placeholder</td>
-            <td>illustrative</td>
-            <td>data</td>
-          </tr>
-          <tr>
-            <td>1,004</td>
-            <td>text</td>
-            <td>random</td>
-            <td>layout</td>
-            <td>dashboard</td>
-          </tr>
-          <tr>
-            <td>1,005</td>
-            <td>dashboard</td>
-            <td>irrelevant</td>
-            <td>text</td>
-            <td>placeholder</td>
-          </tr>
-          <tr>
-            <td>1,006</td>
-            <td>dashboard</td>
-            <td>illustrative</td>
-            <td>rich</td>
-            <td>data</td>
-          </tr>
-          <tr>
-            <td>1,007</td>
-            <td>placeholder</td>
-            <td>tabular</td>
-            <td>information</td>
-            <td>irrelevant</td>
-          </tr>
-          <tr>
-            <td>1,008</td>
-            <td>random</td>
-            <td>data</td>
-            <td>placeholder</td>
-            <td>text</td>
-          </tr>
-          <tr>
-            <td>1,009</td>
-            <td>placeholder</td>
-            <td>irrelevant</td>
-            <td>visual</td>
-            <td>layout</td>
-          </tr>
-          <tr>
-            <td>1,010</td>
-            <td>data</td>
-            <td>rich</td>
-            <td>dashboard</td>
-            <td>tabular</td>
-          </tr>
-          <tr>
-            <td>1,011</td>
-            <td>information</td>
-            <td>placeholder</td>
-            <td>illustrative</td>
-            <td>data</td>
-          </tr>
-          <tr>
-            <td>1,012</td>
-            <td>text</td>
-            <td>placeholder</td>
-            <td>layout</td>
-            <td>dashboard</td>
-          </tr>
-          <tr>
-            <td>1,013</td>
-            <td>dashboard</td>
-            <td>irrelevant</td>
-            <td>text</td>
-            <td>visual</td>
-          </tr>
-          <tr>
-            <td>1,014</td>
-            <td>dashboard</td>
-            <td>illustrative</td>
-            <td>rich</td>
-            <td>data</td>
-          </tr>
-          <tr>
-            <td>1,015</td>
-            <td>random</td>
-            <td>tabular</td>
-            <td>information</td>
-            <td>text</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </main>
-);
+      <div class="users" >
+        <div class="card">
+          <h4>Sham Pawar</h4>
+          <p>Today's Data</p>
+          <div class="per">
+            <table>
+              <tr>
+                <td><span>65%</span></td>
+                <td><span>35%</span></td>
+              </tr>
+              <tr>
+                <td>Delivered</td>
+                <td>Undelivered</td>
+              </tr>
+            </table>
+          </div>
+          <button>Click For Details</button>
+        </div>
+        
+        <div class="card">
+          <h4>Satyam Patil</h4>
+
+          <p>Today's Data</p>
+          <div class="per">
+            <table>
+              <tr>
+                <td><span>45%</span></td>
+                <td><span>55%</span></td>
+              </tr>
+              <tr>
+                <td>Delivered</td>
+                <td>Undelivered</td>
+              </tr>
+            </table>
+          </div>
+          <button>Click For Details</button>
+        </div>       
+      </div>
+
+
+
+
+      <section class="attendance">
+        <div class="attendance-list">
+          <h1>Sham Pawar's Orders:</h1>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Delivery Date</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr >
+                <td>01</td>
+                <td>Rushi Patel</td>
+                <td>29-08-23</td>
+               
+                <td><button>View Details</button></td>
+              </tr>
+              <tr  >
+                <td>02</td>
+                <td>Mrunal Khapre</td>
+                <td>30-08-23</td>
+                <td><button>View Details</button></td>
+              </tr>
+              <tr>
+                <td>03</td>
+                <td>Manoj Shinde</td>
+                <td>29-08-23</td>
+                
+                <td><button>View Details</button></td>
+              </tr>
+              <tr>
+                <td>04</td>
+                <td>Apurva More</td>
+                <td>29-08-23</td>
+              
+                <td><button>View Details</button></td>
+              </tr>
+   
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
+
+      <section class="attendance">
+        <div class="attendance-list">
+          <h1>Satyam Patils's Orders:</h1>
+          <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Delivery Date</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr >
+                <td>01</td>
+                <td>Mahesh Tiwari</td>
+                <td>29-08-23</td>
+               
+                <td><button>View Details</button></td>
+              </tr>
+              <tr  >
+                <td>02</td>
+                <td>Tushar Mali</td>
+                <td>29-08-23</td>
+                <td><button>View Details</button></td>
+              </tr>
+              <tr>
+                <td>03</td>
+                <td>Guru Kore</td>
+                <td>30-08-23</td>
+                
+                <td><button>View Details</button></td>
+              </tr>
+              <tr>
+                <td>04</td>
+                <td>Avdhut Jamdade</td>
+                <td>30-08-23</td>
+              
+                <td><button>View Details</button></td>
+              </tr>
+
+              <tr>
+                <td>05</td>
+                <td>Tejashree Patil</td>
+                <td>31-08-23</td>
+              
+                <td><button>View Details</button></td>
+              </tr>
+
+              <tr>
+                <td>06</td>
+                <td>Roshani Mohite</td>
+                <td>01-09-23</td>
+              
+                <td><button>View Details</button></td>
+              </tr>
+               
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </div>
+    </>);
 }
 
 export default DispatcherDashboard;

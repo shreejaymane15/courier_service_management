@@ -96,23 +96,23 @@ const renderHeader = () => {
             <input type="text" name="tracking" className="form-control" placeholder="Enter tracking id..." />
             <button type="submit" className="btn btn-primary ml-2">Track</button>
             </form>
+                {tracking.length > 0 && (
+            <div className="mt-4">
+              <h3>Tracking Details</h3>
+              <table className="table table-bordered">
+                  {renderHeader()}
+                <tbody>
+                  {renderTracking()}
+                </tbody>
+              </table>
+            </div>
+            )}
             {/* <center><p data-aos="fade-up" data-aos-delay={100} /><h5>Fill the tracking id correctly</h5><p /></center> */}
             </div>
             <div className="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
             <img src="assets/img/hero-img.svg" className="img-fluid" alt="" />
             </div>
         </div>
-        {tracking.length > 0 && (
-        <div className="mt-4">
-          <h3>Tracking Details</h3>
-          <table className="table table-bordered">
-              {renderHeader()}
-            <tbody>
-              {renderTracking()}
-            </tbody>
-          </table>
-        </div>
-        )}
         </div>
         <footer id="footer" className="footer mt-5">
           <div className="container">

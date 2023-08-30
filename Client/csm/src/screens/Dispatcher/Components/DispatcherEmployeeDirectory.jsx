@@ -12,8 +12,8 @@ function DispatcherEmployeeDirectory() {
     
   
     const headerMapping = {
-      'Employee ID': 'user_Id',
-      'First Name': 'first_name',
+      'Employee ID': 'user_Info.user_Id',
+      'First Name': 'user_Info.first_name',
       'Last Name': 'last_name',
       'Email': 'email',
       'Address': 'address',
@@ -35,7 +35,8 @@ function DispatcherEmployeeDirectory() {
           toast.warning("Session Time Expired");
         }
         else{
-          setEmployees(user_info);
+          setEmployees(response.data);
+          console.log(response.data);
         }   
       }else{
         toast.error('Error while calling get api')
@@ -44,25 +45,26 @@ function DispatcherEmployeeDirectory() {
 
     const renderEmployees = () =>
     employees.map(employee => (
-      <tr key={employee.user_id}>
+      <tr key={employee.user_Id}>
         {Object.keys(headerMapping).map(label => (
-            <td>{employee[headerMapping[label]]}</td>
-            ))}
+          <td key={label}>{employee[headerMapping[label]]}</td>
+        ))}
       </tr>
     ));
 
 
-    const renderHeader = () => {
-      return (
-        <thead>
+
+  const renderHeader = () => {
+    return (
+      <thead>
         <tr>
-            {Object.keys(headerMapping).map(label => (
-                <th key={label}>{label}</th>
-            ))}
+          {Object.keys(headerMapping).map(label => (
+            <th key={label}>{label}</th>
+          ))}
         </tr>
-        </thead>
-      );
-    }
+      </thead>
+    );
+  }
   
   
     return (<>

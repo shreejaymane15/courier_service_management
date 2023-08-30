@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { createUrl } from "../utils/utils";
+import { createUrl } from "../../utils/utils";
+import { AuthContext } from "../../utils/GlobalStates";
+
+
+
+
 function MyOrders() {
-    var [orders, setOrders] = useState([]);
+  var [orders, setOrders] = useState([]);
   var [selectedFilter, setSelectedFilter] = useState("");
   var [cities, setCities] = useState([]);
-
-  const id = sessionStorage.getItem("user_id");
-  const token = sessionStorage.getItem("token");
+  var [authState, setAuthState] = useContext(AuthContext);
   
 
 
@@ -25,7 +28,7 @@ function MyOrders() {
 
   useEffect(() => {
     getOrders();
-    getCities();
+    // getCities();
   },[]);
 
   useEffect(() => {
@@ -34,24 +37,10 @@ function MyOrders() {
   },[selectedFilter]);
 
 
-
-  function getCities(){
-    axios.get("http://localhost:58447/api/Admin/GetCities")
-    .then((response) => {
-      debugger;
-      var responseData = response.data;
-      setCities(responseData);
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  }
-
     
   const getOrders = () =>{
     debugger;
-    // const filterParam = selectedFilter != "ALL" ? `/${selectedFilter}` : ``;
-    const url = `http://localhost:58447/api/DeliveryPersonnel/GetMyOrders/${id}`;
+    let url = createUrl(`/api/DeliveryPersonnel/GetMyOrders/${authState.user_id}`);
     axios.get(url)
     .then((response) => {
       debugger;
@@ -62,6 +51,7 @@ function MyOrders() {
       console.log(error);
     })
   }
+
 
   function OrderDelivered(props){
     let id = props.target.id;
@@ -79,6 +69,7 @@ function MyOrders() {
       })
     }
   
+
  function OrderUndelivered(props) {
 
   let id = props.target.id;

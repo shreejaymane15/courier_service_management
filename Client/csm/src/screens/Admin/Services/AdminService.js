@@ -82,10 +82,11 @@ export async function GetEmployeeDetailsAPI(id, data){
 
 
 
-export async function UpdateEmployeeDetailsAPI(updateid, user, data){
+export async function UpdateEmployeeDetailsAPI(user, authState){
     try{
         debugger;
-        let url = createUrl(`/api/Admin/UpdateEmployeeDetails/${updateid}`);
+        let data = authState;
+        let url = createUrl(`/api/Admin/UpdateEmployeeDetails/${user.user_id}`);
         const response  = await axios.put(url, {user, data});
         return response;
     }catch(ex){

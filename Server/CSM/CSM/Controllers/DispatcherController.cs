@@ -372,10 +372,6 @@ namespace CSM.Controllers
                     employeeToUpdate.last_name = user.user.last_name;
                     employeeToUpdate.address = user.user.address;
                     employeeToUpdate.mobile = user.user.mobile;
-                    SHA512Encryption sha512 = new SHA512Encryption();
-                    string encrypt = sha512.Encode(user.user.password);
-                    user.user.password = encrypt;
-                    employeeToUpdate.password = user.user.password;
                     int save = db.SaveChanges();
                     return Ok(save);
                 }
