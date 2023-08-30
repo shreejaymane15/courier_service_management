@@ -4,7 +4,7 @@ import { getMyProfileAPI, saveMyProfileAPI } from "../Services/DispatcherService
 import { toast } from "react-toastify";
 import { AuthContext } from "../../utils/GlobalStates";
 
-function MyProfile(){
+function MyProfile({toggleComponent}){
 
     const [profile, setProfile] = useState({user_Id:"", first_name: "", last_name: "", email:"", password:"", address: "", mobile: "", role:""});
     const [editing, setEditing] = useState({});
@@ -21,7 +21,10 @@ function MyProfile(){
         GetMyProfile();
     }, [editing]);
 
-    
+    const ResetPassword = () =>{
+        toggleComponent("ResetPassword");
+    }
+
 
 
     const GetMyProfile = async() => {
@@ -203,6 +206,9 @@ return(<>
                 Edit
             </button>)}
         </div>
+        <p className="forgot-password text-center mt-2">
+            <a onClick={ResetPassword}> Forgot password?</a>
+        </p>
     </>)
 }
 

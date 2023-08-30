@@ -13,9 +13,15 @@ function Login() {
   var [password, setPassword] = useState("");
   const [authState,setAuthState] = useContext(AuthContext);
   
-  const GoToSignUp = () =>{
-    navigate("/register");
-  }
+  // const GoToSignUp = () =>{
+  //   navigate("/register");
+  // }
+
+
+
+  // const ResetPassword = () =>{
+  //   navigate("/reset");
+  // }
 
 const sendLoginData = async() => {
   if(email == "" || password == ""){
@@ -51,8 +57,10 @@ const sendLoginData = async() => {
             default:
               break;
           }
-        } 
-        toast.success(`Welcome ${response.data.first_name}!`);
+          toast.success(`Welcome ${response.data.first_name}!`);
+        }else{
+          toast.warning("Please Enter Correct Password");
+        }
       }else{
         toast.error("Customer Login Failed. Please Try Again!");
       }
@@ -99,7 +107,7 @@ const sendLoginData = async() => {
           </button>
         </div>
         {/* <p className="forgot-password text-center mt-2">
-        <a href="#"> Forgot password?</a>
+        <a onClick={ResetPassword}> Forgot password?</a>
         </p> */}
       </div>
   </div>

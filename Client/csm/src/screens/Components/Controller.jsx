@@ -29,7 +29,7 @@ function Controller() {
                 <Route path='/admin' element={<Admin/>}/>                
                 <Route path='/dispatcher' element={<Dispatcher/>}/>                
                 <Route path='/deliverypersonnel' element={<DeliveryPersonnel/>}/>                
-                <Route path='/trackshipment' element={<Tracking/>}/>                
+                <Route path='/trackshipment' element={<Tracking/>}/>              
             </Routes>
             <div>
                 <ToastContainer/>

@@ -6,6 +6,7 @@ import MyOrders from "./MyOrders";
 import AdminSupport from "./AdminSupport";
 import Complaints from "./Complaints";
 import MyProfile from "./MyProfile";
+import ResetPassword from "./ResetPassword";
 
 
 
@@ -24,7 +25,8 @@ function DeliveryPersonnel() {
       // DeliveredOrders: <DeliveredOrders />,
       Complaints:< Complaints/>,
       AdminSupport:<AdminSupport/>,
-      MyProfile:<MyProfile/>
+      MyProfile:<MyProfile toggleComponent={toggleComponent}/>,
+      ResetPassword:<ResetPassword/>
     };
 
 return (<>

@@ -38,7 +38,7 @@ namespace CSM.Controllers
             }
             else
             {
-                return NotFound();
+                return Ok(0);
             }
         }
 

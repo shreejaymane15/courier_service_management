@@ -11,16 +11,15 @@ function DispatcherEmployeeDirectory() {
     const navigate = useNavigate();
     
   
-    const headerMapping = {
-      'Employee ID': 'user_Info.user_Id',
-      'First Name': 'user_Info.first_name',
-      'Last Name': 'last_name',
-      'Email': 'email',
-      'Address': 'address',
-      'Mobile': 'mobile',
-      'Status': 'status'
-    };
-  
+const headerMapping = {
+  'Employee ID': 'user_Info.user_Id',
+  'First Name': 'user_Info.first_name',
+  'Last Name': 'user_Info.last_name',
+  'Email': 'user_Info.email',
+  'Address': 'user_Info.address',
+  'Mobile': 'user_Info.mobile',
+  'Status': 'user_Info.status'
+};
   
     useEffect(() => {
       loadEmployees();
@@ -43,15 +42,20 @@ function DispatcherEmployeeDirectory() {
       }  
     }  
 
-    const renderEmployees = () =>
-    employees.map(employee => (
-      <tr key={employee.user_Id}>
-        {Object.keys(headerMapping).map(label => (
-          <td key={label}>{employee[headerMapping[label]]}</td>
-        ))}
-      </tr>
-    ));
 
+
+const renderEmployees = () =>
+  employees.map((employee, index) => (
+    <tr key={index}>
+      <td>{employee.user_Info.user_Id}</td>
+      <td>{employee.user_Info.first_name}</td>
+      <td>{employee.user_Info.last_name}</td>
+      <td>{employee.user_Info.email}</td>
+      <td>{employee.user_Info.address}</td>
+      <td>{employee.user_Info.mobile}</td>
+      <td>{employee.user_Info.status}</td>
+    </tr>
+  ));
 
 
   const renderHeader = () => {

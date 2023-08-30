@@ -157,3 +157,17 @@ export async function saveMyProfileAPI(user, authState){
         return null;        
     }
 }
+
+
+export async function sendResetPasswordAPI(user, authState){
+    try{
+        debugger;
+        let data = authState;
+        let url = createUrl(`/api/Admin/ResetPassword/${authState.user_id}`);
+        const response  = await axios.put(url, {user, data});
+        return response;
+    }catch(ex){
+        console.log(ex);
+        return null;
+    }
+}

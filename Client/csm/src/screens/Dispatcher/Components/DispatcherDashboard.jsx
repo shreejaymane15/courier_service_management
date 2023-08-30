@@ -2,7 +2,6 @@ import "../../css/style.css"
 
 function DispatcherDashboard (){
     return(<>
-    
     <div class="container">
     <section class="main">
       <div class="main-top">
@@ -47,10 +46,6 @@ function DispatcherDashboard (){
           <button>Click For Details</button>
         </div>       
       </div>
-
-
-
-
       <section class="attendance">
         <div class="attendance-list">
           <h1>Sham Pawar's Orders:</h1>

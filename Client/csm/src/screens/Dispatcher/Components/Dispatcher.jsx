@@ -8,6 +8,7 @@ import RaisedTickets from "./RaisedTickets";
 import Tracking from "../../Components/Tracking";
 import NavBarProtected from "../../Components/NavBarProtected";
 import MyProfile from "./MyProfile";
+import ResetPassword from "./ResetPassword";
 
 function DispatcherDash() {
 
@@ -24,7 +25,8 @@ function DispatcherDash() {
       DispatcherEmployeeDirectory: <DispatcherEmployeeDirectory/>,
       RaisedTickets: <RaisedTickets />,
       OrderTracking: < Tracking/>,
-      MyProfile: <MyProfile/>,
+      MyProfile: <MyProfile toggleComponent={toggleComponent}/>,
+      ResetPassword:<ResetPassword/>
     };
 
     return (<>

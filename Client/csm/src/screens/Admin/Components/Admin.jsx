@@ -9,6 +9,7 @@ import Update from "./Update";
 import Add from "./Add";
 import Customer from "./Customer";
 import MyProfile from "./MyProfile";
+import ResetPassword from "./ResetPassword";
 
 function Admin() {
 
@@ -34,7 +35,8 @@ function Admin() {
       Update: <Update id={id} updateData={updateData} toggleComponent={toggleComponent}/>,
       Add:  <Add toggleComponent={toggleComponent}/>,
       Customer: <Customer toggleComponent={toggleComponent}/>,
-      MyProfile:<MyProfile/>
+      MyProfile:<MyProfile toggleComponent={toggleComponent}/>,
+      ResetPassword:<ResetPassword/>
     };
 
 

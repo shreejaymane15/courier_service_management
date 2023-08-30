@@ -11,7 +11,7 @@ namespace CSM.Controllers
     public class DeliveryPersonnelController : ApiController
     {
         CSMEntities1 db = new CSMEntities1 ();    
-
+        JWTTokenizer tokenizer = new JWTTokenizer ();
 
 
         [HttpGet]
@@ -175,6 +175,45 @@ namespace CSM.Controllers
             }
         }
 
+
+        [HttpPut]
+        [Route("api/DeliveryPersonnel/ResetPassword/{id}")]
+        public async Task<IHttpActionResult> ResetPassword(int id, [FromBody] EmployeeData user)
+        {
+            try
+            {
+                var loginuser = await Task.Run(() => db.User_Info.ToList()
+                     .Where(u => u.user_Id == user.data.user_id && u.token == user.data.token)
+                     .FirstOrDefault());
+
+                if (loginuser == null)
+                    return Ok("INVALID");
+
+
+                string result = tokenizer.validateToken(user.data.token);
+
+                if (result == "VALID")
+                {
+                    var employeeToUpdate = await Task.Run(() => db.User_Info.ToList()
+                                                    .Where(User_Info => User_Info.user_Id == id && User_Info.email == user.user.email)
+                                                    .FirstOrDefault());
+                    SHA512Encryption sha512 = new SHA512Encryption();
+                    string encrypt = sha512.Encode(user.user.password);
+                    employeeToUpdate.password = encrypt;
+                    int save = db.SaveChanges();
+                    return Ok(save);
+                }
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine(ex + "An error occurred while processing the request.");
+                return InternalServerError(ex);
+            }
+        }
 
 
     }
